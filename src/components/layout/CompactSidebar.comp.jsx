@@ -1,0 +1,79 @@
+import { Link } from 'react-router-dom'
+import { UserService } from '../../services'
+
+import { Tooltip } from 'primereact/tooltip'
+
+import { UsersIcon, LogoutIcon } from '../../assets/icons'
+
+import useSelectRoute from '../hooks'
+import { routes } from '../../utils/misc'
+
+const CompactSidebar = ({ themeState }) => {
+  const [selected, setSelected] = useSelectRoute()
+
+  const handleClick = (divNum) => () => setSelected(divNum)
+
+  return (
+    <div className="flex h-screen min-w-[5rem] flex-col overflow-hidden pt-4 shadow">
+      <div className="relative flex flex-col space-y-10 p-4">
+        <div className="flex items-center justify-center">
+          <Link to="/" onClick={handleClick(1)}>
+            <img
+              src={`/aw-logo-${!themeState ? 'light' : 'dark'}.png`}
+              className="h-10"
+            />
+          </Link>
+        </div>
+        <div className="flex-1 text-base font-medium">
+          <Tooltip target=".tooltip" />
+          <ul className="space-y-3 fill-color-secondary pt-2 pb-4 text-color-secondary">
+            {routes.map((route, index) => {
+              return (
+                <Link
+                  key={index + 1}
+                  to={route.path}
+                  data-pr-tooltip={route.name}
+                  onClick={handleClick(index)}
+                  className={`flex flex-wrap items-center justify-center ${
+                    selected === index + 1
+                      ? 'bg-color-secondary fill-blue-500 font-normal text-blue-500 shadow-soft-xl dark:fill-white dark:text-white'
+                      : ''
+                  } tooltip rounded-xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-blue-500 hover:text-blue-500 hover:shadow-soft-xl `}>
+                  <route.component width="1.5rem" height="1.5rem" />
+                </Link>
+              )
+            })}
+            {UserService.hasRole(['admin']) && (
+              <Link
+                data-pr-tooltip="Users"
+                to="/users"
+                onClick={handleClick(4)}
+                className={`flex flex-wrap items-center justify-center ${
+                  selected === 4
+                    ? 'bg-color-secondary fill-blue-500 font-normal text-blue-500 shadow-soft-xl dark:fill-white dark:text-white'
+                    : ''
+                } tooltip rounded-xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-blue-500 hover:text-blue-500 hover:shadow-soft-xl `}>
+                <UsersIcon width="1.5rem" height="1.5rem" />
+              </Link>
+            )}
+            <li
+              data-pr-tooltip={`Log out ${UserService.getUsername()}`}
+              className={`flex flex-wrap items-center justify-center ${
+                selected === 6
+                  ? 'bg-color-secondary fill-blue-500 font-normal text-blue-500 shadow-soft-xl dark:fill-white dark:text-white'
+                  : ''
+              } tooltip !my-10 rounded-xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:text-red-400 hover:shadow-soft-xl`}
+              onClick={() => {
+                UserService.doLogout()
+                window.localStorage.removeItem('loggedIn')
+              }}>
+              <LogoutIcon width="1.5rem" height="1.5rem" />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default CompactSidebar

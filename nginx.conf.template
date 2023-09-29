@@ -1,0 +1,81 @@
+events {}
+http {
+  include /etc/nginx/mime.types;
+  default_type text/html;
+
+  server {
+    listen 5173;
+
+    location / {
+      root /usr/share/nginx/html;
+      index index.html;
+      try_files $uri /index.html;
+    }
+
+    location /delegation {
+      if ($request_method = 'OPTIONS') {
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type';
+        add_header 'Access-Control-Max-Age' 86400;
+        return 204;
+      }
+
+      add_header 'Access-Control-Allow-Origin' '*';
+      proxy_pass ${VITE_API_BASE_URL}/delegation;
+    }
+
+
+    location /state-management {
+      if ($request_method = 'OPTIONS') {
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type';
+        add_header 'Access-Control-Max-Age' 86400;
+        return 204;
+      }
+
+      add_header 'Access-Control-Allow-Origin' '*';
+      proxy_pass ${VITE_API_BASE_URL}/state-management;
+    }
+
+    location /model {
+      if ($request_method = 'OPTIONS') {
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type';
+        add_header 'Access-Control-Max-Age' 86400;
+        return 204;
+      }
+
+      add_header 'Access-Control-Allow-Origin' '*';
+      proxy_pass ${VITE_API_BASE_URL}/model;
+    }
+
+    location /data {
+      if ($request_method = 'OPTIONS') {
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type';
+        add_header 'Access-Control-Max-Age' 86400;
+        return 204;
+      }
+
+      add_header 'Access-Control-Allow-Origin' '*';
+      proxy_pass ${VITE_API_BASE_URL}/data;
+    }
+
+    location /admin {
+      if ($request_method = 'OPTIONS') {
+        add_header 'Access-Control-Allow-Origin' '*';
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type';
+        add_header 'Access-Control-Max-Age' 86400;
+        return 204;
+      }
+
+      add_header 'Access-Control-Allow-Origin' '*';
+      proxy_pass ${VITE_KEYCLOAK_URL}/admin;
+    }
+  }
+}

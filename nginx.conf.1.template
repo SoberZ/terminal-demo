@@ -1,0 +1,15 @@
+events {}
+http {
+  include /etc/nginx/mime.types;
+  default_type text/html;
+
+  server {
+    listen 5173;
+
+    location / {
+      root /usr/share/nginx/html;
+      index index.html;
+      try_files $uri /index.html;
+    }
+  }
+}
