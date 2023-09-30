@@ -1,11 +1,14 @@
 import { useEffect, useState, useLayoutEffect } from 'react'
 import { toast } from 'react-hot-toast'
-
+import fs from 'fs'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { useNavigate } from 'react-router-dom'
 import { Tag } from 'primereact/tag'
 import { Accordion, AccordionTab } from 'primereact/accordion'
+
+// Import FakeData
+import Data from "../data/homepageData"
 
 import {
   Tile,
@@ -16,28 +19,19 @@ import {
   Spotlight,
 } from '../components'
 
-import {
-  fetchActiveStrategies,
-  fetchExchangeAccounts,
-  fetchFundingRates,
-} from '../utils/Fetchers/DashboardFetchers'
-
-import { getRollingMetrics } from '../utils/Fetchers/StateFetchers'
-
 import { useWindowSize } from '../hooks'
-
 import { statusColors } from '../utils/statusColors'
 
 const Dashboard = () => {
   const navigate = useNavigate()
   const [homeData, setHomeData] = useState({
-    strategiesRunning: '0',
-    pnl: '0 USD',
-    liveExchangeAccounts: '0',
-    tradingVolume: '0',
-    tradesExecuted: '0',
-    ordersPlaced: '0',
-    activeStrategies: [],
+    strategiesRunning: '12',
+    pnl: '5341 USD',
+    liveExchangeAccounts: '6',
+    tradingVolume: '1249823',
+    tradesExecuted: '4653',
+    ordersPlaced: '34523',
+    activeStrategies: [ ],
     orders: [],
     pnls: [],
     fundingRates: [],
@@ -68,29 +62,11 @@ const Dashboard = () => {
   // https://api.autowhale.net/data/market-data/get-fundingrates-for-pair?pair=BTC/USDT:USDT
   useLayoutEffect(() => {
     toast.dismiss()
-    const fetchData = async () => {
-      await fetchFundingRates('BTC/USDT:USDT', setHomeData)
-    }
-    fetchData()
   }, [])
 
   useEffect(() => {
     toast.dismiss()
-    const fetchData = async () => {
-      let res = await getRollingMetrics('global')
-
-      setHomeData((item) => ({
-        ...item,
-        tradingVolume: `${res.total_volume.toFixed(2)} $`,
-        tradesExecuted: res.total_num_of_trades,
-        ordersPlaced: res.total_num_of_orders,
-        pnl: `${res.total_pnl.toFixed(2)} $`,
-      }))
-
-      await fetchActiveStrategies(setHomeData)
-      await fetchExchangeAccounts(setHomeData)
-    }
-    fetchData()
+    setHomeData(Data)
   }, [])
 
   return (
