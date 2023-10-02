@@ -9,30 +9,30 @@
         {
             "active_status": "active",
             "exchange": "binance",
-            "market": "BHAT/USDT",
-            "strategy_id": "bhat_5percent_longer_renewal",
-            "exchange_account_id": "binance-test-2"
+            "market": "BTC/USDT",
+            "strategy_id": "DEMO_BTC_STRATEGY",
+            "exchange_account_id": "binance-account"
         },
         {
             "active_status": "active",
-            "exchange_account_id": "binance-test-2",
-            "strategy_id": "bhat_volume_2",
+            "exchange_account_id": "binance-account",
+            "strategy_id": "ETH_USDT_VOLUME",
             "exchange": "binance",
-            "market": "BHAT/USDT",
+            "market": "ETH/USDT",
             "type": "VolumeStrategy"
         },
         {
             "active_status": "active",
             "exchange": "binance",
             "market": "BHAT/USDT",
-            "exchange_account_id": "binance-test-2",
+            "exchange_account_id": "gate-account",
             "strategy_id": "bhat_sprad_maintainer_2"
         },
         {
             "active_status": "active",
             "exchange": "binance",
             "market": "BHAT/USDT",
-            "exchange_account_id": "binance-test-2",
+            "exchange_account_id": "binance-account",
             "strategy_id": "bhat_5percent_longer_renewal_2"
         },
         {
@@ -46,7 +46,7 @@
             "active_status": "active",
             "exchange": "binance",
             "market": "BHAT/USDT",
-            "exchange_account_id": "binance-test-2",
+            "exchange_account_id": "binance-account",
             "strategy_id": "bhat_wide_spread_spoofs_1"
         }
     ],

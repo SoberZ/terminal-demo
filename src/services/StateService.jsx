@@ -1,5 +1,8 @@
 import HttpService from './HttpService'
 
+import AllOrdersData from "../data/ordersData.json"
+import AllTradesData from "../data/closedOrdersData.json"
+
 const axiosClient = HttpService.getAxiosClient()
 
 const StateService = {
@@ -12,22 +15,7 @@ const StateService = {
    */
   getAllOrders: async function (page, per_page, timeframe, filter_dict) {
     try {
-      const res = await axiosClient.get(
-        '/state-management/trade-data/all-orders',
-        {
-          params: {
-            page,
-            per_page,
-            timeframe,
-            ...filter_dict,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-        }
-      )
-      return res
+      return AllOrdersData
     } catch (error) {
       return error
     }
@@ -153,22 +141,7 @@ const StateService = {
    */
   getAllTrades: async function (page, per_page, timeframe, filter_dict) {
     try {
-      const res = await axiosClient.get(
-        '/state-management/trade-data/all-trades',
-        {
-          params: {
-            page,
-            per_page,
-            timeframe,
-            ...filter_dict,
-          },
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-        }
-      )
-      return res
+      return AllTradesData
     } catch (error) {
       return error
     }

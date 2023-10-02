@@ -3,16 +3,6 @@ import { toast } from 'react-hot-toast'
 import { useParams } from 'react-router-dom'
 
 import { UserService } from '../services'
-import {
-  fetchChartData,
-  fetchChartGroupedMetrics,
-  fetchExchangeStatus,
-  fetchGroupedMetrics,
-  fetchLastTradedPrice,
-  fetchRollingMetrics,
-  fetchStrategy,
-  setStrategyStatus,
-} from '../utils/Fetchers/StrategyFetchers'
 import { getGroupedMetrics } from '../utils/Fetchers/StateFetchers'
 
 import { Tooltip } from 'primereact/tooltip'
@@ -32,6 +22,11 @@ import { getSeverity as getSeverityExchange } from './Exchanges'
 import { timeFrames } from '../utils/constants'
 import { getBase, getQuote } from '../utils/misc'
 import { Message } from 'primereact/message'
+
+import ChartData from '../data/strategyData/charts.json'
+import MetricData from '../data/strategyData/metrics.json'
+import StrategyData from '../data/strategyData/strategy.json'
+import GroupedChart from '../data/strategyData/groupedCharts.json'
 
 const Strategy = () => {
   const { strategyId } = useParams()
@@ -152,12 +147,11 @@ const Strategy = () => {
   })
 
   useEffect(() => {
-    toast.dismiss()
-    async function fetchAllData() {
-      await fetchStrategy(setStrategyData, strategyId)
-    }
-    fetchAllData()
-    isLoaded.current = true
+    setChartData(ChartData)
+    setFetchedData(MetricData)
+    setStrategyData(StrategyData)
+    setTotalChartMetricsActive(true)
+    setLast24MetricsActive(true)
   }, [])
 
   const handleSetStrategyStatus = async (status) => {
@@ -167,18 +161,13 @@ const Strategy = () => {
       icon: 'pi pi-exclamation-triangle',
       accept: async () => {
         const t = toast.loading(`Changing strategy status`)
-        const resStatus = await setStrategyStatus(strategyId, status)
-
-        if (resStatus === 200) {
-          await fetchStrategy(setStrategyData, strategyId)
+          setStrategyData((prev) => ({
+            ...prev,
+            active_status: status,
+          }))
           toast.success(`Successfully changed strategy status to ${status}`, {
             id: t,
           })
-        } else {
-          toast.error(`Failed to change strategy status to ${status}`, {
-            id: t,
-          })
-        }
       },
       reject: () => {},
     })
@@ -196,6 +185,7 @@ const Strategy = () => {
         [`${valueKey}_labels`]: labels,
         [valueKey]: [{ data: data, label: valueKey }],
       }))
+    setLast24MetricsActive(true)
       toast.success('Finished loading Grouped Charts', { id: handleToast })
     } else if (res.status !== 200) {
       toast.error(res.response.data.message, { id: handleToast })
@@ -205,46 +195,48 @@ const Strategy = () => {
   const handleWrapper = (select, valueKey) => {
     handleSelect(select, valueKey)
   }
-  useEffect(() => {
-    if (isLoaded.current) {
-      ;(async () => {
-        if (strategyData.market) {
-          const base = getBase(strategyData.market)
-          const quote = getQuote(strategyData.market)
-          setMarket({ base, quote })
-          fetchExchangeStatus(strategyData.exchange_account_id, setStrategyData)
-          fetchLastTradedPrice(
-            strategyData.market,
-            strategyData.exchange,
-            setFetchedData
-          )
-        }
-        if (last24MetricsActive == null) {
-          setLast24MetricsActive(false)
-        }
-        if (totalChartMetricsActive == null) {
-          setTotalChartMetricsActive(true)
-        }
-      })()
-    }
-  }, [strategyData.active_status])
+  // useEffect(() => {
+  //   if (isLoaded.current) {
+  //     ;(async () => {
+  //       if (strategyData.market) {
+  //         const base = getBase(strategyData.market)
+  //         const quote = getQuote(strategyData.market)
+  //         setMarket({ base, quote })
+  //         fetchExchangeStatus(strategyData.exchange_account_id, setStrategyData)
+  //         fetchLastTradedPrice(
+  //           strategyData.market,
+  //           strategyData.exchange,
+  //           setFetchedData
+  //         )
+  //       }
+  //       if (last24MetricsActive == null) {
+  //         setLast24MetricsActive(false)
+  //       }
+  //       if (totalChartMetricsActive == null) {
+  //         setTotalChartMetricsActive(true)
+  //       }
+  //     })()
+  //   }
+  // }, [strategyData.active_status])
 
-  useEffect(() => {
-    ;(async () => {
-      if (last24MetricsActive) {
-        await fetchGroupedMetrics(setFetchedData, strategyId)
-      } else if (last24MetricsActive === false) {
-        await fetchRollingMetrics(setFetchedData, strategyId)
-      }
-    })()
-  }, [last24MetricsActive])
+  // useEffect(() => {
+  //   ;(async () => {
+  //     if (last24MetricsActive) {
+  //       await fetchGroupedMetrics(setFetchedData, strategyId)
+  //       console.log(fetchedData)
+  //     } else if (last24MetricsActive === false) {
+  //       await fetchRollingMetrics(setFetchedData, strategyId)
+  //     }
+  //   })()
+  // }, [last24MetricsActive])
 
   useEffect(() => {
     ;(async () => {
       if (totalChartMetricsActive) {
-        await fetchChartData(setChartData, strategyId)
+        setChartData(GroupedChart)
       } else if (totalChartMetricsActive === false) {
-        await fetchChartGroupedMetrics(setChartData, strategyId)
+        // await fetchChartGroupedMetrics(setChartData, strategyId)
+        setChartData(GroupedChart)
       }
     })()
   }, [totalChartMetricsActive])

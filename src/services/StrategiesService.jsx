@@ -1,5 +1,6 @@
 import HttpService from './HttpService'
 
+import StrategiesData from '../data/strategiesData.json'
 const axiosClient = HttpService.getAxiosClient()
 
 const StrategiesService = {
@@ -103,11 +104,7 @@ const StrategiesService = {
 
   getAll: async function () {
     try {
-      const res = await axiosClient.get(
-        '/delegation/strategies/get-all-strategies',
-        {}
-      )
-      return res.data
+      return StrategiesData.data
     } catch (error) {
       return error
     }
