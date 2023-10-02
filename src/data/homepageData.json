@@ -1,8 +1,8 @@
 {
-    "strategiesRunning": 6,
-    "pnl": "6450.76 $",
-    "liveExchangeAccounts": 5,
-    "tradingVolume": "3873659.36 $",
+    "strategiesRunning": 2,
+    "pnl": "645.76 $",
+    "liveExchangeAccounts": 1,
+    "tradingVolume": "387659.36 $",
     "tradesExecuted": 107795,
     "ordersPlaced": 980412,
     "activeStrategies": [

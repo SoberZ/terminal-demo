@@ -155,10 +155,9 @@ const Strategy = () => {
   })
 
   useEffect(() => {
-    setChartData(ChartData)
-    setFetchedData(MetricData)
-    setStrategyData(StrategyData)
-
+    setChartData(()=>ChartData)
+    setFetchedData(()=>MetricData)
+    setStrategyData(()=>StrategyData)
     isLoaded.current = true
   }, [])
 
@@ -464,7 +463,7 @@ const Strategy = () => {
                 />
               </div>
               <Tooltip target=".tooltip" />
-              {UserService.hasRole(['trader']) && (
+              {/* {UserService.hasRole(['trader']) && ( */}
                 <div className="flex flex-wrap justify-center gap-2 text-center">
                   {editMode && (
                     <TerminalButton
@@ -593,7 +592,7 @@ const Strategy = () => {
                     />
                   )}
                 </div>
-              )}
+              {/* )} */}
             </div>
           </div>
 

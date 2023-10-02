@@ -26,7 +26,7 @@
         "quantity_filled": 0.00005355,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -54,7 +54,7 @@
         "quantity_filled": 0.00005517,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -82,7 +82,7 @@
         "quantity_filled": 0.00005517,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -110,7 +110,7 @@
         "quantity_filled": 0.00005352,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -138,7 +138,7 @@
         "quantity_filled": 0.00005352,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -166,7 +166,7 @@
         "quantity_filled": 0.00005427,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -194,7 +194,7 @@
         "quantity_filled": 0.00005428,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -222,7 +222,7 @@
         "quantity_filled": 0.00005406,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -250,7 +250,7 @@
         "quantity_filled": 0.00005406,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -278,7 +278,7 @@
         "quantity_filled": 0.00005554,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -306,7 +306,7 @@
         "quantity_filled": 0.00005464,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -334,7 +334,7 @@
         "quantity_filled": 0.00005425,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -362,7 +362,7 @@
         "quantity_filled": 0.00005475,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -390,7 +390,7 @@
         "quantity_filled": 0.00005368,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -418,7 +418,7 @@
         "quantity_filled": 0.00005466,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -446,7 +446,7 @@
         "quantity_filled": 0.00005389,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -474,7 +474,7 @@
         "quantity_filled": 0.0000556,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -502,7 +502,7 @@
         "quantity_filled": 0.00005405,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -530,7 +530,7 @@
         "quantity_filled": 0.00005429,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       },
       {
@@ -558,7 +558,7 @@
         "quantity_filled": 0.00005554,
         "stop_loss_price_trigger": null,
         "stop_loss_type": null,
-        "strategy_id": "test-123-vvv",
+        "strategy_id": "DEMO_STRATEGY",
         "trade_signal_id": null
       }
     ],

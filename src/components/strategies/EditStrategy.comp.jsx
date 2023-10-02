@@ -10,6 +10,8 @@ import { Accordion, AccordionTab } from 'primereact/accordion'
 import { StrategiesService } from '../../services'
 import { useWindowSize } from '../../hooks'
 
+import RequiredParams from '../../data/createStrategy/defaultRequiredParams.json'
+
 const allowedValueTypes = ['integer', 'decimal', 'boolean']
 
 const strategyType = {
@@ -31,21 +33,6 @@ function filterParamsKeys(params) {
     filteredParams[key] = params[key]
     return filteredParams
   }, {})
-}
-
-async function fetchRequiredParams(setFetchedData) {
-  try {
-    const res = await StrategiesService.getRequiredParams()
-
-    if (res.status === 200) {
-      setFetchedData(res.data.data)
-    } else {
-      toast.error(res.response.data.message)
-    }
-  } catch (e) {
-    toast.error('Failed params')
-    return
-  }
 }
 
 export default function EditStrategyComponent({
@@ -131,7 +118,9 @@ export default function EditStrategyComponent({
     }
     reset(strategyData)
 
-    fetchRequiredParams(setRequiredParams)
+    // fetchRequiredParams(setRequiredParams)
+    setRequiredParams(() => RequiredParams.requiredParams)
+    console.log(requiredParams)
     const filteredParams = requiredParams?.filter((param) => {
       return param.strategy_type === strategyType[strategyData.type]
     })
