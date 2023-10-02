@@ -2,7 +2,7 @@
   "data": {
     "data": [
       {
-        "active_status": "stop",
+        "active_status": "paused",
         "exchange": "binance",
         "exchange_account_id": "binance_account",
         "is_demo_strategy": true,
@@ -16,7 +16,7 @@
         "type": "DepthStrategy"
       },
       {
-        "active_status": "stop",
+        "active_status": "active",
         "err_msg": "EXCHANGE ERROR: \nkucoin Balance insufficient!\n",
         "exchange": "kucoin",
         "exchange_account_id": "kucoin-account",
@@ -28,10 +28,10 @@
         "pid": 49917,
         "strategy_id": "KUCOIN_BTCUSDT",
         "taker_fee": 0.0002,
-        "type": "AvellanedaStrategy"
+        "type": "VolumeStrategy"
       },
       {
-        "active_status": "paused_err",
+        "active_status": "active",
         "err_msg": "binance GET https://api.binance.com/api/v1/orders/64b891d73fd9810001a1dee1 429 Too Many Requests {\"code\":\"429000\",\"msg\":\"too many request\"}\n",
         "exchange": "binance",
         "exchange_account_id": "binance-account",
@@ -58,10 +58,10 @@
         "order_size": 0.0001,
         "pid": 8445,
         "risk_aversion": 0.05,
-        "strategy_id": "newest-avellaneda",
+        "strategy_id": "BTC_DEPTH_KUCOIN",
         "taker_fee": 0.0001,
         "trading_frequency": 1,
-        "type": "AvellanedaStrategy"
+        "type": "DepthStrategy"
       },
       {
         "active_status": "stop",
@@ -73,33 +73,33 @@
         "is_streaming_strategy": true,
         "kappa": 1.5,
         "maker_fee": 0.0001,
-        "market": "BTC/USDT",
+        "market": "LOKI/BTC",
         "order_size": 0.0001,
         "pid": 58054,
         "risk_aversion": 0.05,
-        "strategy_id": "KUCOIN_AVELLANEDA_2",
+        "strategy_id": "DEMO_STRATEGY_LOKI_BTC",
         "taker_fee": 0.0002,
         "trading_frequency": 0.2,
-        "type": "AvellanedaStrategy"
+        "type": "SpreadStrategy"
       },
       {
         "active_status": "stop",
         "err_msg": "2ND API CONN ERR\nCannot run the event loop while another loop is running\n",
-        "exchange": "kucoin",
-        "exchange_account_id": "kucoin_account",
+        "exchange": "gateio",
+        "exchange_account_id": "gateio_account",
         "inventory_target_base": 0.4,
         "is_demo_strategy": false,
         "is_streaming_strategy": true,
         "kappa": 1.5,
         "maker_fee": 0.0001,
-        "market": "BTC/USDT",
+        "market": "XRP/BTC",
         "order_size": 0.0001,
         "pid": 12265,
         "risk_aversion": 0.05,
-        "strategy_id": "im-new-avellaneda",
+        "strategy_id": "GATE_DEMO_XRP_BTC",
         "taker_fee": 0.0002,
         "trading_frequency": 0.1,
-        "type": "AvellanedaStrategy"
+        "type": "DepthStrategy"
       }
     ],
     "isError": false,
