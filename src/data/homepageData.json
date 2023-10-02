@@ -8,13 +8,6 @@
     "activeStrategies": [
         {
             "active_status": "active",
-            "exchange": "binance",
-            "market": "BTC/USDT",
-            "strategy_id": "DEMO_BTC_STRATEGY",
-            "exchange_account_id": "binance-account"
-        },
-        {
-            "active_status": "active",
             "exchange_account_id": "binance-account",
             "strategy_id": "ETH_USDT_VOLUME",
             "exchange": "binance",
@@ -23,31 +16,11 @@
         },
         {
             "active_status": "active",
-            "exchange": "gateio",
-            "market": "XRP/BTC",
-            "exchange_account_id": "gate-account",
-            "strategy_id": "GATE_DEMO_XRP_BTC"
-        },
-        {
-            "active_status": "active",
-            "exchange": "bitget",
-            "market": "ADA/USDT",
-            "exchange_account_id": "bitget-account",
-            "strategy_id": "BITGET_ADAUSDT"
-        },
-        {
-            "active_status": "active",
-            "exchange": "gateio",
-            "market": "LTC_BTC",
-            "strategy_id": "GATEIO_DEPTH_LTCBTC",
-            "taker_fee_percentage": 0.000001
-        },
-        {
-            "active_status": "active",
             "exchange": "kucoin",
             "market": "BTC/USDT",
             "exchange_account_id": "kucoin-account",
-            "strategy_id": "KUCOIN_BTCUSDT"
+            "strategy_id": "KUCOIN_BTCUSDT",
+            "type": "VolumeStrategy"
         }
     ],
     "orders": [],
