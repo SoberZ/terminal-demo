@@ -22,16 +22,10 @@ const Exchange = () => {
       icon: 'pi pi-exclamation-triangle',
       accept: async () => {
         const handler = toast.loading('Pausing exchange account')
-        setAccountData(prev => ({...prev, status: 'paused'}))
-        // const res = await ExchangesService.removeAccount(exchangeId)
-        // if (res.status === 200) {
-          toast.success('Successfully paused exchange account', {
-            id: handler,
-          })
-        //   fetchExchangeAccount()
-        // } else {
-        //   toast.error("Couldn't delete account", { id: handler })
-        // }
+        setAccountData((prev) => ({ ...prev, status: 'paused' }))
+        toast.success('Successfully paused exchange account', {
+          id: handler,
+        })
       },
       reject: () => {},
     })
@@ -44,19 +38,10 @@ const Exchange = () => {
       icon: 'pi pi-exclamation-triangle',
       accept: async () => {
         const handler = toast.loading('Restarting exchange account')
-        setAccountData(prev => ({...prev, status: 'active'}))
-        // const res = await ExchangesService.restartExchangeAccount(exchangeId)
-
-        // if (res.status === 200) {
-          toast.success('Restarted exchange account', {
-            id: handler,
-          })
-        //   fetchExchangeAccount()
-        // } else {
-        //   toast.error("Couldn't restart exchange account", {
-        //     id: handler,
-        //   })
-        // }
+        setAccountData((prev) => ({ ...prev, status: 'active' }))
+        toast.success('Restarted exchange account', {
+          id: handler,
+        })
       },
       reject: () => {},
     })
@@ -65,30 +50,12 @@ const Exchange = () => {
   async function fetchBalances() {
     const t = toast.loading('Fetching Account Balances')
     setBalances((_) => Balances)
-    // const res = await ExchangesService.getBalance(exchangeId)
-    // if (res.status === 200) {
-    //   if (res.data.data === null) {
-    //     toast.error('Authentication failed')
-    //   }
-    //   setBalances((_) => res.data.data)
-      
-      toast.success('Fetched Account Balances', { id: t })
-    // } else {
-    //   toast.error("Couldn't fetch balances", { id: t })
-    // }
+    toast.success('Fetched Account Balances', { id: t })
   }
 
   async function fetchExchangeAccount() {
     if (!exchangeId) return
     setAccountData((_) => ExchangeAccount)
-    // const res = await ExchangesService.getAccount(exchangeId)
-
-    // if (res.status === 200) {
-    //   setAccountData(res.data.data)
-      
-    // } else {
-    //   toast.error("Couldn't fetch exchange account")
-    // }
   }
 
   useEffect(() => {
@@ -100,7 +67,7 @@ const Exchange = () => {
   return (
     <>
       <ConfirmDialog />
-      <div className="bg-color-secondary text-color-secondary dark:border dark:border-neutral-800 p-10 space-y-10 shadow-soft-lg rounded-lg">
+      <div className="space-y-10 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
         {accountData && (
           <div className="flex flex-col space-y-3 text-sm">
             <div className="flex items-center space-x-2">
@@ -142,7 +109,7 @@ const Exchange = () => {
                 ? '!from-gray-800 !to-gray-500 pointer-events-none'
                 : ''
             }`}>
-            <h1 className={`font-semibold text-sm text-white`}>
+            <h1 className={`text-sm font-semibold text-white`}>
               Pause Exchange Account
             </h1>
           </TerminalButton>
@@ -156,7 +123,7 @@ const Exchange = () => {
                 ? 'from-gray-800 to-gray-500 pointer-events-none'
                 : ''
             }`}>
-            <h1 className={`font-semibold text-sm text-white`}>
+            <h1 className={`text-sm font-semibold text-white`}>
               Restart Exchange Account
             </h1>
           </TerminalButton>

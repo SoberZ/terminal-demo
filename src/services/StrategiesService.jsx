@@ -1,6 +1,8 @@
 import HttpService from './HttpService'
 
-import StrategiesData from '../data/strategiesData.json'
+import StrategiesData from '../data/strategies/strategiesData.json'
+import StrategyOrders from '../data/strategyData/orders.json'
+
 const axiosClient = HttpService.getAxiosClient()
 
 const StrategiesService = {
@@ -152,18 +154,7 @@ const StrategiesService = {
     props
   ) {
     try {
-      const res = await axiosClient.get(
-        '/state-management/trade-data/orders-of-strategy',
-        {
-          params: {
-            strategy: strategy_id,
-            page: page,
-            per_page: per_page,
-            ...props,
-          },
-        }
-      )
-      return res
+      return StrategyOrders
     } catch (error) {
       return error
     }

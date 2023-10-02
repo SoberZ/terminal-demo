@@ -23,31 +23,31 @@
         },
         {
             "active_status": "active",
-            "exchange": "binance",
-            "market": "BHAT/USDT",
+            "exchange": "gateio",
+            "market": "XRP/BTC",
             "exchange_account_id": "gate-account",
-            "strategy_id": "bhat_sprad_maintainer_2"
+            "strategy_id": "GATE_DEMO_XRP_BTC"
         },
         {
             "active_status": "active",
-            "exchange": "binance",
-            "market": "BHAT/USDT",
-            "exchange_account_id": "binance-account",
-            "strategy_id": "bhat_5percent_longer_renewal_2"
+            "exchange": "bitget",
+            "market": "ADA/USDT",
+            "exchange_account_id": "bitget-account",
+            "strategy_id": "BITGET_ADAUSDT"
         },
         {
             "active_status": "active",
-            "exchange": "binance",
-            "market": "BHAT/USDT",
-            "strategy_id": "bhat_wide_spread_spoofs_3",
+            "exchange": "gateio",
+            "market": "LTC_BTC",
+            "strategy_id": "GATEIO_DEPTH_LTCBTC",
             "taker_fee_percentage": 0.000001
         },
         {
             "active_status": "active",
-            "exchange": "binance",
-            "market": "BHAT/USDT",
-            "exchange_account_id": "binance-account",
-            "strategy_id": "bhat_wide_spread_spoofs_1"
+            "exchange": "kucoin",
+            "market": "BTC/USDT",
+            "exchange_account_id": "kucoin-account",
+            "strategy_id": "KUCOIN_BTCUSDT"
         }
     ],
     "orders": [],

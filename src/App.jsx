@@ -27,29 +27,29 @@ const App = () => {
             <Route index element={<Dashboard />} />
             <Route path="strategies">
               <Route index element={<Strategies />} />
-              {UserService.hasRole(['trader']) && (
+              {/* {UserService.hasRole(['trader']) && ( */}
                 <Route path="create" element={<CreateStrategy />} />
-              )}
+              {/* )} */}
               <Route path=":strategyId" element={<Strategy />} />
             </Route>
-            {UserService.hasRole(['admin']) && (
+            {/* {UserService.hasRole(['admin']) && ( */}
               <Route path="users">
                 <Route index element={<Users />} />
                 <Route path=":userId" element={<User />} />
               </Route>
-            )}
+            {/* )} */}
             <Route path="exchanges">
               <Route index element={<Exchanges />} />
-              {UserService.hasRole(['trader']) && (
+              {/* {UserService.hasRole(['trader']) && ( */}
                 <Route path="create" element={<CreateExchangeAccount />} />
-              )}
+              {/* )} */}
               <Route path=":exchangeId" element={<Exchange />} />
             </Route>
             <Route path="cachers">
               <Route index element={<Cachers />} />
-              {UserService.hasRole(['trader']) && (
+              {/* {UserService.hasRole(['trader']) && ( */}
                 <Route path="create" element={<RegisterCacher />} />
-              )}
+              {/* )} */}
               {/* <Route path=":strategyId" element={<Cachers />} /> */}
             </Route>
             <Route path="*" element={<NoMatch />} />

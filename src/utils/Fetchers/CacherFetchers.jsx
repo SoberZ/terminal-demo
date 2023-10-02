@@ -1,6 +1,8 @@
 import { toast } from 'react-hot-toast'
 import { CacherService } from '../../services'
 
+import Cachers from '../../data/cachers/cachers.json'
+
 export async function registerCacher(cacher) {
   const t = toast.loading('Registering Cacher')
   try {
@@ -16,41 +18,43 @@ export async function registerCacher(cacher) {
 }
 
 export async function fetchCachers(setCachers) {
-  const t = toast.loading('Fetching Cachers')
-  try {
-    const activeRes = CacherService.getCachers('active')
-    const pausedRes = CacherService.getCachers('paused')
-    const newRes = CacherService.getCachers('new')
-    const restartRes = CacherService.getCachers('restart')
+  setCachers(Cachers)
+  // const t = toast.loading('Fetching Cachers')
+  // try {
+  //   const activeRes = CacherService.getCachers('active')
+  //   const pausedRes = CacherService.getCachers('paused')
+  //   const newRes = CacherService.getCachers('new')
+  //   const restartRes = CacherService.getCachers('restart')
 
-    const [activeData, pausedData, newData, restartData] = await Promise.all([
-      activeRes,
-      pausedRes,
-      newRes,
-      restartRes,
-    ])
+  //   const [activeData, pausedData, newData, restartData] = await Promise.all([
+  //     activeRes,
+  //     pausedRes,
+  //     newRes,
+  //     restartRes,
+  //   ])
 
-    if (
-      activeData.status === 200 &&
-      pausedData.status === 200 &&
-      newData.status === 200 &&
-      restartData.status === 200
-    ) {
-      toast.success('Successfully fetched Cachers', { id: t })
+  //   if (
+  //     activeData.status === 200 &&
+  //     pausedData.status === 200 &&
+  //     newData.status === 200 &&
+  //     restartData.status === 200
+  //   ) {
+  //     toast.success('Successfully fetched Cachers', { id: t })
 
-      const combinedData = [
-        ...activeData.data.data,
-        ...newData.data.data,
-        ...pausedData.data.data,
-        ...restartData.data.data,
-      ]
+  //     const combinedData = [
+  //       ...activeData.data.data,
+  //       ...newData.data.data,
+  //       ...pausedData.data.data,
+  //       ...restartData.data.data,
+  //     ]
 
-      setCachers(combinedData)
-    }
-  } catch (e) {
-    toast.error(e.response.data.message, { id: t })
-    return
-  }
+  //     setCachers(combinedData)
+  //     console.log(JSON.stringify(combinedData))
+  //   }
+  // } catch (e) {
+  //   toast.error(e.response.data.message, { id: t })
+  //   return
+  // }
 }
 
 export async function pauseCacher(cacher) {

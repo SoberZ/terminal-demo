@@ -1,0 +1,9 @@
+[
+  { "value": "SpreadStrategy", "label": "SpreadStrategy" },
+  { "value": "DepthStrategy", "label": "DepthStrategy" },
+  { "value": "GenericStrategy", "label": "GenericStrategy" },
+  { "value": "DemoStreamingStrategy", "label": "DemoStreamingStrategy" },
+  { "value": "VolumeStrategy", "label": "VolumeStrategy" },
+  { "value": "MatrixStrategy", "label": "MatrixStrategy" },
+  { "value": "AvellanedaStrategy", "label": "AvellanedaStrategy" }
+]

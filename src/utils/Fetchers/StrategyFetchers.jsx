@@ -8,6 +8,9 @@ import {
 import { formatNumber } from '../misc'
 import { ExchangesService } from '../../services'
 
+import DefaultRequiredParams from '../../data/createStrategy/defaultRequiredParams.json'
+import StrategyInstances from '../../data/createStrategy/strategyInstances.json'
+
 export async function fetchStrategy(setStrategyData, strategy_id) {
   const res = await StrategiesService.getStrategy(strategy_id)
 
@@ -356,28 +359,10 @@ export async function fetchRequiredParams(
   setFetchedData,
   setStrategyInstances
 ) {
-  try {
-    const res = await StrategiesService.getRequiredParams()
-
-    if (res.status === 200) {
-      setFetchedData((prev) => ({
-        ...prev,
-        requiredParams: res.data.data,
-      }))
-      setStrategyInstances((_) =>
-        res.data.data.map((i) => ({
-          value: i.strategy_type,
-          label: i.strategy_type,
-        }))
-      )
-    } else {
-      toast.error(res.response.data.message)
-    }
-  } catch (e) {
-    toast.error('Failed params')
-    return
-  }
+  setFetchedData(() => DefaultRequiredParams)
+  setStrategyInstances(() => StrategyInstances)
 }
+
 //? the new function to create a strategy
 export async function createStrategy(strategyType, params) {
   const t = toast.loading('Creating your strategy')

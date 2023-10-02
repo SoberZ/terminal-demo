@@ -1,0 +1,433 @@
+{
+  "requiredParams": [
+    {
+      "params": {
+        "exchange": { "optional": false, "type": "string" },
+        "exchange_account_id": { "optional": false, "type": "string" },
+        "explaination": {
+          "text": "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum"
+        },
+        "fee_percentage": {
+          "isPercentage": true,
+          "max_value": 1,
+          "min_value": -1,
+          "optional": false,
+          "placeholder": "Enter a percentage between -1 and 1",
+          "type": "decimal"
+        },
+        "is_demo_strategy": { "optional": false, "type": "boolean" },
+        "liquidate_exceeding_inventory": {
+          "optional": true,
+          "type": "boolean"
+        },
+        "market": { "optional": false, "type": "string" },
+        "only_profitable_pairs": { "optional": false, "type": "boolean" },
+        "order_distance": {
+          "isPercentage": true,
+          "max_value": 1,
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a percentage between 0 and 1",
+          "type": "decimal"
+        },
+        "order_renewal_time": {
+          "min_value": 20,
+          "optional": false,
+          "placeholder": "Enter the time in seconds (>20) to renew the orders",
+          "type": "integer"
+        },
+        "quantity": {
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter the initial to be used for each order",
+          "type": "decimal"
+        },
+        "stop_loss_percentage": {
+          "isPercentage": true,
+          "max_value": 1,
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a percentage between 0 and 1",
+          "type": "decimal"
+        },
+        "strategy_id": {
+          "optional": false,
+          "placeholder": "Enter a unique strategy id",
+          "type": "string"
+        }
+      },
+      "strategy_type": "SpreadStrategy"
+    },
+    {
+      "params": {
+        "balance_exchange_account": { "optional": true, "type": "boolean" },
+        "buy_order_distance": {
+          "isPercentage": true,
+          "max_value": 1,
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a percentage between 0 and 1",
+          "type": "decimal"
+        },
+        "check_for_order_consistency": { "optional": true, "type": "boolean" },
+        "enable_balancing": { "optional": true, "type": "boolean" },
+        "exchange": { "optional": false, "type": "string" },
+        "exchange_account_id": { "optional": false, "type": "string" },
+        "explaination": {
+          "text": "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum"
+        },
+        "init_quantity": {
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter the initial quantity to start the order set with",
+          "type": "decimal"
+        },
+        "is_demo_strategy": { "optional": false, "type": "boolean" },
+        "keep_inventory_in_equilibrium": {
+          "optional": true,
+          "type": "boolean"
+        },
+        "linear_buy_order_size_increase": {
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter an increase to init_quantity for buy orders",
+          "type": "decimal"
+        },
+        "linear_sell_order_size_increase": {
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter an increase to init_quantity for sell orders",
+          "type": "decimal"
+        },
+        "liquidate_exceeding_inventory": {
+          "optional": true,
+          "type": "boolean"
+        },
+        "maker_fee_percentage": {
+          "isPercentage": true,
+          "max_value": 1,
+          "min_value": -1,
+          "optional": false,
+          "placeholder": "Enter a percentage between -1 and 1",
+          "type": "decimal"
+        },
+        "market": { "optional": false, "type": "string" },
+        "num_of_orders": {
+          "min_value": 2,
+          "optional": false,
+          "placeholder": "Enter an even number of orders",
+          "type": "integer"
+        },
+        "order_renewal_time": {
+          "min_value": 60,
+          "optional": false,
+          "placeholder": "Enter the time in seconds (>60) to renew the orders",
+          "type": "integer"
+        },
+        "sell_order_distance": {
+          "isPercentage": true,
+          "max_value": 1,
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a percentage between 0 and 1",
+          "type": "decimal"
+        },
+        "strategy_id": {
+          "optional": false,
+          "placeholder": "Enter a unique strategy id",
+          "type": "string"
+        },
+        "taker_fee_percentage": {
+          "isPercentage": true,
+          "max_value": 1,
+          "min_value": -1,
+          "optional": false,
+          "placeholder": "Enter a percentage between -1 and 1",
+          "type": "decimal"
+        },
+        "target_inventory_base_percentage": {
+          "isPercentage": true,
+          "max_value": 1,
+          "min_value": 0,
+          "optional": true,
+          "placeholder": "Enter a percentage between 0 and 1",
+          "type": "decimal"
+        },
+        "type": { "optional": false, "type": "string" }
+      },
+      "strategy_type": "DepthStrategy"
+    },
+    {
+      "params": {
+        "exchange": { "optional": false, "type": "string" },
+        "exchange_account_id": { "optional": false, "type": "string" },
+        "explaination": {
+          "text": "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum"
+        },
+        "is_demo_strategy": { "optional": false, "type": "boolean" },
+        "notfication_mail": { "optional": false, "type": "string" },
+        "strategy_id": {
+          "optional": false,
+          "placeholder": "Enter a unique strategy id",
+          "type": "string"
+        }
+      },
+      "strategy_type": "GenericStrategy"
+    },
+    {
+      "params": {
+        "exchange_account_id": { "optional": false, "type": "string" },
+        "explaination": {
+          "text": "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum"
+        },
+        "is_demo_strategy": { "optional": false, "type": "boolean" },
+        "market": { "optional": false, "type": "string" },
+        "strategy_id": {
+          "optional": false,
+          "placeholder": "Enter a unique strategy id",
+          "type": "string"
+        }
+      },
+      "strategy_type": "DemoStreamingStrategy"
+    },
+    {
+      "params": {
+        "daily_volume_variance": {
+          "isPercentage": true,
+          "max_value": 1,
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a percentage between 0 and 1",
+          "type": "decimal"
+        },
+        "estimated_daily_volume": {
+          "min_value": 0,
+          "optional": false,
+          "type": "decimal"
+        },
+        "exchange": { "optional": false, "type": "string" },
+        "exchange_account_id": { "optional": false, "type": "string" },
+        "explaination": {
+          "text": "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum"
+        },
+        "is_demo_strategy": { "optional": false, "type": "boolean" },
+        "maker_fee": {
+          "isPercentage": true,
+          "max_value": 1,
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a percentage between 0 and 1",
+          "type": "decimal"
+        },
+        "market": { "optional": false, "type": "string" },
+        "max_delay_between_trades": {
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a number of seconds",
+          "type": "decimal"
+        },
+        "max_order_size": {
+          "min_value": 0,
+          "optional": false,
+          "type": "decimal"
+        },
+        "min_delay_between_trades": {
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a number of seconds",
+          "type": "decimal"
+        },
+        "min_order_size": {
+          "min_value": 0,
+          "optional": false,
+          "type": "decimal"
+        },
+        "strategy_id": {
+          "optional": false,
+          "placeholder": "Enter a unique strategy id",
+          "type": "string"
+        },
+        "taker_fee": {
+          "isPercentage": true,
+          "max_value": 1,
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a percentage between 0 and 1",
+          "type": "decimal"
+        }
+      },
+      "strategy_type": "VolumeStrategy"
+    },
+    {
+      "params": {
+        "base_order_size": {
+          "min_value": 0,
+          "optional": false,
+          "type": "decimal"
+        },
+        "delay_between_matrix_changes": {
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a delay in seconds between possible matrix changes",
+          "type": "integer"
+        },
+        "dynamic_matrix": { "optional": false, "type": "boolean" },
+        "exchange_account_id": { "optional": false, "type": "string" },
+        "explaination": {
+          "text": "<b>WARNING</b>: This strategy is still in development and is not ready for use."
+        },
+        "initial_lower_price": {
+          "min_value": 0,
+          "optional": false,
+          "type": "decimal"
+        },
+        "initial_matrix_size": {
+          "min_value": 0,
+          "optional": false,
+          "type": "integer"
+        },
+        "initial_upper_price": {
+          "min_value": 0,
+          "optional": false,
+          "type": "decimal"
+        },
+        "is_demo_strategy": { "optional": false, "type": "boolean" },
+        "long_term_history_length": {
+          "min_value": 0,
+          "optional": false,
+          "type": "integer"
+        },
+        "maker_fee": {
+          "isPercentage": true,
+          "max_value": 1,
+          "min_value": 0,
+          "optional": false,
+          "type": "decimal"
+        },
+        "market": { "optional": false, "type": "string" },
+        "max_deviation_from_price_bounds": {
+          "isPercentage": true,
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a percentage",
+          "type": "decimal"
+        },
+        "max_matrix_size": {
+          "min_value": 0,
+          "optional": false,
+          "type": "integer"
+        },
+        "max_matrix_size_deviation": {
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a percentage",
+          "type": "decimal"
+        },
+        "max_order_size": {
+          "min_value": 0,
+          "optional": false,
+          "type": "decimal"
+        },
+        "max_range": {
+          "isPercentage": true,
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a percentage",
+          "type": "decimal"
+        },
+        "min_matrix_size": {
+          "min_value": 0,
+          "optional": false,
+          "type": "integer"
+        },
+        "min_order_size": {
+          "min_value": 0,
+          "optional": false,
+          "type": "decimal"
+        },
+        "min_range": {
+          "isPercentage": true,
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a percentage",
+          "type": "decimal"
+        },
+        "short_term_history_length": {
+          "min_value": 0,
+          "optional": false,
+          "type": "integer"
+        },
+        "spice": { "optional": false, "type": "boolean" },
+        "strategy_id": {
+          "optional": false,
+          "placeholder": "Enter a unique strategy id",
+          "type": "string"
+        }
+      },
+      "strategy_type": "MatrixStrategy"
+    },
+    {
+      "params": {
+        "exchange": { "optional": false, "type": "string" },
+        "exchange_account_id": { "optional": false, "type": "string" },
+        "explaination": {
+          "text": "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum"
+        },
+        "inventory_target_base": {
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter your target inventory base",
+          "type": "decimal"
+        },
+        "is_demo_strategy": { "optional": false, "type": "boolean" },
+        "kappa": {
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter your kappa/trading intensity parameter",
+          "type": "decimal"
+        },
+        "maker_fee": {
+          "isPercentage": true,
+          "max_value": 1,
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a percentage between 0 and 1",
+          "type": "decimal"
+        },
+        "market": { "optional": false, "type": "string" },
+        "order_size": {
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter the size of your order",
+          "type": "decimal"
+        },
+        "risk_aversion": {
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter your risk aversion",
+          "type": "decimal"
+        },
+        "strategy_id": {
+          "optional": false,
+          "placeholder": "Enter a unique strategy id",
+          "type": "string"
+        },
+        "taker_fee": {
+          "isPercentage": true,
+          "max_value": 1,
+          "min_value": 0,
+          "optional": false,
+          "placeholder": "Enter a percentage between 0 and 1",
+          "type": "decimal"
+        },
+        "trading_frequency": {
+          "min_value": 1,
+          "optional": false,
+          "placeholder": "Enter your trading frequency in seconds",
+          "type": "decimal"
+        }
+      },
+      "strategy_type": "AvellanedaStrategy"
+    }
+  ]
+}

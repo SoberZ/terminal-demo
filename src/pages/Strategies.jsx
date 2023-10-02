@@ -14,6 +14,9 @@ import { StrategiesService, UserService, StateService } from '../services'
 
 import { useWindowSize } from '../hooks'
 import { statusColors } from '../utils/statusColors'
+import { set } from 'react-hook-form'
+
+import Strategiess from '../data/strategies/strategiesData.json'
 
 import Joyride from 'react-joyride'
 
@@ -116,78 +119,26 @@ const Strategies = () => {
 
   const favLoaded = useRef(false)
 
-  async function fetchAllRollingMetrics() {
-    const res = await StateService.getRollingMetrics()
-    let mapMetrics = {}
-    res.data.data.forEach((item) => (mapMetrics[item._id] = item.doc))
-    return mapMetrics
-  }
-
-  async function fetchStrategies() {
-    const fetchToast = toast.loading('Fetching strategies')
-
-    const res = await StrategiesService.getAll()
-    let serviceData = res.data
-
-    if (!serviceData) {
-      toast.error('Failed to fetch strategies', { id: fetchToast })
-      return
-    }
-
-    toast.success('Fetched all strategies', { id: fetchToast })
-
-    serviceData = serviceData.map((strategy) => ({
-      ...strategy,
-      pnl: '-',
-      realized_pnl: '-',
-    }))
-    setStrategies((_) => serviceData)
-    return serviceData
-  }
-
   useLayoutEffect(() => {
     toast.dismiss()
   }, [])
 
   useEffect(() => {
-    async function fetchFavorites() {
-      const fetchedFavorites = await UserService.getFavorites(username)
-      if (fetchedFavorites) {
-        setFavoriteStrategies(fetchedFavorites)
-      }
-    }
-    fetchFavorites()
+    setStrategies(() => Strategiess.data.data)
+
+    // async function fetchFavorites() {
+    //   const fetchedFavorites = await UserService.getFavorites(username)
+    //   if (fetchedFavorites) {
+    //     setFavoriteStrategies(fetchedFavorites)
+    //   }
+    // }
+    // fetchFavorites()
 
     if (state !== null) {
       if (state.isDeleted === true) {
         toast.success('Successfully deleted strategy')
       }
     }
-    async function fetchData() {
-      const fetchToast = toast.loading('Fetching Pnls')
-
-      let serviceData = await fetchStrategies()
-
-      let resMetrics = await fetchAllRollingMetrics()
-
-      serviceData = serviceData.map((item) => ({
-        ...item,
-        pnl: resMetrics[item.strategy_id]
-          ? `${resMetrics[item.strategy_id].total_pnl.toFixed(2)} ${
-              item.market.split('/')[1]
-            }`
-          : '-',
-        realized_pnl: resMetrics[item.strategy_id]
-          ? `${resMetrics[item.strategy_id].realized_pnl.toFixed(2)} ${
-              item.market.split('/')[1]
-            }`
-          : '-',
-      }))
-      setStrategies((_) => serviceData)
-
-      toast.success('Fetched all Pnls', { id: fetchToast })
-    }
-    fetchData()
   }, [])
 
   useEffect(() => {
