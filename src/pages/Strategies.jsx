@@ -52,7 +52,7 @@ const Strategies = () => {
   const [favoriteStrategies, setFavoriteStrategies] = useState([])
 
   const [{ run, steps }, setState] = useState({
-    run: true,
+    run: false,
     steps: [
       {
         content: <h2>Let's begin our journey!</h2>,

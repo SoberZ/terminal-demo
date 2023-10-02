@@ -37,7 +37,7 @@ const PrimaryChart = ({ id, metricsData, metricsTime, className }) => {
       },
       yaxis: {
         forceNiceScale: true,
-        decimalsInFloat: 2,
+        // decimalsInFloat: 2,
         axisBorder: {
           show: false,
         },
@@ -144,7 +144,7 @@ const PrimaryChart = ({ id, metricsData, metricsTime, className }) => {
   const data = useMemo(() => {
     if (metricsData.length > 0 && metricsTime.length > 0) {
       const dateTime = metricsTime.map((item) => new Date(item).getTime())
-      const chartData = metricsData[0].data.map((item) => item?.toFixed(4))
+      const chartData = metricsData[0].data.map((item) => item)
       return dateTime.map((time, index) => [time, Number(chartData[index])])
     }
     return []
