@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { toast } from 'react-hot-toast'
 import { Controller, useForm } from 'react-hook-form'
 
-import { InputText } from 'primereact/inputtext'
 import { Checkbox } from 'primereact/checkbox'
 import { confirmDialog } from 'primereact/confirmdialog'
 
@@ -10,6 +9,29 @@ import { Accordion, AccordionTab } from 'primereact/accordion'
 
 import { StrategiesService } from '../../services'
 import { useWindowSize } from '../../hooks'
+
+const allowedValueTypes = ['integer', 'decimal', 'boolean']
+
+const strategyType = {
+  'spread-algo': 'SpreadStrategy',
+  'depth-algo': 'DepthStrategy',
+  'generic-algo': 'GenericStrategy',
+  'demo-streaming-algo': 'DemoStreamingStrategy',
+  VolumeStrategy: 'VolumeStrategy',
+  MatrixStrategy: 'MatrixStrategy',
+  AvellanedaStrategy: 'AvellanedaStrategy',
+}
+
+function filterParamsKeys(params) {
+  const filteredKeys = Object.keys(params).filter((key) => {
+    const valueType = params[key].type
+    return allowedValueTypes.includes(valueType)
+  })
+  return filteredKeys.reduce((filteredParams, key) => {
+    filteredParams[key] = params[key]
+    return filteredParams
+  }, {})
+}
 
 async function fetchRequiredParams(setFetchedData) {
   try {
@@ -31,11 +53,13 @@ export default function EditStrategyComponent({
   editMode,
   setEditMode,
 }) {
-  const { handleSubmit, control, reset } = useForm({
+  const { handleSubmit, control, reset, formState } = useForm({
     shouldUnregister: true,
   })
 
   const [strategy, setStrategy] = useState(strategyData)
+  const [requiredParams, setRequiredParams] = useState([])
+  const [params, setParams] = useState({})
 
   const { width } = useWindowSize()
 
@@ -54,7 +78,6 @@ export default function EditStrategyComponent({
       icon: 'pi pi-exclamation-triangle',
       accept: async () => {
         // Send data to backend
-        const res = await StrategiesService.modifyStrategy(data)
 
         if (res.status !== 200) {
           toast.error(res.response.data.message)
@@ -63,7 +86,9 @@ export default function EditStrategyComponent({
         }
         setEditMode(() => !editMode)
       },
-      reject: () => {},
+      reject: () => {
+        reset(strategyData)
+      },
     })
   }
   const filteredStrategyData = Object.keys(strategyData)
@@ -88,10 +113,10 @@ export default function EditStrategyComponent({
   const sortedData = Object.entries(strategy)
     .sort(([keyA, valueA], [keyB, valueB]) => {
       if (typeof valueA === 'boolean' && keyA !== 'key' && keyA !== 'err_msg') {
-        return -1
+        return 1
       }
       if (typeof valueB === 'boolean' && keyB !== 'key' && keyB !== 'err_msg') {
-        return 1
+        return -1
       }
       return 0
     })
@@ -105,10 +130,20 @@ export default function EditStrategyComponent({
       setStrategy(filteredStrategyData)
     }
     reset(strategyData)
+
+    fetchRequiredParams(setRequiredParams)
+    const filteredParams = requiredParams?.filter((param) => {
+      return param.strategy_type === strategyType[strategyData.type]
+    })
+
+    filteredParams.map((strategy) => {
+      const filteredParams = filterParamsKeys(strategy.params)
+      setParams(filteredParams)
+    })
   }, [strategyData, reset])
 
   return (
-    <div>
+    <>
       {width < 768 ? (
         <Accordion activeIndex={0}>
           <AccordionTab header="Strategy Parameters">
@@ -170,11 +205,25 @@ export default function EditStrategyComponent({
                                 }
                                 `}>
                                   <input
-                                    disabled={field.name == 'pid' || editMode}
-                                    inputMode="decimal"
                                     id={field.name}
                                     value={strategy[key]}
+                                    disabled={field.name == 'pid' || editMode}
+                                    inputMode={params[key]?.type}
+                                    type={
+                                      params[key]?.type === 'integer'
+                                        ? 'number'
+                                        : params[key]?.type === 'decimal'
+                                        ? 'number'
+                                        : 'text'
+                                    }
                                     {...field}
+                                    min={params[key]?.min_value}
+                                    max={params[key]?.max_value}
+                                    step={
+                                      params[key]?.type === 'decimal'
+                                        ? 'any'
+                                        : null
+                                    }
                                     placeholder={
                                       keyFormatted.charAt(0).toUpperCase() +
                                       keyFormatted.slice(1)
@@ -206,13 +255,13 @@ export default function EditStrategyComponent({
         <form
           onSubmit={handleSubmit(submitEdit)}
           id="editForm"
-          className="grid items-center justify-items-start gap-x-4 gap-y-5 lg:grid-cols-2 xl:grid-cols-4 ">
+          className="automaticGridInputs grid w-full grid-cols-2 items-center gap-x-4 gap-y-5">
           {strategy.active_status !== '-' &&
             Object.entries(sortedData).map(([key, value]) => {
               let keyFormatted = key.replace(/\_/g, ' ')
               return (
                 <div
-                  className={`flex items-center justify-center gap-5 `}
+                  // className={`flex items-center justify-center gap-5 `}
                   key={keyFormatted}>
                   <div>
                     {typeof value === 'boolean' &&
@@ -222,7 +271,7 @@ export default function EditStrategyComponent({
                         <p
                           className={` ${
                             editMode
-                              ? '!text-black/40 dark:border-neutral-800 dark:bg-color-secondary dark:!text-white/40'
+                              ? 'mb-1 !text-black/40 dark:border-neutral-800 dark:bg-color-secondary dark:!text-white/40'
                               : ''
                           } text-xs font-semibold`}>
                           {keyFormatted.charAt(0).toUpperCase() +
@@ -263,11 +312,23 @@ export default function EditStrategyComponent({
                             }
                             `}>
                               <input
-                                disabled={field.name == 'pid' || editMode}
-                                inputMode="decimal"
                                 id={field.name}
                                 value={strategy[key]}
+                                disabled={field.name == 'pid' || editMode}
+                                inputMode={params[key]?.type}
+                                type={
+                                  params[key]?.type === 'integer'
+                                    ? 'number'
+                                    : params[key]?.type === 'decimal'
+                                    ? 'number'
+                                    : 'text'
+                                }
                                 {...field}
+                                min={params[key]?.min_value}
+                                max={params[key]?.max_value}
+                                step={
+                                  params[key]?.type === 'decimal' ? 'any' : null
+                                }
                                 placeholder={
                                   keyFormatted.charAt(0).toUpperCase() +
                                   keyFormatted.slice(1)
@@ -279,7 +340,7 @@ export default function EditStrategyComponent({
                                 } peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0`}
                               />
                               <span
-                                className={`  pointer-events-none absolute left-2.5 top-0 -translate-y-1/2 bg-color-secondary p-0.5 text-xs transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs `}>
+                                className={`pointer-events-none absolute left-2.5 top-0 -translate-y-1/2 bg-color-secondary p-0.5 text-xs transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs `}>
                                 {keyFormatted.charAt(0).toUpperCase() +
                                   keyFormatted.slice(1)}
                               </span>
@@ -294,6 +355,6 @@ export default function EditStrategyComponent({
             })}
         </form>
       )}
-    </div>
+    </>
   )
 }

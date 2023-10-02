@@ -37,8 +37,9 @@ const Layout = () => {
   }
 
   return (
-    <div className="w-full bg-gray-50 dark:bg-dark-1st">
+    <div className="w-full bg-gray-50  dark:bg-dark-1st">
       <ClientProvider />
+
       <div className="flex bg-gray-50 dark:bg-dark-1st ">
         {(width > 768 && width < 1270) ||
         (width > 1270 && !location.pathname.match(/\/$/)) ? (
@@ -48,9 +49,9 @@ const Layout = () => {
         ) : null}
 
         <div
-          className={`w-screen px-2 md:py-5 md:px-5 h-screen overflow-y-scroll`}>
+          className={`h-screen w-screen overflow-y-scroll px-2 md:py-5 md:px-5`}>
           <div
-            className={`flex my-5 px-2 justify-between items-center md:my-0 ${
+            className={`my-5 flex items-center justify-between px-2 md:my-0 ${
               width > 768 ? 'md:justify-end' : ''
             }`}>
             <div>

@@ -36,9 +36,9 @@ const CompactSidebar = ({ themeState }) => {
                   onClick={handleClick(index)}
                   className={`flex flex-wrap items-center justify-center ${
                     selected === index + 1
-                      ? 'bg-color-secondary fill-blue-500 font-normal text-blue-500 shadow-soft-xl dark:fill-white dark:text-white'
+                      ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                       : ''
-                  } tooltip rounded-xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-blue-500 hover:text-blue-500 hover:shadow-soft-xl `}>
+                  } tooltip rounded-xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
                   <route.component width="1.5rem" height="1.5rem" />
                 </Link>
               )
@@ -50,9 +50,9 @@ const CompactSidebar = ({ themeState }) => {
                 onClick={handleClick(4)}
                 className={`flex flex-wrap items-center justify-center ${
                   selected === 4
-                    ? 'bg-color-secondary fill-blue-500 font-normal text-blue-500 shadow-soft-xl dark:fill-white dark:text-white'
+                    ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                     : ''
-                } tooltip rounded-xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-blue-500 hover:text-blue-500 hover:shadow-soft-xl `}>
+                } tooltip rounded-xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
                 <UsersIcon width="1.5rem" height="1.5rem" />
               </Link>
             )}
@@ -60,7 +60,7 @@ const CompactSidebar = ({ themeState }) => {
               data-pr-tooltip={`Log out ${UserService.getUsername()}`}
               className={`flex flex-wrap items-center justify-center ${
                 selected === 6
-                  ? 'bg-color-secondary fill-blue-500 font-normal text-blue-500 shadow-soft-xl dark:fill-white dark:text-white'
+                  ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                   : ''
               } tooltip !my-10 rounded-xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:text-red-400 hover:shadow-soft-xl`}
               onClick={() => {

@@ -13,12 +13,12 @@ module.exports = {
     },
     extend: {
       colors: {
-        'autowhale-blue': '#176dd2',
+        'autowhale-blue': '#4432e2',
         'color-secondary': 'rgb(var(--text-color-secondary) / <alpha-value>)',
         'color-tertiary': 'rgb(var(--text-color-tertiary) / <alpha-value>)',
       },
       backgroundColor: {
-        'autowhale-blue': '#176dd2',
+        'autowhale-blue': '#4432e2',
         'dark-1st': '#171717',
         'dark-2nd': '#1d1d1d',
         'color-primary': 'rgb(var(--bg-color-primary) / <alpha-value>)',

@@ -37,6 +37,7 @@ function useLocalStorage(key, initialValue) {
       setStoredValue(valueToStore)
       if (typeof window !== 'undefined') {
         window.localStorage.setItem(key, JSON.stringify(valueToStore))
+        window.dispatchEvent(new Event('storage'))
       }
     } catch (error) {
       return error

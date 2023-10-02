@@ -34,7 +34,7 @@ const Tile = ({ data, title, description, fontSize, dashboard, redirect }) => {
     ) : (
       <div
         onClick={() => navigate(redirect)}
-        className={`flex h-full flex-col items-center justify-center rounded-lg border border-gray-50 bg-color-secondary p-5 shadow-md  dark:border-neutral-800 dark:shadow-soft-xl ${
+        className={`flex flex-col items-center justify-center rounded-lg border border-gray-50 bg-color-secondary p-5 shadow-md dark:border-neutral-800 dark:shadow-soft-xl ${
           redirect && 'hover:cursor-pointer'
         } ${dashboard ? 'dark:bg-dark-2nd' : 'dark:bg-[#111111]'} `}>
         <h1
@@ -53,11 +53,11 @@ const Tile = ({ data, title, description, fontSize, dashboard, redirect }) => {
     )
   ) : (
     <div
-      className={`flex flex-col items-center justify-center rounded-lg border border-gray-50 bg-white p-5 shadow-soft-xl dark:border-neutral-800 dark:bg-[#111111] `}>
+      className={`flex flex-col items-center justify-center rounded-lg border border-gray-50 bg-white p-5 shadow-soft-xl dark:border-neutral-700 dark:bg-color-primary `}>
       <h1
         className={`text-center font-bold ${
           fontSize ?? 'text-xl md:text-3xl'
-        } text-primary mb-1 break-all dark:text-white md:mb-3 md:break-normal md:break-words`}>
+        } text-primary mb-1 break-all dark:text-white md:mb-3 xl:break-normal xl:break-words`}>
         {data ? commaSeparator(data) : data ?? 0}
       </h1>
       <h2 className="break-words text-center text-xs font-semibold text-color-secondary md:text-sm">

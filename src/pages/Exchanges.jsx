@@ -66,9 +66,9 @@ const Exchanges = () => {
 
     // const res = await ExchangesService.getAll()
     // if (res.status === 200) {
-      console.log(Exchangess)
-      setExchangeAccounts(Exchangess)
-      toast.success('Fetched all exchange accounts', { id: fetchToast })
+    console.log(Exchangess)
+    setExchangeAccounts(Exchangess)
+    toast.success('Fetched all exchange accounts', { id: fetchToast })
     // } else {
     //   toast.error("Couldn't fetch exchange accounts", { id: fetchToast })
     // }
@@ -152,17 +152,15 @@ const Exchanges = () => {
 
   return (
     <div className="space-y-10">
-      {UserService.hasRole(['trader']) && (
-        <TerminalButton>
-          <Link to="/exchanges/create">
-            <h1 className="text-sm font-semibold text-white">
-              Create Exchange Account
-            </h1>
-          </Link>
-        </TerminalButton>
-      )}
+      <TerminalButton>
+        <Link to="/exchanges/create">
+          <h1 className="text-sm font-semibold text-white">
+            Create Exchange Account
+          </h1>
+        </Link>
+      </TerminalButton>
 
-      <div className="p-5 space-y-5 rounded-lg bg-color-secondary text-color-secondary dark:border dark:border-neutral-800 shadow-soft-lg">
+      <div className="space-y-5 rounded-lg bg-color-secondary p-5 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
         <p className="text-sm font-light ">
           Find on overview of all exchange accounts in the system. By clicking
           on an individual account you can pause or restart exchange accounts
@@ -173,7 +171,7 @@ const Exchanges = () => {
           paused or stopped will restart as well.
         </p>
         <InputText
-          className="h-10 w-full md:w-1/3 border-[#757575] text-black dark:bg-color-secondary dark:text-white"
+          className="h-10 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 md:w-1/3"
           placeholder="Global search for a exchange account (status, exchange, account, etc.)"
           value={globalFilterValue}
           onChange={onGlobalFilterChange}

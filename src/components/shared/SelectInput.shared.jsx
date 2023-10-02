@@ -1,13 +1,14 @@
 import Select from 'react-select'
+import { twMerge } from 'tailwind-merge'
 
-const SelectInput = ({ options, value, handler }) => {
+const SelectInput = ({ options, value, handler, className }) => {
   const handleChange = (selectedOption) => {
     handler(selectedOption, value)
   }
 
   return (
     <Select
-      className="dark:highlighter cursor-pointer"
+      className={twMerge('dark:highlighter cursor-pointer', className)}
       classNames={{
         control: () => 'dark:bg-color-secondary dark:text-white',
         menuList: () => 'dark:bg-color-secondary dark:text-white',

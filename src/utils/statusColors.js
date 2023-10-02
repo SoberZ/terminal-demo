@@ -1,7 +1,7 @@
 const green = '#22C55E'
 const red = '#EF4444'
 const orange = '#F59E0B'
-const blue = '#6366F1'
+const blue = '#4432e2'
 
 export const statusColors = {
   //strategies
