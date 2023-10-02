@@ -13,6 +13,8 @@ import Orders from './strategies/Orders.comp'
 import AllOrders from './dashboard/AllOrders.comp'
 import AllTrades from './dashboard/AllTrades.comp'
 import EditStrategy from './strategies/EditStrategy.comp'
+import PrimaryChart from './shared/PrimaryChart.shared'
+import MinionChart from './shared/MinionChart.shared'
 
 //? Shared Components
 import LineChart from './shared/LineChart.shared'
@@ -47,4 +49,6 @@ export {
   HamburgerSidebar,
   ThemeToggler,
   EditModal,
+  PrimaryChart,
+  MinionChart,
 }

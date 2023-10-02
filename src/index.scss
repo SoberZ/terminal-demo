@@ -26,7 +26,7 @@
     --border-color: #292929;
     --highlight-color-hover: #deebff;
     --sb-track-color: #ffffff;
-    --sb-thumb-color: #176dd2;
+    --sb-thumb-color: #4432e2;
   }
   // it's not regestreing the colorscheme
   :root[data-theme='dark'] {
@@ -53,8 +53,8 @@ body {
 }
 
 :root {
-  --autowhale-blue: #176dd2;
-  --highlight-text-color: #176dd2 !important;
+  --autowhale-blue: #4432e2;
+  --highlight-text-color: #4432e2 !important;
   --primary-color: var(--autowhale-blue) !important;
   --sb-size: 7px;
 
@@ -63,6 +63,7 @@ body {
 
 ::-webkit-scrollbar {
   width: var(--sb-size);
+  height: var(--sb-size);
 }
 
 ::-webkit-scrollbar-track {
@@ -118,7 +119,7 @@ tr:hover {
 }
 
 .p-sortable-column:focus {
-  box-shadow: 0 0 0 0.2rem #3a91f4d8 !important;
+  box-shadow: 0 0 0 0.2rem #4432e2d8 !important;
   border: 0;
 }
 
@@ -132,7 +133,7 @@ tr:hover {
 }
 
 .p-checkbox-box.p-focus {
-  box-shadow: 0 0 0 0.1rem #3a91f4d8 !important;
+  box-shadow: 0 0 0 0.1rem #4432e2d8 !important;
   border-color: var(--autowhale-blue) !important;
 }
 
@@ -143,18 +144,18 @@ tr:hover {
 .p-button:enabled:hover {
   background: var(--autowhale-blue);
   border: 1px solid var(--autowhale-blue);
-  box-shadow: 0 0 0 0.1rem #3a91f4d8 !important;
+  box-shadow: 0 0 0 0.1rem #4432e2d8 !important;
 }
 
 @layer components {
   .text-primary {
-    @apply bg-gradient-to-r from-blue-900 to-blue-500 bg-clip-text text-transparent;
+    color: #4432e2;
   }
   .btn-primary {
-    @apply bg-gradient-to-r from-blue-900 to-blue-500 text-white;
+    background-color: #4432e2;
   }
   .btn-primary-dark {
-    @apply bg-gradient-to-r from-blue-900 to-blue-400 text-white;
+    background-color: #4432e2;
   }
 }
 
@@ -276,7 +277,33 @@ tr:hover {
   background-color: rgb(var(--bg-color-secondary)) !important;
   color: rgb(var(--text-color-secondary)) !important;
 }
-.react-joyride__overlay {
-  mix-blend-mode: overlay;
-  overflow: auto;
+
+.automaticGridTiles {
+  grid-template-columns: repeat(auto-fill, minmax(min(237px), 1fr));
+}
+.automaticGridInputs {
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.apexcharts-tooltip-marker {
+  background: var(--autowhale-blue) !important;
+}
+
+.apexcharts-menu-icon,
+.apexcharts-pan-icon,
+.apexcharts-reset-icon,
+.apexcharts-selection-icon,
+.apexcharts-toolbar-custom-icon,
+.apexcharts-zoom-icon,
+.apexcharts-zoomin-icon,
+.apexcharts-zoomout-icon {
+  color: var(--autowhale-blue) !important;
+}
+.apexcharts-pan-icon.apexcharts-selected svg {
+  stroke: var(--autowhale-blue) !important;
+}
+.apexcharts-canvas .apexcharts-reset-zoom-icon.apexcharts-selected svg,
+.apexcharts-canvas .apexcharts-selection-icon.apexcharts-selected svg,
+.apexcharts-canvas .apexcharts-zoom-icon.apexcharts-selected svg {
+  fill: var(--autowhale-blue) !important;
 }

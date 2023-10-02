@@ -205,17 +205,13 @@ const Cachers = () => {
   //? these are the filter options for the status column
   return (
     <div className="space-y-10">
-      {UserService.hasRole(['trader']) && (
-        <TerminalButton styles="ml-2 md:ml-0">
-          <Link to="/cachers/create">
-            <h1 className="text-sm font-semibold text-white">
-              Register a new Cacher
-            </h1>
-          </Link>
-        </TerminalButton>
-      )}
+      <TerminalButton styles="ml-2 md:ml-0">
+        <h1 className="text-sm font-semibold text-white">
+          Register a new Cacher
+        </h1>
+      </TerminalButton>
 
-      <div className="w-full p-5 space-y-5 rounded-lg bg-color-secondary text-color-secondary dark:border dark:border-neutral-800 shadow-soft-lg">
+      <div className="w-full space-y-5 rounded-lg bg-color-secondary p-5 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
         <p className="text-sm font-light">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque quae
           repudiandae, sint officiis molestiae possimus nesciunt quos in autem
@@ -223,17 +219,17 @@ const Cachers = () => {
         </p>
         <div className="flex items-center justify-between">
           <InputText
-            className="h-10 w-full md:w-1/3 border-[#757575] text-black dark:bg-color-secondary dark:text-white"
+            className="h-10 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 md:w-1/3"
             placeholder="Global search for a cacher (status, endpoint, market, etc.)"
             value={globalFilterValue}
             onChange={onGlobalFilterChange}
           />
           <button className="mx-2" onClick={handleRefresh}>
-            <i className="text-xl pi pi-refresh"></i>
+            <i className="pi pi-refresh text-xl"></i>
           </button>
         </div>
         {cachers ? (
-          <div className="!text-xs !md:text-base">
+          <div className="!md:text-base !text-xs">
             <DataTable
               value={cachers}
               filters={filters}
@@ -261,7 +257,7 @@ const Cachers = () => {
                 field="name"
                 header="Name"
                 frozen
-                className="min-w-[8rem] md:min-w-[15rem] lg:min-w-[18rem] shadow-[5px_0px_5px_#00000022] xl:shadow-none break-all"
+                className="min-w-[8rem] break-all shadow-[5px_0px_5px_#00000022] md:min-w-[15rem] lg:min-w-[18rem] xl:shadow-none"
               />
               <Column
                 sortable
@@ -303,7 +299,7 @@ const Cachers = () => {
                 showFilterOperator={false}
                 filterElement={endpointFilterTemplate}
                 filterMatchModeOptions={endpointsFilterOptions}
-                className="min-w-[9rem] lg:min-w-[10rem] break-words"
+                className="min-w-[9rem] break-words lg:min-w-[10rem]"
               />
               <Column
                 sortable
@@ -351,17 +347,6 @@ const Cachers = () => {
                   )
                 }}
               />
-              {/* <Column
-                style={{ fontSize: '0.9rem' }}
-                body={(cacher) => {
-                  return (
-                    <i
-                      onClick={() => handleDelete(cacher)}
-                      className="pi pi-times-circle"
-                      style={{ color: 'red' }}></i>
-                  )
-                }}
-              /> */}
             </DataTable>
           </div>
         ) : (

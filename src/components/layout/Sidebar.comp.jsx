@@ -25,9 +25,9 @@ const Sidebar = ({ themeState }) => {
                   key={index + 1}
                   className={`${
                     selected === index + 1
-                      ? 'bg-color-secondary fill-blue-500 font-normal text-blue-500 shadow-soft-xl dark:fill-white dark:text-white'
+                      ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                       : ''
-                  } rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-blue-500 hover:text-blue-500 hover:shadow-soft-xl `}>
+                  } rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
                   <Link
                     to={route.path}
                     className="flex flex-wrap items-center justify-center"
@@ -42,9 +42,9 @@ const Sidebar = ({ themeState }) => {
               <li
                 className={`${
                   selected === 4
-                    ? 'bg-color-secondary fill-blue-500 font-normal text-blue-500 shadow-soft-xl dark:fill-white dark:text-white'
+                    ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                     : ''
-                } rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-blue-500 hover:text-blue-500 hover:shadow-soft-xl `}>
+                } rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
                 <Link
                   to="/users"
                   className="flex flex-wrap items-center justify-center"
@@ -57,7 +57,7 @@ const Sidebar = ({ themeState }) => {
             <li
               className={`${
                 selected === 5
-                  ? 'bg-color-secondary fill-blue-500 font-normal text-blue-500 shadow-soft-xl dark:fill-white dark:text-white'
+                  ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                   : ''
               } !my-10 rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:text-red-400 hover:shadow-soft-xl`}
               onClick={handleClick(5)}>

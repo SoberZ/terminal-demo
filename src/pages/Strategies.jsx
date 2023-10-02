@@ -347,7 +347,7 @@ const Strategies = () => {
   })
 
   return (
-    <div className="flex flex-col space-y-10">
+    <>
       <Joyride
         callback={() => {}}
         continuous
@@ -366,7 +366,7 @@ const Strategies = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
-      {UserService.hasRole(['trader']) && (
+      <div className="flex flex-col space-y-10">
         <TerminalButton styles="ml-2 md:ml-0">
           <Link to="/strategies/create">
             <h1 className="text-sm font-semibold text-white">
@@ -374,152 +374,156 @@ const Strategies = () => {
             </h1>
           </Link>
         </TerminalButton>
-      )}
 
-      <div
-        id="step-0"
-        className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
-        <div>
-          <p className="text-sm font-light">
-            Find an overview over all strategies in the system here. It gives a
-            compact overview of which pairs and exchange accounts the strategies
-            are running on as well as their respective 24h PnL, status and
-            whether it’s a demo strategy. To create a new strategy the “Create
-            new strategy” button will direct to the corresponding form. Note
-            that only traders can create or modify strategies.
-          </p>
+        <div
+          id="step-0"
+          className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
+          <div>
+            <p className="text-sm font-light">
+              Find an overview over all strategies in the system here. It gives
+              a compact overview of which pairs and exchange accounts the
+              strategies are running on as well as their respective 24h PnL,
+              status and whether it’s a demo strategy. To create a new strategy
+              the “Create new strategy” button will direct to the corresponding
+              form. Note that only traders can create or modify strategies.
+            </p>
+          </div>
+          <InputText
+            className="h-10 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 md:w-1/3"
+            placeholder="Search a strategy"
+            value={globalFilterValue}
+            onChange={onGlobalFilterChange}
+          />
+          <DataTable
+            value={sortedStrategies}
+            filters={filters}
+            paginator
+            breakpoint="0"
+            scrollable
+            paginatorTemplate={
+              width < 768
+                ? 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink'
+                : 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
+            }
+            sortField={'active_status'}
+            sortOrder={1}
+            rows={20}
+            rowsPerPageOptions={[20, 30, 40, 50]}
+            totalRecords={strategies.length}
+            className="text-[0.75rem]"
+            onRowClick={(e) => {
+              navigate(`/strategies/${e.data.strategy_id}`)
+            }}>
+            <Column
+              header=""
+              frozen
+              body={(data) => (
+                <button
+                  className="favorite-icon"
+                  onClick={() => toggleFavoriteStrategy(data.strategy_id)}>
+                  {favoriteStrategies.includes(data.strategy_id) ? (
+                    <i
+                      className="pi pi-star-fill color-gradient-to-r from-blue-900 to-blue-500 "
+                      style={{ fontSize: '1.4rem', color: '#c6a907' }}
+                    />
+                  ) : (
+                    <i
+                      className="pi pi-star "
+                      style={{ fontSize: '1.4rem', color: '#c6a907' }}
+                    />
+                  )}
+                </button>
+              )}
+              className="max-w-[3rem]"
+            />
+            <Column
+              sortable
+              field="strategy_id"
+              header="Strategy name"
+              frozen
+              className="min-w-[8rem] break-all shadow-[5px_0px_5px_#00000022] md:min-w-[15rem] lg:min-w-[18rem] xl:shadow-none"
+              body={(data) => (
+                <div className="flex flex-col">
+                  <Link to={`/strategies/${data.strategy_id}`} className="">
+                    <h1 className="text-sm font-semibold">
+                      {data.strategy_id}
+                    </h1>
+                  </Link>
+                </div>
+              )}
+            />
+            <Column
+              sortable
+              field="type"
+              header="Type"
+              filter
+              filterMatchModeOptions={equalsFilterOptions}
+              showFilterOperator={false}
+              filterElement={strategyTypesFilterTemplate}
+              className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+            />
+            <Column
+              sortable
+              field="market"
+              header="Market"
+              className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+            />
+            <Column
+              sortable
+              field="exchange_account_id"
+              header="Exchange account"
+              filter
+              filterMatchModeOptions={stringFilterOptions}
+              showFilterOperator={false}
+              className="min-w-[8rem] md:min-w-[10rem] lg:min-w-[14rem]"
+            />
+            <Column
+              sortable
+              field="pnl"
+              header="Total PnL"
+              className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+            />
+            <Column
+              sortable
+              field="realized_pnl"
+              header="Realized PnL"
+              className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+            />
+            <Column
+              sortable
+              field="is_demo_strategy"
+              header="Demo mode"
+              body={strategyDemoModeBodyTemplate}
+              style={{ minWidth: '7rem' }}
+              filter
+              filterMatchModeOptions={equalsFilterOptions}
+              showFilterOperator={false}
+              filterElement={demoModeFilterTemplate}
+            />
+            <Column
+              sortable
+              field="active_status"
+              header="Status"
+              filter
+              body={(strategy) => (
+                <Tag
+                  value={strategy.active_status}
+                  style={{
+                    backgroundColor: getSeverity(strategy.active_status),
+                  }}
+                  className="text-md"
+                />
+              )}
+              sortFunction={statusSortingFunction}
+              filterMatchModeOptions={equalsFilterOptions}
+              showFilterOperator={false}
+              filterElement={statusFilterTemplate}
+              className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+            />
+          </DataTable>
         </div>
-        <InputText
-          className="h-10 w-full border-[#757575] text-black dark:bg-color-secondary dark:text-white md:w-1/3"
-          placeholder="Search a strategy"
-          value={globalFilterValue}
-          onChange={onGlobalFilterChange}
-        />
-        <DataTable
-          value={sortedStrategies}
-          filters={filters}
-          paginator
-          breakpoint="0"
-          scrollable
-          paginatorTemplate={
-            width < 768
-              ? 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink'
-              : 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
-          }
-          sortField={'active_status'}
-          sortOrder={1}
-          rows={20}
-          rowsPerPageOptions={[20, 30, 40, 50]}
-          totalRecords={strategies.length}
-          className="text-[0.75rem]"
-          onRowClick={(e) => {
-            navigate(`/strategies/${e.data.strategy_id}`)
-          }}>
-          <Column
-            header=""
-            frozen
-            body={(data) => (
-              <button
-                className="favorite-icon"
-                onClick={() => toggleFavoriteStrategy(data.strategy_id)}>
-                {favoriteStrategies.includes(data.strategy_id) ? (
-                  <i
-                    className="pi pi-star-fill color-gradient-to-r from-blue-900 to-blue-500 "
-                    style={{ fontSize: '1.4rem', color: '#c6a907' }}
-                  />
-                ) : (
-                  <i
-                    className="pi pi-star "
-                    style={{ fontSize: '1.4rem', color: '#c6a907' }}
-                  />
-                )}
-              </button>
-            )}
-            className="max-w-[3rem]"
-          />
-          <Column
-            sortable
-            field="strategy_id"
-            header="Strategy name"
-            frozen
-            className="min-w-[8rem] break-all shadow-[5px_0px_5px_#00000022] md:min-w-[15rem] lg:min-w-[18rem] xl:shadow-none"
-            body={(data) => (
-              <div className="flex flex-col">
-                <Link to={`/strategies/${data.strategy_id}`} className="">
-                  <h1 className="text-sm font-semibold">{data.strategy_id}</h1>
-                </Link>
-              </div>
-            )}
-          />
-          <Column
-            sortable
-            field="type"
-            header="Type"
-            filter
-            filterMatchModeOptions={equalsFilterOptions}
-            showFilterOperator={false}
-            filterElement={strategyTypesFilterTemplate}
-            className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-          />
-          <Column
-            sortable
-            field="market"
-            header="Market"
-            className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-          />
-          <Column
-            sortable
-            field="exchange_account_id"
-            header="Exchange account"
-            filter
-            filterMatchModeOptions={stringFilterOptions}
-            showFilterOperator={false}
-            className="min-w-[8rem] md:min-w-[10rem] lg:min-w-[14rem]"
-          />
-          <Column
-            sortable
-            field="pnl"
-            header="Total PnL"
-            className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-          />
-          <Column
-            sortable
-            field="realized_pnl"
-            header="Realized PnL"
-            className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-          />
-          <Column
-            sortable
-            field="is_demo_strategy"
-            header="Demo mode"
-            body={strategyDemoModeBodyTemplate}
-            style={{ minWidth: '7rem' }}
-            filter
-            filterMatchModeOptions={equalsFilterOptions}
-            showFilterOperator={false}
-            filterElement={demoModeFilterTemplate}
-          />
-          <Column
-            sortable
-            field="active_status"
-            header="Status"
-            filter
-            body={(strategy) => (
-              <Tag
-                value={strategy.active_status}
-                style={{ backgroundColor: getSeverity(strategy.active_status) }}
-                className="text-md"
-              />
-            )}
-            sortFunction={statusSortingFunction}
-            filterMatchModeOptions={equalsFilterOptions}
-            showFilterOperator={false}
-            filterElement={statusFilterTemplate}
-            className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-          />
-        </DataTable>
       </div>
-    </div>
+    </>
   )
 }
 
