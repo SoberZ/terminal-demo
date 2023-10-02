@@ -276,3 +276,7 @@ tr:hover {
   background-color: rgb(var(--bg-color-secondary)) !important;
   color: rgb(var(--text-color-secondary)) !important;
 }
+.react-joyride__overlay {
+  mix-blend-mode: overlay;
+  overflow: auto;
+}

@@ -23,6 +23,7 @@
     "react-hook-form": "^7.42.1",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.10.1",
+    "react-joyride": "^2.5.5",
     "react-router-dom": "^6.6.1",
     "react-select": "^5.7.0",
     "react-toggle-dark-mode": "^1.1.1",

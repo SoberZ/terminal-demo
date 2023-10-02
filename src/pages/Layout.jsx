@@ -1,7 +1,8 @@
-import { useLayoutEffect, useEffect } from 'react'
+import { useLayoutEffect, useEffect, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 
+import Joyride from 'react-joyride'
 import {
   ClientProvider,
   Sidebar,
@@ -14,6 +15,42 @@ import { useDarkMode, useTime, useKeyPress, useWindowSize } from '../hooks'
 
 const Layout = () => {
   const [darkMode, setDarkMode] = useDarkMode()
+
+  const [{ run, steps }, setState] = useState({
+    run: true,
+    steps: [
+      {
+        content: <h2>Let's begin our journey!</h2>,
+        locale: { skip: <strong>SKIP</strong> },
+        placement: 'center',
+        target: 'body',
+      },
+      {
+        content: <h2>Here is first step!</h2>,
+        placement: 'bottom',
+        target: '#step-0',
+        title: 'First step',
+      },
+      {
+        content: <h2>Here is first step!</h2>,
+        placement: 'bottom',
+        target: '#step-1',
+        title: 'First step',
+      },
+      {
+        content: <h2>Here is first step!</h2>,
+        placement: 'bottom',
+        target: '#step-2',
+        title: 'First step',
+      },
+      {
+        content: <h2>Here is first step!</h2>,
+        placement: 'bottom',
+        target: '#step-3',
+        title: 'First step',
+      },
+    ],
+  })
 
   const shiftKey = useKeyPress('Shift')
   const letterDKey = useKeyPress('D')
@@ -37,8 +74,25 @@ const Layout = () => {
   }
 
   return (
-    <div className="w-full bg-gray-50 dark:bg-dark-1st">
+    <div className="w-full bg-gray-50  dark:bg-dark-1st">
       <ClientProvider />
+      <Joyride
+        continuous
+        callback={() => {}}
+        run={run}
+        steps={steps}
+        hideCloseButton
+        showSkipButton
+        showProgress
+        debug
+        // disableOverlay={true}
+        styles={{
+          options: {
+            overlayHeight: `100vh`,
+          },
+        }}
+        // styles={{ overlay: { height: '100%' } }}
+      />
       <div className="flex bg-gray-50 dark:bg-dark-1st ">
         {(width > 768 && width < 1270) ||
         (width > 1270 && !location.pathname.match(/\/$/)) ? (
@@ -48,9 +102,9 @@ const Layout = () => {
         ) : null}
 
         <div
-          className={`w-screen px-2 md:py-5 md:px-5 h-screen overflow-y-scroll`}>
+          className={`h-screen w-screen overflow-y-scroll px-2 md:py-5 md:px-5`}>
           <div
-            className={`flex my-5 px-2 justify-between items-center md:my-0 ${
+            className={`my-5 flex items-center justify-between px-2 md:my-0 ${
               width > 768 ? 'md:justify-end' : ''
             }`}>
             <div>
