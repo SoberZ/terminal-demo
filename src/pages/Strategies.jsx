@@ -15,6 +15,8 @@ import { StrategiesService, UserService, StateService } from '../services'
 import { useWindowSize } from '../hooks'
 import { statusColors } from '../utils/statusColors'
 
+import Joyride from 'react-joyride'
+
 //? these are the filter options for the status column
 export const getSeverity = (input) => {
   switch (input) {
@@ -48,6 +50,24 @@ export const getSeverity = (input) => {
 const Strategies = () => {
   const { width } = useWindowSize()
   const [favoriteStrategies, setFavoriteStrategies] = useState([])
+
+  const [{ run, steps }, setState] = useState({
+    run: true,
+    steps: [
+      {
+        content: <h2>Let's begin our journey!</h2>,
+        locale: { skip: <strong>SKIP</strong> },
+        placement: 'center',
+        target: 'body',
+      },
+      {
+        content: <h2>Here is first step!</h2>,
+        placement: 'bottom',
+        target: '#step-0',
+        title: 'First step',
+      },
+    ],
+  })
 
   const [strategies, setStrategies] = useState([])
   const [filters, setFilters] = useState({
@@ -328,6 +348,24 @@ const Strategies = () => {
 
   return (
     <div className="flex flex-col space-y-10">
+      <Joyride
+        callback={() => {}}
+        continuous
+        hideCloseButton
+        run={run}
+        scrollToFirstStep
+        showProgress
+        showSkipButton
+        steps={steps}
+        // disableOverlay={true}
+        styles={{
+          options: {
+            overlayHeight: `100vh`,
+            zIndex: 10000,
+          },
+        }}
+        // styles={{ overlay: { height: '100%' } }}
+      />
       {UserService.hasRole(['trader']) && (
         <TerminalButton styles="ml-2 md:ml-0">
           <Link to="/strategies/create">
@@ -338,7 +376,9 @@ const Strategies = () => {
         </TerminalButton>
       )}
 
-      <div className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
+      <div
+        id="step-0"
+        className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
         <div>
           <p className="text-sm font-light">
             Find an overview over all strategies in the system here. It gives a
