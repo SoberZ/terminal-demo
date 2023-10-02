@@ -268,7 +268,6 @@ const AllOrdersComponent = ({ records }) => {
         }
 
         Object.assign(filterDict, getFilterKeys(field, matchMode, value))
-        // console.log(filterDict)
       }
     }
     setIsLoading(true)
@@ -279,7 +278,7 @@ const AllOrdersComponent = ({ records }) => {
       constants.timeFrames.TEN_YEARS,
       filterDict
     )
-    // console.log(res)
+
     if (res.status == 200) {
       setOrdersData(res.data.data)
       setTotalRecords((_) => Number(res.data.total_results))

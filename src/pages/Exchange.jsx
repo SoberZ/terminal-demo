@@ -7,6 +7,9 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
 import { TerminalButton } from '../components'
 import { ExchangesService } from '../services'
 
+import ExchangeAccount from '../data/exchange/exchange.json'
+import Balances from '../data/exchange/balances.json'
+
 const Exchange = () => {
   const { exchangeId } = useParams()
   const [accountData, setAccountData] = useState(null)
@@ -19,15 +22,16 @@ const Exchange = () => {
       icon: 'pi pi-exclamation-triangle',
       accept: async () => {
         const handler = toast.loading('Pausing exchange account')
-        const res = await ExchangesService.removeAccount(exchangeId)
-        if (res.status === 200) {
+        setAccountData(prev => ({...prev, status: 'paused'}))
+        // const res = await ExchangesService.removeAccount(exchangeId)
+        // if (res.status === 200) {
           toast.success('Successfully paused exchange account', {
             id: handler,
           })
-          fetchExchangeAccount()
-        } else {
-          toast.error("Couldn't delete account", { id: handler })
-        }
+        //   fetchExchangeAccount()
+        // } else {
+        //   toast.error("Couldn't delete account", { id: handler })
+        // }
       },
       reject: () => {},
     })
@@ -40,18 +44,19 @@ const Exchange = () => {
       icon: 'pi pi-exclamation-triangle',
       accept: async () => {
         const handler = toast.loading('Restarting exchange account')
-        const res = await ExchangesService.restartExchangeAccount(exchangeId)
+        setAccountData(prev => ({...prev, status: 'active'}))
+        // const res = await ExchangesService.restartExchangeAccount(exchangeId)
 
-        if (res.status === 200) {
+        // if (res.status === 200) {
           toast.success('Restarted exchange account', {
             id: handler,
           })
-          fetchExchangeAccount()
-        } else {
-          toast.error("Couldn't restart exchange account", {
-            id: handler,
-          })
-        }
+        //   fetchExchangeAccount()
+        // } else {
+        //   toast.error("Couldn't restart exchange account", {
+        //     id: handler,
+        //   })
+        // }
       },
       reject: () => {},
     })
@@ -59,27 +64,31 @@ const Exchange = () => {
 
   async function fetchBalances() {
     const t = toast.loading('Fetching Account Balances')
-    const res = await ExchangesService.getBalance(exchangeId)
-    if (res.status === 200) {
-      if (res.data.data === null) {
-        toast.error('Authentication failed')
-      }
-      setBalances((_) => res.data.data)
+    setBalances((_) => Balances)
+    // const res = await ExchangesService.getBalance(exchangeId)
+    // if (res.status === 200) {
+    //   if (res.data.data === null) {
+    //     toast.error('Authentication failed')
+    //   }
+    //   setBalances((_) => res.data.data)
+      
       toast.success('Fetched Account Balances', { id: t })
-    } else {
-      toast.error("Couldn't fetch balances", { id: t })
-    }
+    // } else {
+    //   toast.error("Couldn't fetch balances", { id: t })
+    // }
   }
 
   async function fetchExchangeAccount() {
     if (!exchangeId) return
-    const res = await ExchangesService.getAccount(exchangeId)
+    setAccountData((_) => ExchangeAccount)
+    // const res = await ExchangesService.getAccount(exchangeId)
 
-    if (res.status === 200) {
-      setAccountData(res.data.data)
-    } else {
-      toast.error("Couldn't fetch exchange account")
-    }
+    // if (res.status === 200) {
+    //   setAccountData(res.data.data)
+      
+    // } else {
+    //   toast.error("Couldn't fetch exchange account")
+    // }
   }
 
   useEffect(() => {

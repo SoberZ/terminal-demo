@@ -15,6 +15,8 @@ import { ExchangesService, UserService } from '../services'
 import { useWindowSize } from '../hooks'
 import { statusColors } from '../utils/statusColors'
 
+import Exchangess from '../data/exchanges.json'
+
 export const getSeverity = (status) => {
   switch (status) {
     case 'running':
@@ -62,13 +64,14 @@ const Exchanges = () => {
   async function fetchExchangeAccounts() {
     const fetchToast = toast.loading('Fetching Exchanges')
 
-    const res = await ExchangesService.getAll()
-    if (res.status === 200) {
-      setExchangeAccounts(res.data.data)
+    // const res = await ExchangesService.getAll()
+    // if (res.status === 200) {
+      console.log(Exchangess)
+      setExchangeAccounts(Exchangess)
       toast.success('Fetched all exchange accounts', { id: fetchToast })
-    } else {
-      toast.error("Couldn't fetch exchange accounts", { id: fetchToast })
-    }
+    // } else {
+    //   toast.error("Couldn't fetch exchange accounts", { id: fetchToast })
+    // }
   }
 
   useEffect(() => {
