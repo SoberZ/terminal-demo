@@ -1,5 +1,7 @@
 import HttpService from './HttpService'
 
+import AllExchanges from '../data/createExchangeAccount/exchanges.json'
+
 const axiosInstance = HttpService.getAxiosClient()
 
 const ExchangesService = {
@@ -64,8 +66,9 @@ const ExchangesService = {
    */
   getExchanges: async function () {
     try {
-      const res = await axiosInstance.get('/data/market-data/get-all-exchanges')
-      return res
+      // const res = await axiosInstance.get('/data/market-data/get-all-exchanges')
+      // return res
+      return AllExchanges
     } catch (error) {
       return error
     }

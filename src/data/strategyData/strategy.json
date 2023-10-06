@@ -1,6 +1,5 @@
 {
     "active_status": "stop",
-    "err_msg": "2ND API CONN ERR\nCannot run the event loop while another loop is running\n",
     "exchange": "kucoin",
     "exchange_account_id": "kucoin_account",
     "order_distance": 0.004,

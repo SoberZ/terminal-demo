@@ -206,9 +206,11 @@ const Cachers = () => {
   return (
     <div className="space-y-10">
       <TerminalButton styles="ml-2 md:ml-0">
-        <h1 className="text-sm font-semibold text-white">
-          Register a new Cacher
-        </h1>
+        <Link to="/cachers/create">
+          <h1 className="text-sm font-semibold text-white">
+            Register a new Cacher
+          </h1>
+        </Link>
       </TerminalButton>
 
       <div className="w-full space-y-5 rounded-lg bg-color-secondary p-5 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">

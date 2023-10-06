@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { Select, TerminalButton } from '../components'
 import { registerCacher } from '../utils/Fetchers/CacherFetchers'
+import AllExchanges from '../data/exchange/exchange.json'
 
 const endpointOptions = [
   { label: 'Ticker', value: 'ticker' },
@@ -65,7 +66,8 @@ const RegisterCacher = () => {
 
   useEffect(() => {
     toast.dismiss()
-    fetchExchanges(setExchanges)
+    // fetchExchanges(setExchanges)
+    setExchanges(AllExchanges)
   }, [])
 
   useEffect(() => {
@@ -168,9 +170,9 @@ const RegisterCacher = () => {
     // //? grab cachers state
     let res = await registerCacher(cacherData)
 
-    if (res.status !== 200) {
-      toast.error('Cacher registration failed')
-    }
+    // if (res.status !== 200) {
+    //   toast.error('Cacher registration failed')
+    // }
   }
 
   return (

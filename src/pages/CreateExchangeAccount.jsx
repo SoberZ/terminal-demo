@@ -12,9 +12,9 @@ const ParamsField = ({ handleChange, id, paramName }) => {
   return (
     <div className="text-sm">
       <label className="font-semibold">{'Parameter'}</label>
-      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
+      <div className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
         <input
-          className="border p-inputtext border-gray-300 p-2.5 shadow-sm rounded-lg text-color-secondary"
+          className="p-inputtext rounded-lg border border-gray-300 p-2.5 text-color-secondary shadow-sm"
           placeholder={'Parameter Name'}
           name="paramName"
           {...(paramName && { value: paramName })}
@@ -23,7 +23,7 @@ const ParamsField = ({ handleChange, id, paramName }) => {
           required
         />
         <Password
-          className="border  border-gray-300 shadow-sm rounded-lg text-color-secondary"
+          className="rounded-lg  border border-gray-300 text-color-secondary shadow-sm"
           placeholder={'Parameter Value'}
           name="paramValue"
           data-index={id}
@@ -68,11 +68,11 @@ const CreateExchangeAccount = () => {
       postData['params'][item[0]] = item[1]
     })
 
-    const notif = toast.loading('Creating an exchange account')
+    // const notif = toast.loading('Creating an exchange account')
     const res = await ExchangesService.registerExchangeAccount(postData)
 
     if (res.isError) {
-      toast.error(res.message, { id: notif })
+      // toast.error(res.message, { id: notif })
     } else {
       toast.success('Exchange account created!', { id: notif })
       toast.loading('Redirecting to strategy page')
@@ -146,20 +146,14 @@ const CreateExchangeAccount = () => {
 
   // Fetch exchanges
   const fetchExchanges = async () => {
-    const t = toast.loading('Fetching exchanges')
     const res = await ExchangesService.getExchanges()
 
-    if (res.status === 200) {
-      setExchanges(
-        res.data.data.map((exchange) => ({
-          label: exchange.id,
-          value: exchange.id,
-        }))
-      )
-      toast.success('Successfully fetched Exchanges', { id: t })
-    } else {
-      toast.error("Couldn't fetch exchanges", { id: t })
-    }
+    setExchanges(
+      res.map((exchange) => ({
+        label: exchange.label,
+        value: exchange.value,
+      }))
+    )
   }
 
   useEffect(() => {
@@ -168,20 +162,20 @@ const CreateExchangeAccount = () => {
   }, [])
 
   return (
-    <div className="bg-color-secondary text-color-secondary dark:border dark:border-neutral-800 rounded-lg p-10 space-y-5 shadow-soft-lg">
-      <h1 className="text-2xl font-semibold text-primary dark:text-white inline-block text-transparent bg-clip-text">
+    <div className="space-y-5 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
+      <h1 className="text-primary inline-block bg-clip-text text-2xl font-semibold text-transparent dark:text-white">
         Create an exchange account
       </h1>
-      <p className="font-light text-sm">{`To register a new exchange account assign an ID and select the corresponding exchange from the dropdown. As each exchange may have different authentication parameters, you can add new params by clicking “add param” and input a key value pair such as <apiKey>:<XYZ>. Here is a list of frequently used exchanges and their params: \n`}</p>
+      <p className="text-sm font-light">{`To register a new exchange account assign an ID and select the corresponding exchange from the dropdown. As each exchange may have different authentication parameters, you can add new params by clicking “add param” and input a key value pair such as <apiKey>:<XYZ>. Here is a list of frequently used exchanges and their params: \n`}</p>
 
-      <ul className="font-light text-sm">
+      <ul className="text-sm font-light">
         <li>Kucoin: apiKey, secret, password</li>
         <li>Binance: apiKey, secret</li>
         <li>Gate (use gateio): apiKey, secret</li>
         <li>Bitmart: apiKey, secret, uid</li>
       </ul>
 
-      <p className="font-light text-sm">
+      <p className="text-sm font-light">
         Also note that when trying out a new exchange, test strategies in demo
         mode first and when starting live trading test with little capital to
         ensure proper functioning of the system as exchange endpoints and
@@ -191,7 +185,7 @@ const CreateExchangeAccount = () => {
 
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col md:w-[30rem] space-y-5">
+        className="flex flex-col space-y-5 md:w-[30rem]">
         <Input
           id="exchangeAccount"
           title="Exchange account id"
