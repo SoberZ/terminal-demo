@@ -155,9 +155,9 @@ const Strategy = () => {
   })
 
   useEffect(() => {
-    setChartData(()=>ChartData)
-    setFetchedData(()=>MetricData)
-    setStrategyData(()=>StrategyData)
+    setChartData(() => ChartData)
+    setFetchedData(() => MetricData)
+    setStrategyData(() => StrategyData)
     isLoaded.current = true
   }, [])
 
@@ -181,22 +181,8 @@ const Strategy = () => {
   }
   const handleSelect = async (select, valueKey) => {
     const handleToast = toast.loading('Fetching Grouped Charts')
-    const res = await getGroupedMetrics(strategyId, select.value)
-    if (res) {
-      const labels = res.map((item) => item.insertion_datetime)
-      const metrics = res.map((item) => item.metrics)
-      const data = metrics.map((item) => item[valueKey])
-
-      setChartData((prev) => ({
-        ...prev,
-        [`${valueKey}_labels`]: labels,
-        [valueKey]: [{ data: data, label: valueKey }],
-      }))
-      setLast24MetricsActive(true)
-      toast.success('Finished loading Grouped Charts', { id: handleToast })
-    } else if (res.status !== 200) {
-      toast.error(res.response.data.message, { id: handleToast })
-    }
+    setLast24MetricsActive(true)
+    toast.success('Finished loading Grouped Charts', { id: handleToast })
   }
 
   const handleSelectWrapper = (select) => {
@@ -288,7 +274,6 @@ const Strategy = () => {
             {`${strategyData?.market} - ${strategyData?.exchange}`}
           </h1>
         </div>
-
         {strategyData?.err_msg && (
           <div className="w-fit">
             <p className="font-semibold">Last error message</p>
@@ -300,7 +285,6 @@ const Strategy = () => {
             />
           </div>
         )}
-
         <div className="flex w-full justify-center md:justify-start">
           <div className="flex w-fit rounded-md border-2 leading-none shadow-soft-lg dark:border-neutral-800">
             <button
@@ -464,134 +448,134 @@ const Strategy = () => {
               </div>
               <Tooltip target=".tooltip" />
               {/* {UserService.hasRole(['trader']) && ( */}
-                <div className="flex flex-wrap justify-center gap-2 text-center">
-                  {editMode && (
-                    <TerminalButton
-                      data-pr-tooltip="Pauses the strategy and cancels all open orders in next iteration of the bot. Terminates after next iteration."
-                      data-pr-position="top"
-                      data-pr-my="center bottom-10"
-                      text={'Pause strategy'}
-                      styles={`w-full md:w-40 tooltip ${
-                        strategyData &&
-                        (strategyData['active_status'] === 'paused' ||
-                          strategyData['active_status'] === 'stopped' ||
-                          strategyData['active_status'] === 'pausing' ||
-                          strategyData['active_status'] === 'paused_err' ||
-                          strategyData['active_status'] === 'stop' ||
-                          strategyData['is_streaming_strategy'] === true)
-                          ? 'bg-neutral-500 dark:bg-neutral-800 pointer-events-none'
-                          : ''
-                      }`}
-                      onClick={() => handleSetStrategyStatus('pausing')}
-                    />
-                  )}
-
-                  {editMode && (
-                    <TerminalButton
-                      data-pr-tooltip="Starts the strategy after it’s stopped"
-                      data-pr-position="top"
-                      data-pr-my="center bottom-10"
-                      text={'Start strategy'}
-                      styles={`w-full sm:w-40 tooltip ${
-                        strategyData &&
-                        (strategyData['active_status'] === 'active' ||
-                          strategyData['active_status'] === 'new' ||
-                          strategyData['active_status'] === 'pausing' ||
-                          strategyData['active_status'] === 'stopped')
-                          ? 'bg-neutral-500 dark:bg-neutral-800 pointer-events-none'
-                          : ''
-                      }`}
-                      onClick={() => handleSetStrategyStatus('new')}
-                    />
-                  )}
-
-                  {editMode && (
-                    <TerminalButton
-                      text={'Continue strategy'}
-                      data-pr-tooltip="Starts the strategy again after it was paused"
-                      data-pr-position="top"
-                      data-pr-my="center bottom-10"
-                      styles={`w-full sm:w-40 tooltip ${
-                        strategyData &&
-                        (strategyData['active_status'] === 'active' ||
-                          strategyData['active_status'] === 'new' ||
-                          strategyData['active_status'] === 'stop' ||
-                          strategyData['active_status'] === 'pausing' ||
-                          strategyData['active_status'] === 'stopped' ||
-                          strategyData['is_streaming_strategy'] === true)
-                          ? 'bg-neutral-500 dark:bg-neutral-800 pointer-events-none'
-                          : ''
-                      } `}
-                      onClick={() => handleSetStrategyStatus('new')}
-                    />
-                  )}
-
+              <div className="flex flex-wrap justify-center gap-2 text-center">
+                {editMode && (
                   <TerminalButton
-                    data-pr-tooltip="Edit the strategy's parameters, editing is only possible in paused state"
+                    data-pr-tooltip="Pauses the strategy and cancels all open orders in next iteration of the bot. Terminates after next iteration."
                     data-pr-position="top"
                     data-pr-my="center bottom-10"
-                    text={editMode ? 'Edit strategy' : 'Save strategy'}
+                    text={'Pause strategy'}
+                    styles={`w-full md:w-40 tooltip ${
+                      strategyData &&
+                      (strategyData['active_status'] === 'paused' ||
+                        strategyData['active_status'] === 'stopped' ||
+                        strategyData['active_status'] === 'pausing' ||
+                        strategyData['active_status'] === 'paused_err' ||
+                        strategyData['active_status'] === 'stop' ||
+                        strategyData['is_streaming_strategy'] === true)
+                        ? 'bg-neutral-500 dark:bg-neutral-800 pointer-events-none'
+                        : ''
+                    }`}
+                    onClick={() => handleSetStrategyStatus('pausing')}
+                  />
+                )}
+
+                {editMode && (
+                  <TerminalButton
+                    data-pr-tooltip="Starts the strategy after it’s stopped"
+                    data-pr-position="top"
+                    data-pr-my="center bottom-10"
+                    text={'Start strategy'}
                     styles={`w-full sm:w-40 tooltip ${
-                      (strategyData &&
-                        strategyData['active_status'] === 'stopped') ||
-                      strategyData['active_status'] === 'active' ||
+                      strategyData &&
+                      (strategyData['active_status'] === 'active' ||
+                        strategyData['active_status'] === 'new' ||
+                        strategyData['active_status'] === 'pausing' ||
+                        strategyData['active_status'] === 'stopped')
+                        ? 'bg-neutral-500 dark:bg-neutral-800 pointer-events-none'
+                        : ''
+                    }`}
+                    onClick={() => handleSetStrategyStatus('new')}
+                  />
+                )}
+
+                {editMode && (
+                  <TerminalButton
+                    text={'Continue strategy'}
+                    data-pr-tooltip="Starts the strategy again after it was paused"
+                    data-pr-position="top"
+                    data-pr-my="center bottom-10"
+                    styles={`w-full sm:w-40 tooltip ${
+                      strategyData &&
+                      (strategyData['active_status'] === 'active' ||
+                        strategyData['active_status'] === 'new' ||
+                        strategyData['active_status'] === 'stop' ||
+                        strategyData['active_status'] === 'pausing' ||
+                        strategyData['active_status'] === 'stopped' ||
+                        strategyData['is_streaming_strategy'] === true)
+                        ? 'bg-neutral-500 dark:bg-neutral-800 pointer-events-none'
+                        : ''
+                    } `}
+                    onClick={() => handleSetStrategyStatus('new')}
+                  />
+                )}
+
+                <TerminalButton
+                  data-pr-tooltip="Edit the strategy's parameters, editing is only possible in paused state"
+                  data-pr-position="top"
+                  data-pr-my="center bottom-10"
+                  text={editMode ? 'Edit strategy' : 'Save strategy'}
+                  styles={`w-full sm:w-40 tooltip ${
+                    (strategyData &&
+                      strategyData['active_status'] === 'stopped') ||
+                    strategyData['active_status'] === 'active' ||
+                    strategyData['active_status'] === 'pausing' ||
+                    strategyData['active_status'] === 'new'
+                      ? 'bg-neutral-500 dark:bg-neutral-800 pointer-events-none'
+                      : ''
+                  }`}
+                  type="submit"
+                  form="editForm"
+                />
+
+                {!editMode && (
+                  <TerminalButton
+                    data-pr-tooltip="Cancel the strategy's changes"
+                    data-pr-position="top"
+                    data-pr-my="center bottom-10"
+                    text={'Cancel'}
+                    styles={`w-full sm:w-40 tooltip`}
+                    onClick={() => {
+                      setEditMode(!editMode)
+                      setResetForm(true)
+                    }}
+                  />
+                )}
+
+                {editMode && (
+                  <TerminalButton
+                    data-pr-tooltip="Pauses the strategy in the next iteration and archives it. Cannot be rerun again. Archive also works for strategies in STOP."
+                    data-pr-position="top"
+                    data-pr-my="center bottom-10"
+                    text={'Archive strategy'}
+                    styles={`w-full sm:w-40 tooltip ${
+                      strategyData['active_status'] === 'stopped' ||
                       strategyData['active_status'] === 'pausing' ||
+                      strategyData['active_status'] === 'active' ||
                       strategyData['active_status'] === 'new'
                         ? 'bg-neutral-500 dark:bg-neutral-800 pointer-events-none'
                         : ''
                     }`}
-                    type="submit"
-                    form="editForm"
+                    onClick={() => handleSetStrategyStatus('stopped')}
                   />
-
-                  {!editMode && (
-                    <TerminalButton
-                      data-pr-tooltip="Cancel the strategy's changes"
-                      data-pr-position="top"
-                      data-pr-my="center bottom-10"
-                      text={'Cancel'}
-                      styles={`w-full sm:w-40 tooltip`}
-                      onClick={() => {
-                        setEditMode(!editMode)
-                        setResetForm(true)
-                      }}
-                    />
-                  )}
-
-                  {editMode && (
-                    <TerminalButton
-                      data-pr-tooltip="Pauses the strategy in the next iteration and archives it. Cannot be rerun again. Archive also works for strategies in STOP."
-                      data-pr-position="top"
-                      data-pr-my="center bottom-10"
-                      text={'Archive strategy'}
-                      styles={`w-full sm:w-40 tooltip ${
-                        strategyData['active_status'] === 'stopped' ||
-                        strategyData['active_status'] === 'pausing' ||
-                        strategyData['active_status'] === 'active' ||
-                        strategyData['active_status'] === 'new'
-                          ? 'bg-neutral-500 dark:bg-neutral-800 pointer-events-none'
-                          : ''
-                      }`}
-                      onClick={() => handleSetStrategyStatus('stopped')}
-                    />
-                  )}
-                  {editMode && (
-                    <TerminalButton
-                      data-pr-tooltip="Stops the strategy and immediately cancels all open orders of the strategy; can be restarted"
-                      data-pr-position="top"
-                      data-pr-my="center bottom-10"
-                      text={'Stop strategy'}
-                      styles={`w-full sm:w-40 tooltip ${
-                        strategyData['active_status'] === 'paused' ||
-                        strategyData['active_status'] === 'stopped' ||
-                        strategyData['active_status'] === 'stop'
-                          ? 'bg-neutral-500 dark:bg-neutral-800 pointer-events-none'
-                          : ''
-                      }`}
-                      onClick={() => handleSetStrategyStatus('stop')}
-                    />
-                  )}
-                </div>
+                )}
+                {editMode && (
+                  <TerminalButton
+                    data-pr-tooltip="Stops the strategy and immediately cancels all open orders of the strategy; can be restarted"
+                    data-pr-position="top"
+                    data-pr-my="center bottom-10"
+                    text={'Stop strategy'}
+                    styles={`w-full sm:w-40 tooltip ${
+                      strategyData['active_status'] === 'paused' ||
+                      strategyData['active_status'] === 'stopped' ||
+                      strategyData['active_status'] === 'stop'
+                        ? 'bg-neutral-500 dark:bg-neutral-800 pointer-events-none'
+                        : ''
+                    }`}
+                    onClick={() => handleSetStrategyStatus('stop')}
+                  />
+                )}
+              </div>
               {/* )} */}
             </div>
           </div>

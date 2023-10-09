@@ -2,20 +2,20 @@ import { Link } from 'react-router-dom'
 import { UserService } from '../../services'
 
 import { Tooltip } from 'primereact/tooltip'
-
+import { BiInfoCircle } from 'react-icons/bi'
 import { UsersIcon, LogoutIcon } from '../../assets/icons'
-
+import TerminalButton from '../shared/TerminalButton.shared'
 import useSelectRoute from '../hooks'
 import { routes } from '../../utils/misc'
 
-const CompactSidebar = ({ themeState }) => {
+const CompactSidebar = ({ themeState, setter }) => {
   const [selected, setSelected] = useSelectRoute()
 
   const handleClick = (divNum) => () => setSelected(divNum)
 
   return (
     <div className="flex h-screen min-w-[5rem] flex-col overflow-hidden pt-4 shadow">
-      <div className="relative flex flex-col space-y-10 p-4">
+      <div className="relative flex h-[90%]  flex-col space-y-10 p-4">
         <div className="flex items-center justify-center">
           <Link to="/" onClick={handleClick(1)}>
             <img
@@ -70,6 +70,13 @@ const CompactSidebar = ({ themeState }) => {
               <LogoutIcon width="1.5rem" height="1.5rem" />
             </li>
           </ul>
+        </div>
+        <div className="w- flex justify-center">
+          <TerminalButton
+            onClick={() => setter((prev) => ({ ...prev, run: true }))}
+            styles="!w-auto text-white flex justify-center items-center gap-2">
+            <BiInfoCircle />
+          </TerminalButton>
         </div>
       </div>
     </div>

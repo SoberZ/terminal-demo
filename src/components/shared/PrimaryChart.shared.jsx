@@ -37,7 +37,7 @@ const PrimaryChart = ({ id, metricsData, metricsTime, className }) => {
       },
       yaxis: {
         forceNiceScale: true,
-        // decimalsInFloat: 2,
+        decimalsInFloat: 5,
         axisBorder: {
           show: false,
         },
