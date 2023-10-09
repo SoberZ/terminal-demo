@@ -71,10 +71,10 @@ const CompactSidebar = ({ themeState, setter }) => {
             </li>
           </ul>
         </div>
-        <div className="flex justify-center">
+        <div className="w- flex justify-center">
           <TerminalButton
             onClick={() => setter((prev) => ({ ...prev, run: true }))}
-            styles="w-auto text-white flex justify-center items-center gap-2">
+            styles="!w-auto text-white flex justify-center items-center gap-2">
             <BiInfoCircle />
           </TerminalButton>
         </div>
