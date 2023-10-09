@@ -1,6 +1,5 @@
 import { useEffect, useState, useLayoutEffect } from 'react'
 import { toast } from 'react-hot-toast'
-import fs from 'fs'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 import { useNavigate } from 'react-router-dom'
@@ -39,42 +38,6 @@ const Dashboard = () => {
   })
   const { width } = useWindowSize()
 
-  const [{ run, steps }, setState] = useState({
-    run: false,
-    steps: [
-      {
-        content: <h2>Let's begin our journey!</h2>,
-        locale: { skip: <strong>SKIP</strong> },
-        placement: 'center',
-        target: 'body',
-      },
-      {
-        content: <h2>Here is first step!</h2>,
-        placement: 'bottom',
-        target: '#step-0',
-        title: 'First step',
-      },
-      {
-        content: <h2>Here is first step!</h2>,
-        placement: 'bottom',
-        target: '#step-1',
-        title: 'First step',
-      },
-      {
-        content: <h2>Here is first step!</h2>,
-        placement: 'bottom',
-        target: '#step-2',
-        title: 'First step',
-      },
-      {
-        content: <h2>Here is first step!</h2>,
-        placement: 'bottom',
-        target: '#step-3',
-        title: 'First step',
-      },
-    ],
-  })
-
   const getSeverity = (input) => {
     switch (input) {
       case 'active':
@@ -107,24 +70,6 @@ const Dashboard = () => {
 
   return (
     <>
-      <Joyride
-        callback={() => {}}
-        continuous
-        hideCloseButton
-        run={run}
-        scrollToFirstStep
-        showProgress
-        showSkipButton
-        steps={steps}
-        // disableOverlay={true}
-        styles={{
-          options: {
-            overlayHeight: `100vh`,
-            zIndex: 10000,
-          },
-        }}
-        // styles={{ overlay: { height: '100%' } }}
-      />
       <div className="flex flex-col space-y-10">
         <div id={`step-0`}>
           {width > 768 ? (

@@ -1,17 +1,18 @@
 import { Link } from 'react-router-dom'
 import { UserService } from '../../services'
 import useSelectRoute from '../hooks'
-
+import { BiInfoCircle } from 'react-icons/bi'
 import { UsersIcon, LogoutIcon } from '../../assets/icons'
 import { routes } from '../../utils/misc'
+import TerminalButton from '../shared/TerminalButton.shared'
 
-const Sidebar = ({ themeState }) => {
+const Sidebar = ({ themeState, setter }) => {
   const [selected, setSelected] = useSelectRoute()
   const handleClick = (divNum) => () => setSelected(divNum)
 
   return (
     <div className="flex h-screen max-w-[20rem] flex-col overflow-hidden shadow">
-      <div className="relative flex flex-col space-y-10 p-5">
+      <div className="relative flex h-[90%] flex-col justify-between space-y-10 p-5">
         <div className="p-3">
           <Link to="/" onClick={handleClick(1)}>
             <img src={`/aw-logo-full-${!themeState ? 'light' : 'dark'}.png`} />
@@ -73,6 +74,14 @@ const Sidebar = ({ themeState }) => {
             </li>
             <p className="ml-6 italic"> {UserService.getUsername()}</p>
           </ul>
+        </div>
+        <div className="flex justify-center">
+          <TerminalButton
+            onClick={() => setter((prev) => ({ ...prev, run: true }))}
+            styles="w-28 w-fit text-white flex justify-center items-center gap-2">
+            Start Tutorial
+            <BiInfoCircle />
+          </TerminalButton>
         </div>
       </div>
     </div>
