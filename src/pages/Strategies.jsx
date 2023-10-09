@@ -16,7 +16,7 @@ import { useWindowSize } from '../hooks'
 import { statusColors } from '../utils/statusColors'
 import { set } from 'react-hook-form'
 
-import Strategiess from '../data/strategies/strategiesData.json'
+import StrategiesData from '../data/strategies/strategiesData.json'
 
 import Joyride from 'react-joyride'
 
@@ -124,7 +124,7 @@ const Strategies = () => {
   }, [])
 
   useEffect(() => {
-    setStrategies(() => Strategiess.data.data)
+    setStrategies(() => StrategiesData.data.data)
 
     // async function fetchFavorites() {
     //   const fetchedFavorites = await UserService.getFavorites(username)

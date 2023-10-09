@@ -13,7 +13,9 @@
         "pid": 32193,
         "strategy_id": "DEMO_BTC_STRATEGY",
         "taker_fee": 0.0002,
-        "type": "DepthStrategy"
+        "type": "DepthStrategy",
+        "pnl": "4210.21 USDT",
+        "realized_pnl": "543.13 USDT"
       },
       {
         "active_status": "active",
@@ -28,7 +30,9 @@
         "pid": 49917,
         "strategy_id": "KUCOIN_BTCUSDT",
         "taker_fee": 0.0002,
-        "type": "VolumeStrategy"
+        "type": "VolumeStrategy",
+        "pnl": "115.21 USDT",
+        "realized_pnl": "100.13 USDT"
       },
       {
         "active_status": "active",
@@ -43,7 +47,9 @@
         "pid": 50050,
         "strategy_id": "ETH_USDT_VOLUME",
         "taker_fee": 0.0005,
-        "type": "SpreadStrategy"
+        "type": "SpreadStrategy",
+        "pnl": "1034.8 USDT",
+        "realized_pnl": "213 USDT"
       },
       {
         "active_status": "stop",
@@ -61,7 +67,9 @@
         "strategy_id": "BTC_DEPTH_KUCOIN",
         "taker_fee": 0.0001,
         "trading_frequency": 1,
-        "type": "DepthStrategy"
+        "type": "DepthStrategy",
+        "pnl": "132.1 USDT",
+        "realized_pnl": "84.71 USDT"
       },
       {
         "active_status": "stop",
@@ -80,7 +88,9 @@
         "strategy_id": "DEMO_STRATEGY_LOKI_BTC",
         "taker_fee": 0.0002,
         "trading_frequency": 0.2,
-        "type": "SpreadStrategy"
+        "type": "SpreadStrategy",
+        "pnl": "2035.09 USDT",
+        "realized_pnl": "1354.19 USDT"
       },
       {
         "active_status": "stop",
@@ -99,7 +109,9 @@
         "strategy_id": "GATE_DEMO_XRP_BTC",
         "taker_fee": 0.0002,
         "trading_frequency": 0.1,
-        "type": "DepthStrategy"
+        "type": "DepthStrategy",
+        "pnl": "254.22 USDT",
+        "realized_pnl": "30.13 USDT"
       }
     ],
     "isError": false,
