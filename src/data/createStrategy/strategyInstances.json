@@ -1,9 +1,9 @@
 [
-  { "value": "SpreadStrategy", "label": "SpreadStrategy" },
-  { "value": "DepthStrategy", "label": "DepthStrategy" },
+  { "value": "Demo MM Strategy", "label": "Demo MM Strategy" },
+  { "value": "Generic Strategy", "label": "Generic Strategy" },
   { "value": "GenericStrategy", "label": "GenericStrategy" },
   { "value": "DemoStreamingStrategy", "label": "DemoStreamingStrategy" },
-  { "value": "VolumeStrategy", "label": "VolumeStrategy" },
+  { "value": "Avellaneda Strategy", "label": "Avellaneda Strategy" },
   { "value": "MatrixStrategy", "label": "MatrixStrategy" },
   { "value": "AvellanedaStrategy", "label": "AvellanedaStrategy" }
 ]

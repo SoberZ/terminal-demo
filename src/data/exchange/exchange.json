@@ -1,1 +1,7 @@
-{"exchange":"kucoin","exchange_account_id":"kucoin_account","ip_addr":"localhost:8050","port":"8050","status":"running"}
+{
+  "exchange": "kucoin",
+  "exchange_account_id": "kucoin-account",
+  "ip_addr": "localhost:8050",
+  "port": "8050",
+  "status": "running"
+}
