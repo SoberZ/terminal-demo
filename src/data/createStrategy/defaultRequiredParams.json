@@ -15,7 +15,7 @@
           "placeholder": "Enter a percentage between -1 and 1",
           "type": "decimal"
         },
-        "is_STRATEGY_NAME": { "optional": false, "type": "boolean" },
+        "is_demo_strategy": { "optional": false, "type": "boolean" },
         "liquidate_exceeding_inventory": {
           "optional": true,
           "type": "boolean"
@@ -56,7 +56,7 @@
           "type": "string"
         }
       },
-      "strategy_type": "Demo MM Strategy"
+      "strategy_type": "SpreadStrategy"
     },
     {
       "params": {
@@ -82,7 +82,7 @@
           "placeholder": "Enter the initial quantity to start the order set with",
           "type": "decimal"
         },
-        "is_STRATEGY_NAME": { "optional": false, "type": "boolean" },
+        "is_demo_strategy": { "optional": false, "type": "boolean" },
         "keep_inventory_in_equilibrium": {
           "optional": true,
           "type": "boolean"
@@ -155,7 +155,7 @@
         },
         "type": { "optional": false, "type": "string" }
       },
-      "strategy_type": "Generic Strategy"
+      "strategy_type": "DepthStrategy"
     },
     {
       "params": {
@@ -164,7 +164,7 @@
         "explaination": {
           "text": "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum"
         },
-        "is_STRATEGY_NAME": { "optional": false, "type": "boolean" },
+        "is_demo_strategy": { "optional": false, "type": "boolean" },
         "notfication_mail": { "optional": false, "type": "string" },
         "strategy_id": {
           "optional": false,
@@ -180,7 +180,7 @@
         "explaination": {
           "text": "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum"
         },
-        "is_STRATEGY_NAME": { "optional": false, "type": "boolean" },
+        "is_demo_strategy": { "optional": false, "type": "boolean" },
         "market": { "optional": false, "type": "string" },
         "strategy_id": {
           "optional": false,
@@ -210,7 +210,7 @@
         "explaination": {
           "text": "lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum"
         },
-        "is_STRATEGY_NAME": { "optional": false, "type": "boolean" },
+        "is_demo_strategy": { "optional": false, "type": "boolean" },
         "maker_fee": {
           "isPercentage": true,
           "max_value": 1,
@@ -256,7 +256,7 @@
           "type": "decimal"
         }
       },
-      "strategy_type": "Avellaneda Strategy"
+      "strategy_type": "VolumeStrategy"
     },
     {
       "params": {
@@ -291,7 +291,7 @@
           "optional": false,
           "type": "decimal"
         },
-        "is_STRATEGY_NAME": { "optional": false, "type": "boolean" },
+        "is_demo_strategy": { "optional": false, "type": "boolean" },
         "long_term_history_length": {
           "min_value": 0,
           "optional": false,
@@ -379,7 +379,7 @@
           "placeholder": "Enter your target inventory base",
           "type": "decimal"
         },
-        "is_STRATEGY_NAME": { "optional": false, "type": "boolean" },
+        "is_demo_strategy": { "optional": false, "type": "boolean" },
         "kappa": {
           "min_value": 0,
           "optional": false,

@@ -2,7 +2,7 @@
   "data": {
     "data": [
       {
-        "active_status": "paused",
+        "active_status": "active",
         "exchange": "binance",
         "exchange_account_id": "binance_account",
         "is_demo_strategy": true,
@@ -77,7 +77,7 @@
       }
     ],
     "isError": false,
-    "message": "Successfully queried 5 strategies.",
+    "message": "Successfully queried 4 strategies.",
     "statusCode": 200,
     "total_results": "14"
   },

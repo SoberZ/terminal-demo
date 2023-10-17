@@ -4,7 +4,7 @@
   "exchange_account_id": "kucoin-account",
   "order_distance": 0.004,
   "quantity": 0.0023,
-  "is_STRATEGY_NAME": false,
+  "is_demo_strategy": false,
   "kappa": 1.5,
   "maker_fee": 0.0001,
   "market": "BTC/USDT",

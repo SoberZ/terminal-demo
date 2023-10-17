@@ -1,5 +1,5 @@
 {
-  "strategiesRunning": 4,
+  "strategiesRunning": 2,
   "pnl": "645.76 $",
   "liveExchangeAccounts": 1,
   "tradingVolume": "387659.36 $",
@@ -8,18 +8,18 @@
   "activeStrategies": [
     {
       "active_status": "active",
-      "exchange_account_id": "binance-account",
-      "strategy_id": "ETH_USDT_VOLUME",
       "exchange": "binance",
-      "market": "ETH/USDT",
-      "type": "Avellaneda Strategy"
+      "market": "BTC/USDT",
+      "exchange_account_id": "binance_account",
+      "strategy_id": "DEMO_BTC_STRATEGY",
+      "type": "Demo MM Strategy"
     },
     {
       "active_status": "active",
+      "exchange_account_id": "kucoin-account",
+      "strategy_id": "KUCOIN_BTC_AVELLANEDA_STRATEGY",
       "exchange": "kucoin",
       "market": "BTC/USDT",
-      "exchange_account_id": "kucoin-account",
-      "strategy_id": "KUCOIN_BTCUSDT",
       "type": "Avellaneda Strategy"
     }
   ],

@@ -16,7 +16,7 @@ const TableRow = ({ strategyData }) => {
       <td className="p-3">{strategyData.exchange_account_id}</td>
       <td className="p-3">{strategyData.pnl}</td>
       <td className="flex p-3">
-        {strategyData.is_STRATEGY_NAME ? (
+        {strategyData.is_demo_strategy ? (
           <img src={checkIcon} className="h-6" />
         ) : (
           <img src={closeIcon} className="h-6" />
