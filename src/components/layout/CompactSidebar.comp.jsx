@@ -57,26 +57,24 @@ const CompactSidebar = ({ themeState, setter }) => {
               </Link>
             )}
             <li
-              data-pr-tooltip={`Log out ${UserService.getUsername()}`}
+              data-pr-tooltip={`Log out`}
               className={`flex flex-wrap items-center justify-center ${
                 selected === 6
                   ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                   : ''
-              } tooltip !my-10 rounded-xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:text-red-400 hover:shadow-soft-xl`}
-              onClick={() => {
-                UserService.doLogout()
-                window.localStorage.removeItem('loggedIn')
-              }}>
+              } tooltip !my-10 rounded-xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:text-red-400 hover:shadow-soft-xl`}>
               <LogoutIcon width="1.5rem" height="1.5rem" />
             </li>
           </ul>
         </div>
         <div className="w- flex justify-center">
-          <TerminalButton
-            onClick={() => setter((prev) => ({ ...prev, run: true }))}
-            styles="!w-auto text-white flex justify-center items-center gap-2">
-            <BiInfoCircle />
-          </TerminalButton>
+          <Link to="/">
+            <TerminalButton
+              onClick={() => setter((prev) => ({ ...prev, run: true }))}
+              styles="!w-auto text-white flex justify-center items-center gap-2">
+              <BiInfoCircle />
+            </TerminalButton>
+          </Link>
         </div>
       </div>
     </div>

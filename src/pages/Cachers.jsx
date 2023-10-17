@@ -92,12 +92,10 @@ const Cachers = () => {
 
   const handlePause = (cacher) => {
     const { name, status, ...filteredCacher } = cacher
-    const res = pauseCacher(filteredCacher)
   }
 
   const handleRestart = (cacher) => {
     const { name, status, ...filteredCacher } = cacher
-    const res = registerCacher(filteredCacher)
   }
 
   //? can't refetch the data, i need to make it manual
@@ -205,19 +203,22 @@ const Cachers = () => {
   //? these are the filter options for the status column
   return (
     <div className="space-y-10">
-      <TerminalButton styles="ml-2 md:ml-0">
-        <Link to="/cachers/create">
+      <Link to="/cachers/create">
+        <TerminalButton styles="ml-2 md:ml-0">
           <h1 className="text-sm font-semibold text-white">
             Register a new Cacher
           </h1>
-        </Link>
-      </TerminalButton>
+        </TerminalButton>
+      </Link>
 
       <div className="w-full space-y-5 rounded-lg bg-color-secondary p-5 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
         <p className="text-sm font-light">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque quae
-          repudiandae, sint officiis molestiae possimus nesciunt quos in autem
-          voluptatem iure ex, aliquid dolor! In dolorum ratione ex sed esse!
+          Find an overview over all cachers in the system here. it gives a
+          compact overview over the status of each cacher, the exchange it is
+          connected to, and what type of endpoint it has, and it's market pair.
+          You can also pause cachers and refresh the table here and you can
+          register a new cacher here too. Note there's no detailed info on
+          cacher though
         </p>
         <div className="flex items-center justify-between">
           <InputText
@@ -243,7 +244,7 @@ const Cachers = () => {
               paginator
               breakpoint="0"
               scrollable
-              className="text-[0.75rem]"
+              className="text-[0.75rem] "
               paginatorTemplate={
                 width < 768
                   ? 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink'
@@ -259,7 +260,7 @@ const Cachers = () => {
                 field="name"
                 header="Name"
                 frozen
-                className="min-w-[8rem] break-all shadow-[5px_0px_5px_#00000022] md:min-w-[15rem] lg:min-w-[18rem] xl:shadow-none"
+                className="min-w-[8rem] break-all shadow-[5px_0px_5px_#00000022] hover:cursor-default md:min-w-[15rem] lg:min-w-[18rem] xl:shadow-none"
               />
               <Column
                 sortable
@@ -269,7 +270,7 @@ const Cachers = () => {
                 filter
                 showFilterOperator={false}
                 filterMatchModeOptions={stringFilterOptions}
-                className="min-w-[8rem] md:min-w-[10rem] lg:min-w-[14rem]"
+                className="min-w-[8rem] hover:cursor-default md:min-w-[10rem] lg:min-w-[14rem]"
               />
               <Column
                 sortable
@@ -290,7 +291,7 @@ const Cachers = () => {
                 filterMatchModeOptions={statusFilterOptions}
                 showFilterOperator={false}
                 filterElement={statusFilterTemplate}
-                className="min-w-[8rem] lg:min-w-[10rem]"
+                className="min-w-[8rem] hover:cursor-default lg:min-w-[10rem]"
               />
               <Column
                 sortable
@@ -301,7 +302,7 @@ const Cachers = () => {
                 showFilterOperator={false}
                 filterElement={endpointFilterTemplate}
                 filterMatchModeOptions={endpointsFilterOptions}
-                className="min-w-[9rem] break-words lg:min-w-[10rem]"
+                className="min-w-[9rem] break-words hover:cursor-default lg:min-w-[10rem]"
               />
               <Column
                 sortable
@@ -312,11 +313,11 @@ const Cachers = () => {
                 showFilterOperator={false}
                 body={marketBodyTemplate}
                 filterMatchModeOptions={stringFilterOptions}
-                className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                className="min-w-[5rem] hover:cursor-default md:min-w-[7rem] lg:min-w-[10rem]"
               />
               <Column
                 style={{ fontSize: '0.9rem' }}
-                className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                className="min-w-[5rem] hover:cursor-default md:min-w-[7rem] lg:min-w-[10rem]"
                 body={(cacher) => {
                   return (
                     <i

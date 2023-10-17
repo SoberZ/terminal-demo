@@ -62,12 +62,7 @@ const Sidebar = ({ themeState, setter }) => {
                   : ''
               } !my-10 rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:text-red-400 hover:shadow-soft-xl`}
               onClick={handleClick(5)}>
-              <button
-                onClick={() => {
-                  UserService.doLogout()
-                  window.localStorage.removeItem('loggedIn')
-                }}
-                className="flex flex-wrap items-center justify-center">
+              <button className="flex flex-wrap items-center justify-center">
                 <LogoutIcon width="1.5rem" height="1.5rem" />
                 <span className="ml-3 flex-1 text-left">Log out</span>
               </button>

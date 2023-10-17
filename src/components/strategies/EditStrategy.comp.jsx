@@ -15,11 +15,11 @@ import RequiredParams from '../../data/createStrategy/defaultRequiredParams.json
 const allowedValueTypes = ['integer', 'decimal', 'boolean']
 
 const strategyType = {
-  'spread-algo': 'SpreadStrategy',
-  'depth-algo': 'DepthStrategy',
+  'spread-algo': 'Demo MM Strategy',
+  'depth-algo': 'Generic Strategy',
   'generic-algo': 'GenericStrategy',
   'demo-streaming-algo': 'DemoStreamingStrategy',
-  VolumeStrategy: 'VolumeStrategy',
+  VolumeStrategy: 'Volume Strategy',
   MatrixStrategy: 'MatrixStrategy',
   AvellanedaStrategy: 'AvellanedaStrategy',
 }

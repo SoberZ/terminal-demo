@@ -143,13 +143,13 @@ const Exchanges = () => {
 
   return (
     <div className="space-y-10">
-      <TerminalButton>
-        <Link to="/exchanges/create">
+      <Link to="/exchanges/create">
+        <TerminalButton>
           <h1 className="text-sm font-semibold text-white">
             Create Exchange Account
           </h1>
-        </Link>
-      </TerminalButton>
+        </TerminalButton>
+      </Link>
 
       <div className="space-y-5 rounded-lg bg-color-secondary p-5 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
         <p className="text-sm font-light ">

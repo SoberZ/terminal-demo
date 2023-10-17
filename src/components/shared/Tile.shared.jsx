@@ -2,13 +2,26 @@ import { SpotlightCard } from './Spotlight.shared'
 import { useNavigate } from 'react-router-dom'
 import { commaSeparator } from '../../utils/misc'
 import { useWindowSize } from '../../hooks'
+import { twMerge } from 'tailwind-merge'
 
-const Tile = ({ data, title, description, fontSize, dashboard, redirect }) => {
+const Tile = ({
+  data,
+  title,
+  description,
+  fontSize,
+  dashboard,
+  redirect,
+  className,
+  ...props
+}) => {
   const navigate = useNavigate()
   const { width } = useWindowSize()
+
   return dashboard ? (
     width > 768 ? (
-      <SpotlightCard className="rounded-lg shadow-md dark:shadow-soft-xl ">
+      <SpotlightCard
+        className="rounded-lg shadow-md dark:shadow-soft-xl "
+        {...props}>
         <div
           className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-color-secondary"
           onClick={() => navigate(redirect)}>
@@ -19,13 +32,13 @@ const Tile = ({ data, title, description, fontSize, dashboard, redirect }) => {
             <h1
               className={`text-center font-bold ${
                 fontSize ?? 'text-xl md:text-3xl'
-              } text-primary mb-1 break-words dark:text-white md:mb-3 `}>
+              } text-primary break-anywhere mb-1 dark:text-white md:mb-3 `}>
               {data ? commaSeparator(data) : data ?? 0}
             </h1>
-            <h2 className="break-all text-center text-xs font-semibold text-color-secondary md:text-sm">
+            <h2 className="break-anywhere text-center text-xs font-semibold text-color-secondary md:text-sm">
               {title}
             </h2>
-            <p className="break-all text-xs font-light text-color-tertiary md:text-sm">
+            <p className="break-anywhere text-xs font-light text-color-tertiary md:text-sm">
               {description}
             </p>
           </div>
@@ -33,6 +46,7 @@ const Tile = ({ data, title, description, fontSize, dashboard, redirect }) => {
       </SpotlightCard>
     ) : (
       <div
+        {...props}
         onClick={() => navigate(redirect)}
         className={`flex flex-col items-center justify-center rounded-lg border border-gray-50 bg-color-secondary p-5 shadow-md dark:border-neutral-800 dark:shadow-soft-xl ${
           redirect && 'hover:cursor-pointer'
@@ -40,24 +54,28 @@ const Tile = ({ data, title, description, fontSize, dashboard, redirect }) => {
         <h1
           className={`text-center font-bold ${
             fontSize ?? 'text-xl md:text-3xl'
-          } text-primary mb-1 break-all dark:text-white md:mb-3`}>
+          } text-primary break-anywhere mb-1 dark:text-white md:mb-3`}>
           {data ? commaSeparator(data) : data ?? 0}
         </h1>
-        <h2 className="break-all text-center text-xs font-semibold text-color-secondary md:text-sm">
+        <h2 className="break-anywhere text-center text-xs font-semibold text-color-secondary md:text-sm">
           {title}
         </h2>
-        <p className="break-all text-xs font-light text-color-tertiary md:text-sm">
+        <p className="break-anywhere text-xs font-light text-color-tertiary md:text-sm">
           {description}
         </p>
       </div>
     )
   ) : (
     <div
-      className={`flex flex-col items-center justify-center rounded-lg border border-gray-50 bg-white p-5 shadow-soft-xl dark:border-neutral-700 dark:bg-color-primary `}>
+      {...props}
+      className={twMerge(
+        `flex flex-col items-center justify-center rounded-lg border border-gray-200 bg-color-secondary p-5 shadow-sm transition-all ease-in dark:border-neutral-700 dark:bg-color-primary`,
+        className
+      )}>
       <h1
         className={`text-center font-bold ${
           fontSize ?? 'text-xl md:text-3xl'
-        } text-primary mb-1 break-all dark:text-white md:mb-3 xl:break-normal xl:break-words`}>
+        } text-primary break-anywhere mb-1 dark:text-white md:mb-3 `}>
         {data ? commaSeparator(data) : data ?? 0}
       </h1>
       <h2 className="break-words text-center text-xs font-semibold text-color-secondary md:text-sm">

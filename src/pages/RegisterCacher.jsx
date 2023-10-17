@@ -6,6 +6,8 @@ import { Select, TerminalButton } from '../components'
 import { registerCacher } from '../utils/Fetchers/CacherFetchers'
 import AllExchanges from '../data/exchange/exchange.json'
 
+import { fetchExchanges, fetchMarkets } from '../utils/Fetchers/DataFetchers'
+
 const endpointOptions = [
   { label: 'Ticker', value: 'ticker' },
   { label: 'Open Interest', value: 'open_interest' },
@@ -18,9 +20,9 @@ const ParamsField = ({ handleChange, id, paramName }) => {
   return (
     <div className="text-sm">
       <label className="font-semibold">{'Parameter'}</label>
-      <div className="flex flex-col md:flex-row md:justify-between space-y-4 md:space-y-0 md:space-x-4">
+      <div className="flex flex-col space-y-4 md:flex-row md:justify-between md:space-y-0 md:space-x-4">
         <input
-          className="border p-inputtext border-gray-300 p-2.5 shadow-sm rounded-lg text-color-secondary"
+          className="p-inputtext rounded-lg border border-gray-300 p-2.5 text-color-secondary shadow-sm"
           placeholder={'Parameter Name'}
           name="paramName"
           {...(paramName && { value: paramName })}
@@ -29,7 +31,7 @@ const ParamsField = ({ handleChange, id, paramName }) => {
           required
         />
         <input
-          className="border p-inputtext border-gray-300 p-2.5 shadow-sm rounded-lg text-color-secondary"
+          className="p-inputtext rounded-lg border border-gray-300 p-2.5 text-color-secondary shadow-sm"
           placeholder={'Parameter Value'}
           name="paramValue"
           onChange={handleChange}
@@ -66,8 +68,7 @@ const RegisterCacher = () => {
 
   useEffect(() => {
     toast.dismiss()
-    // fetchExchanges(setExchanges)
-    setExchanges(AllExchanges)
+    fetchExchanges(setExchanges)
   }, [])
 
   useEffect(() => {
@@ -167,8 +168,7 @@ const RegisterCacher = () => {
     //!     endpoint : "screener",
     //! }
 
-    // //? grab cachers state
-    let res = await registerCacher(cacherData)
+    toast.success('Registered Successfully !')
 
     // if (res.status !== 200) {
     //   toast.error('Cacher registration failed')
@@ -176,18 +176,19 @@ const RegisterCacher = () => {
   }
 
   return (
-    <div className="bg-color-secondary text-color-secondary dark:border dark:border-neutral-800 rounded-lg p-10 space-y-5 shadow-soft-lg">
-      <h1 className="text-2xl font-semibold text-primary dark:text-white inline-block text-transparent bg-clip-text">
+    <div className="space-y-5 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
+      <h1 className="text-primary inline-block bg-clip-text text-2xl font-semibold text-transparent dark:text-white">
         Register a Cacher
       </h1>
-      <p className="font-light text-sm">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse qui sequi
-        deleniti hic soluta velit magnam animi, perspiciatis beatae ratione
-        doloremque voluptate. Magni iusto deleniti id voluptates sit at porro.
+      <p className="text-sm font-light">
+        Register a cacher to start caching data from exchanges. You can register
+        a cacher for any exchange and any endpoint, market pairs are optional
+        though. You can also add parameters to the cacher, Note that Parameters
+        are optional and are used to name and filter the data
       </p>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col md:w-[30rem] space-y-5">
+        className="flex flex-col space-y-5 md:w-[30rem]">
         {exchanges && (
           <Select
             label="Exchange"

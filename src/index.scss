@@ -10,6 +10,9 @@
 .w-fullest {
   width: -webkit-fill-available;
 }
+.break-anywhere {
+  overflow-wrap: anywhere;
+}
 
 @layer base {
   :root {

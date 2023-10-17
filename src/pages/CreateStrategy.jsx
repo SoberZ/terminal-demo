@@ -79,7 +79,7 @@ const CreateStrategy = () => {
   // Update right panel on each form update
   useEffect(() => {
     const subscription = watch((value) => {
-      if (strategyMode === 'SpreadStrategy') {
+      if (strategyMode === 'Demo MM Strategy') {
         value['Profitable?'] = value.order_distance > 2 * value.fee_percentage
       }
       setStrategyState(value)
@@ -95,11 +95,11 @@ const CreateStrategy = () => {
   }, [strategyState.exchange])
 
   return (
-    <div className="bg-color-secondary text-color-secondary dark:border dark:border-neutral-800 rounded-lg p-10 space-y-5 shadow-soft-lg">
-      <h1 className="text-2xl font-semibold text-primary dark:text-white inline-block text-transparent bg-clip-text">
+    <div className="space-y-5 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
+      <h1 className="text-primary inline-block bg-clip-text text-2xl font-semibold text-transparent dark:text-white">
         Create a new strategy
       </h1>
-      <p className="font-light text-sm">
+      <p className="text-sm font-light">
         Use this form to create a new strategy. The form will change depending
         on the type of strategy selected in the “strategy instance” dropdown.
         Select an exchange account that you previously registered on the{' '}
@@ -116,7 +116,7 @@ const CreateStrategy = () => {
               <div className="space-y-2" key={idx}>
                 {Object.entries(params).map(([key, value], idx) => {
                   return (
-                    <p className="font-light text-sm" key={idx}>
+                    <p className="text-sm font-light" key={idx}>
                       {key === 'explaination' && value.text}
                     </p>
                   )
@@ -127,8 +127,8 @@ const CreateStrategy = () => {
         })}
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 md:space-x-5">
-          <div className="max-w-xs space-y-5 my-2 md:my-0">
+        <div className="grid md:grid-cols-2 md:space-x-5 lg:grid-cols-3">
+          <div className="my-2 max-w-xs space-y-5 md:my-0">
             <Select
               label="Strategy instance"
               options={strategyInstances}
@@ -267,7 +267,7 @@ const CreateStrategy = () => {
 
           {/* //? so this checks the state, and there's this watch method, which is adding the other states regardless*/}
           <div className="max-w-lg space-y-5 text-sm">
-            <div className="bg-color-secondary text-color-secondary dark:border dark:border-neutral-800 p-4 space-y-1 rounded-md shadow-soft-xl">
+            <div className="space-y-1 rounded-md bg-color-secondary p-4 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800">
               {Object.keys(strategyState).map((key) => {
                 return (
                   <div className="flex space-x-3" key={key}>
@@ -282,7 +282,7 @@ const CreateStrategy = () => {
             </div>
             <button
               type="submit"
-              className="border bg-autowhale-blue font-semibold text-white px-5 py-3 rounded-md">
+              className="rounded-md border bg-autowhale-blue px-5 py-3 font-semibold text-white">
               Submit
             </button>
           </div>
