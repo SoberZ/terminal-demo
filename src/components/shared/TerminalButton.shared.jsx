@@ -1,10 +1,13 @@
-//TODO add twMerge and clsx here to make it more dynamic
+import { twMerge } from 'tailwind-merge'
 
-const TerminalButton = ({ text, children, red, styles, ...props }) => {
+const TerminalButton = ({ text, children, red, className, ...props }) => {
   return (
     <button
       {...props}
-      className={`font-medium shadow-soft-xl p-3 rounded-lg w-52 hover:opacity-95 transition duration-200 btn-primary dark:btn-primary-dark ${styles}`}>
+      className={twMerge(
+        `btn-primary dark:btn-primary-dark w-52 rounded-lg p-3 font-medium shadow-soft-xl transition duration-200 hover:opacity-95`,
+        className
+      )}>
       {text && <h1 className="text-sm font-semibold text-white">{text}</h1>}
       {children}
     </button>

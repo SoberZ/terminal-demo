@@ -73,7 +73,7 @@ const Sidebar = ({ themeState, setter }) => {
         <div className="flex justify-center">
           <TerminalButton
             onClick={() => setter((prev) => ({ ...prev, run: true }))}
-            styles="w-28 w-fit text-white flex justify-center items-center gap-2">
+            className="flex items-center justify-center gap-2 text-white">
             Start Tutorial
             <BiInfoCircle />
           </TerminalButton>

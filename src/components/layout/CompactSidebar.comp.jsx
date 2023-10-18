@@ -71,7 +71,7 @@ const CompactSidebar = ({ themeState, setter }) => {
           <Link to="/">
             <TerminalButton
               onClick={() => setter((prev) => ({ ...prev, run: true }))}
-              styles="!w-auto text-white flex justify-center items-center gap-2">
+              className="flex !w-auto items-center justify-center gap-2 text-white">
               <BiInfoCircle />
             </TerminalButton>
           </Link>

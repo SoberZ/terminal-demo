@@ -107,7 +107,7 @@ const CreateStrategy = () => {
         and choose the right exchange, market and whether it's in demo mode.
       </p>
 
-      {requiredParams?.length > 0 &&
+      {/* {requiredParams?.length > 0 &&
         requiredParams.map(({ strategy_type, params }, idx) => {
           if (strategy_type === strategyMode) {
             return (
@@ -122,7 +122,7 @@ const CreateStrategy = () => {
               </div>
             )
           }
-        })}
+        })} */}
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid md:grid-cols-2 md:space-x-5 lg:grid-cols-3">

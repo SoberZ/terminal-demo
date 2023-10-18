@@ -336,7 +336,10 @@ const Strategies = () => {
               strategies are running on as well as their respective 24h PnL,
               status and whether it’s a demo strategy. To create a new strategy
               the “Create new strategy” button will direct to the corresponding
-              form. Note that only traders can create or modify strategies.
+              form.{' '}
+              <span className="font-bold">
+                Note that only traders can create or modify strategies.
+              </span>
             </p>
           </div>
           <InputText

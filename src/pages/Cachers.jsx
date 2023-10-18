@@ -204,7 +204,7 @@ const Cachers = () => {
   return (
     <div className="space-y-10">
       <Link to="/cachers/create">
-        <TerminalButton styles="ml-2 md:ml-0">
+        <TerminalButton className="ml-2 md:ml-0">
           <h1 className="text-sm font-semibold text-white">
             Register a new Cacher
           </h1>
@@ -217,8 +217,10 @@ const Cachers = () => {
           compact overview over the status of each cacher, the exchange it is
           connected to, and what type of endpoint it has, and it's market pair.
           You can also pause cachers and refresh the table here and you can
-          register a new cacher here too. Note there's no detailed info on
-          cacher though
+          register a new cacher here too.{' '}
+          <span className="font-bold">
+            Note there's no detailed info on cacher though
+          </span>
         </p>
         <div className="flex items-center justify-between">
           <InputText

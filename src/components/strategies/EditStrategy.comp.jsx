@@ -120,7 +120,7 @@ export default function EditStrategyComponent({
 
     // fetchRequiredParams(setRequiredParams)
     setRequiredParams(() => RequiredParams.requiredParams)
-    console.log(requiredParams)
+
     const filteredParams = requiredParams?.filter((param) => {
       return param.strategy_type === strategyType[strategyData.type]
     })

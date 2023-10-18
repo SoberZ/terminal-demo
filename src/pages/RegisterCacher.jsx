@@ -183,8 +183,11 @@ const RegisterCacher = () => {
       <p className="text-sm font-light">
         Register a cacher to start caching data from exchanges. You can register
         a cacher for any exchange and any endpoint, market pairs are optional
-        though. You can also add parameters to the cacher, Note that Parameters
-        are optional and are used to name and filter the data
+        for different endpoints. You can also add parameters to the cacher,{' '}
+        <span className="font-bold">
+          Note that Parameters are optional and are used to name and filter the
+          data
+        </span>
       </p>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -215,18 +218,21 @@ const RegisterCacher = () => {
           />
         )}
 
-        {paramComponents}
-        <TerminalButton
-          onClick={onAddParamClick}
-          type="button"
-          text={'Add param'}
-        />
-        <TerminalButton
-          onClick={onRemoveParamClick}
-          type="button"
-          text={'Remove param'}
-        />
-        <TerminalButton type="submit" text={'Submit'}></TerminalButton>
+        <div className="flex justify-between gap-2">
+          <TerminalButton
+            onClick={onAddParamClick}
+            type="button"
+            text={'Add param'}
+            className="w-full"
+          />
+          <TerminalButton
+            onClick={onRemoveParamClick}
+            type="button"
+            text={'Remove param'}
+            className="w-full"
+          />
+        </div>
+        <TerminalButton type="submit" text={'Submit'} className="w-full" />
       </form>
     </div>
   )
