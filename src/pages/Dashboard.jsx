@@ -5,7 +5,7 @@ import { Column } from 'primereact/column'
 import { useNavigate } from 'react-router-dom'
 import { Tag } from 'primereact/tag'
 import { Accordion, AccordionTab } from 'primereact/accordion'
-import Joyride from 'react-joyride'
+import Joyride, { STATUS } from 'react-joyride'
 // Import FakeData
 import Data from '../data/homepageData'
 
@@ -71,7 +71,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="flex flex-col space-y-10">
-        <div id={`step-0`}>
+        <div id={`step-2`} className="flex flex-col space-y-10">
           {width > 768 ? (
             <Spotlight className="group grid grid-cols-2 gap-6 lg:grid-cols-3 2xl:grid-cols-6">
               <Tile
@@ -152,9 +152,7 @@ const Dashboard = () => {
             </div>
           )}
         </div>
-        <div
-          id={`step-1`}
-          className="rounded-lg bg-color-secondary p-5 pb-48 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:pb-40 md:pb-32 lg:pb-24">
+        <div className="rounded-lg bg-color-secondary p-5 pb-48 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:pb-40 md:pb-32 lg:pb-24">
           <div className="h-96">
             <div className="flex flex-row items-center space-x-2">
               <div className="demo__projects">
@@ -176,7 +174,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="this grid grid-cols-1 lg:grid-cols-1" id={`step-2`}>
+        <div className="this grid grid-cols-1 lg:grid-cols-1">
           <div className="space-y-7 rounded-lg bg-color-secondary p-5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800">
             <div className="">
               <h6 className="text-md font-semibold text-color-secondary">
@@ -301,8 +299,8 @@ const Dashboard = () => {
         </div>
 
         <div
-          className="space-y-5 rounded-lg bg-color-secondary p-5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800"
-          id={`step-3`}>
+          id={`step-3`}
+          className="space-y-5 rounded-lg bg-color-secondary p-5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800">
           <h1>Recent orders</h1>
           <p className="text-sm font-light">
             List of orders of all strategies where you can sort them by

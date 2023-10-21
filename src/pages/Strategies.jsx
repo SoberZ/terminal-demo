@@ -18,7 +18,8 @@ import { set } from 'react-hook-form'
 
 import StrategiesData from '../data/strategies/strategiesData.json'
 
-import Joyride from 'react-joyride'
+import Joyride, { STATUS } from 'react-joyride'
+import { BiInfoCircle } from 'react-icons/bi'
 
 //? these are the filter options for the status column
 export const getSeverity = (input) => {
@@ -64,7 +65,16 @@ const Strategies = () => {
         target: 'body',
       },
       {
-        content: <h2>Here is first step!</h2>,
+        content: (
+          <h2>
+            Overview of all strategies in the system, gives a compact overview
+            of which pairs and exchange accounts strategies are running on and
+            their respective 24h PnL, status and whether it’s a demo strategy
+            (i.E. paper trading strategies); you can also search or sort
+            strategies.
+          </h2>
+        ),
+
         placement: 'bottom',
         target: '#step-0',
         title: 'First step',
@@ -296,11 +306,16 @@ const Strategies = () => {
 
     return 0
   })
-
+  const handleJoyrideCallback = (data) => {
+    const { status } = data
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      setState((prev) => ({ ...prev, run: false }))
+    }
+  }
   return (
     <>
       <Joyride
-        callback={() => {}}
+        callback={handleJoyrideCallback}
         continuous
         hideCloseButton
         run={run}
@@ -308,16 +323,20 @@ const Strategies = () => {
         showProgress
         showSkipButton
         steps={steps}
-        // disableOverlay={true}
+        disableOverlay
+        disableScrollParentFix
+        // spotlightPadding={5}
+        // disableOverlayClose
+        // spotlightClicks
         styles={{
           options: {
-            overlayHeight: `100vh`,
-            zIndex: 10000,
+            zIndex: 1000,
+            primaryColor: '#4432e2',
           },
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
-      <div className="flex flex-col space-y-10">
+      <div className=" flex flex-col space-y-10 overflow-y-hidden">
         <TerminalButton styles="ml-2 md:ml-0">
           <Link to="/strategies/create">
             <h1 className="text-sm font-semibold text-white">
@@ -476,6 +495,17 @@ const Strategies = () => {
             />
           </DataTable>
         </div>
+      </div>
+      <div className="absolute bottom-5 right-5 z-20">
+        <TerminalButton
+          text="Start Tour"
+          textSize="text-base"
+          onClick={() => {
+            setState((prev) => ({ ...prev, run: true }))
+          }}
+          className="flex !w-auto items-center justify-center gap-2 text-white ">
+          <BiInfoCircle size={25} />
+        </TerminalButton>
       </div>
     </>
   )

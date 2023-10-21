@@ -72,10 +72,11 @@ const Sidebar = ({ themeState, setter }) => {
         </div>
         <div className="flex justify-center">
           <TerminalButton
+            text="Start Tour"
+            textSize="text-base"
             onClick={() => setter((prev) => ({ ...prev, run: true }))}
-            className="flex items-center justify-center gap-2 text-white">
-            Start Tutorial
-            <BiInfoCircle />
+            className="flex items-center justify-center gap-2 text-white ">
+            <BiInfoCircle size={25} />
           </TerminalButton>
         </div>
       </div>
