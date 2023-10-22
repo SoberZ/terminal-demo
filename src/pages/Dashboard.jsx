@@ -18,11 +18,13 @@ import {
   Spotlight,
 } from '../components'
 
-import { useWindowSize } from '../hooks'
+import { useWindowSize, useDarkMode } from '../hooks'
 import { statusColors } from '../utils/statusColors'
+import { BiInfoCircle } from 'react-icons/bi'
 
 const Dashboard = () => {
   const navigate = useNavigate()
+  const [darkMode, setDarkMode] = useDarkMode()
   const [homeData, setHomeData] = useState({
     strategiesRunning: '12',
     pnl: '5341 USD',
@@ -67,9 +69,116 @@ const Dashboard = () => {
     toast.dismiss()
     setHomeData(Data)
   }, [])
+  const [{ run, steps }, setState] = useState({
+    run: false,
+    steps: [
+      {
+        title: <strong>Autowhale's Terminal Tour</strong>,
+        content: (
+          <>
+            <h2>
+              this is your interface to control, interact and monitor the
+              trading engine.
+            </h2>
+            <br />
+            <h2>
+              {' '}
+              this tour will give you an overview of the features we provide
+              (with fake data of course)
+            </h2>
+          </>
+        ),
+        placement: 'center',
+        target: 'body',
+      },
+      {
+        title: <strong>Home Page</strong>,
+        content: (
+          <h2>
+            the Home page here gives you an overview of your trading activity,
+            system-wide performance indicators, market data, PnL, accounts,
+            volume, trades and orders.
+          </h2>
+        ),
+        placement: 'center',
+        styles: {
+          options: {
+            width: 450,
+          },
+        },
+        target: 'body',
+      },
+      {
+        title: <strong>Widgets</strong>,
+        target: '#step-2',
+        content: (
+          <h2>
+            These contain general info about your whole trading activity at a
+            glance
+          </h2>
+        ),
+        locale: {
+          back: (
+            <span className="rounded bg-autowhale-blue py-[4.8px] px-2 text-white">
+              Back
+            </span>
+          ),
+        },
+        placement: 'bottom',
+      },
+      {
+        title: <strong>Recent Orders & Trades</strong>,
+        content: (
+          <h2>
+            All Order tables in the system come with advanced querying and
+            filtering options with pagination to quickly find the order/data you
+            need, and are Mobile friendly
+          </h2>
+        ),
+        placement: 'bottom',
+        target: '#step-3',
+        styles: {
+          options: {
+            width: 450,
+          },
+        },
+      },
+    ],
+  })
 
+  const handleJoyrideCallback = (data) => {
+    const { status } = data
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      setState((prev) => ({ ...prev, run: false }))
+    }
+  }
   return (
     <>
+      <Joyride
+        callback={handleJoyrideCallback}
+        continuous
+        hideCloseButton
+        run={run}
+        scrollToFirstStep
+        showProgress
+        showSkipButton
+        steps={steps}
+        disableOverlay
+        disableScrollParentFix
+        // spotlightPadding={5}
+        // disableOverlayClose
+        // spotlightClicks
+        styles={{
+          options: {
+            zIndex: 1000,
+            primaryColor: '#4432e2',
+            arrowColor: !darkMode ? '#1D1D1D' : '#fff',
+            backgroundColor: !darkMode ? '#1D1D1D' : '#fff',
+            textColor: darkMode ? '#171717' : '#fff',
+          },
+        }}
+        // styles={{ overlay: { height: '100%' } }}
+      />
       <div className="flex flex-col space-y-10">
         <div id={`step-2`} className="flex flex-col space-y-10">
           {width > 768 ? (
@@ -317,6 +426,17 @@ const Dashboard = () => {
           </p>
           <AllTrades totalRecords={0} />
         </div>
+      </div>
+      <div className="absolute bottom-5 left-5 z-20">
+        <TerminalButton
+          text="Start Tour"
+          textSize="text-base"
+          onClick={() => {
+            setState((prev) => ({ ...prev, run: true }))
+          }}
+          className="flex !w-auto items-center justify-center gap-2 text-white ">
+          <BiInfoCircle size={25} />
+        </TerminalButton>
       </div>
     </>
   )

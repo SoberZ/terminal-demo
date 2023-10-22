@@ -37,6 +37,9 @@ import StrategyData from '../data/strategyData/strategy.json'
 import GroupedChart from '../data/strategyData/groupedCharts.json'
 import { getBase, getQuote } from '../utils/misc'
 
+import Joyride, { STATUS } from 'react-joyride'
+import { BiInfoCircle } from 'react-icons/bi'
+
 const Strategy = () => {
   const { strategyId } = useParams()
   const { width } = useWindowSize()
@@ -246,10 +249,158 @@ const Strategy = () => {
     }
   }, [strategyData.active_status])
 
+  const [{ run, steps }, setState] = useState({
+    run: false,
+    steps: [
+      {
+        title: <strong>Strategy Details Page</strong>,
+        content: (
+          <div className="flex flex-col gap-2">
+            <h2>
+              this page contains all kinds of KPIs relevant for your strategy,
+              status of the strategy and the exchange account (indicated with
+              the color of the tag), State controllers and Performance Charts
+              and Metrics
+            </h2>
+            <h2></h2>
+            <h2></h2>
+          </div>
+        ),
+        placement: 'center',
+        target: 'body',
+        styles: {
+          options: {
+            width: 550,
+          },
+        },
+      },
+      {
+        title: <strong>Action Buttons</strong>,
+        content: (
+          <div className="flex flex-col gap-2">
+            <h2>
+              These are action buttons to change the status of the strategy, you
+              can pause, stop, continue or archive the strategy from here, with
+              some tooltips for more info
+            </h2>
+          </div>
+        ),
+        placement: 'left',
+        target: '#step-3',
+        styles: {
+          options: {
+            width: 450,
+          },
+        },
+      },
+      {
+        title: <strong>Performance Metrics Widgets</strong>,
+        content: (
+          <div className="flex flex-col gap-2">
+            <h2>
+              these widgets represent the aggregated metrics for this strategy,
+              you can toggle above to check for the Last 24h Metrics,
+            </h2>
+            <h2>
+              {' '}
+              Some Widgets can be clicked to change the chart on the right to
+              the Metric it represents
+            </h2>
+          </div>
+        ),
+        placement: 'auto',
+        target: '#step-0',
+        styles: {
+          options: {
+            width: 400,
+          },
+        },
+      },
+      {
+        title: <strong>Performances Chart</strong>,
+        content: (
+          <div className="flex flex-col gap-2">
+            <h2>
+              This chart represents the performance of the Widget that was
+              clicked on the right, or one of the mini charts (found below)
+            </h2>
+          </div>
+        ),
+        placement: 'auto',
+        target: '#step-1',
+        styles: {
+          options: {
+            width: 550,
+          },
+        },
+      },
+      {
+        title: <strong>Strategy Parameters Controller</strong>,
+        content: (
+          <div className="flex flex-col gap-2">
+            <h2>
+              these inputs would be used to control and fine-tune the strategy's
+              parameters
+            </h2>
+          </div>
+        ),
+        placement: 'left',
+        target: '#step-4',
+      },
+      {
+        title: <strong>Behind-the-Scenes</strong>,
+        content: (
+          <div className="flex flex-col gap-2">
+            <h2>
+              these Performance metrics are fetched from our service, that
+              calculates them in a unified fashion, they're also pre-cached in
+              the backend for fast loading!
+            </h2>
+          </div>
+        ),
+        placement: 'center',
+        target: 'body',
+        styles: {
+          options: {
+            width: 550,
+          },
+        },
+      },
+    ],
+  })
+
+  const handleJoyrideCallback = (data) => {
+    const { status } = data
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      setState((prev) => ({ ...prev, run: false }))
+    }
+  }
+
   return (
     <>
       <ConfirmDialog />
-
+      <Joyride
+        callback={handleJoyrideCallback}
+        continuous
+        hideCloseButton
+        run={run}
+        scrollToFirstStep
+        showProgress
+        showSkipButton
+        steps={steps}
+        disableOverlay
+        disableScrollParentFix
+        // spotlightPadding={5}
+        // disableOverlayClose
+        // spotlightClicks
+        styles={{
+          options: {
+            zIndex: 1000,
+            primaryColor: '#4432e2',
+          },
+        }}
+        // styles={{ overlay: { height: '100%' } }}
+      />
       <div className="space-y-4 rounded-lg bg-color-secondary p-3.5 text-sm text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800 md:p-10">
         <div className="flex flex-col items-center space-y-2 md:flex md:flex-row md:items-center md:justify-between md:space-y-0">
           <div className="flex flex-wrap justify-center gap-2 md:justify-start">
@@ -316,7 +467,7 @@ const Strategy = () => {
               <span>Last 24h performance</span>
             </button>
           </div>
-          <div className="flex flex-wrap justify-center gap-2">
+          <div id="step-3" className="flex flex-wrap justify-center gap-2">
             <TerminalButton
               text="Continue"
               data-pr-tooltip="Starts/Continues the strategy after it's stopped"
@@ -379,6 +530,7 @@ const Strategy = () => {
           <div className="flex flex-col gap-5 lg:flex-row lg:justify-center">
             <div className="space-y-3 lg:w-2/4">
               <div
+                id="step-0"
                 className={`mt-5 grid grid-cols-2 gap-3  xl:mt-0 ${
                   width > 1024 ? 'automaticGridTiles' : ''
                 } `}>
@@ -552,13 +704,15 @@ const Strategy = () => {
                 ) : null}
               </div>
             </div>
-            <div className="space-y-2 lg:w-2/4">
+            <div id="step-1" className="space-y-2 lg:w-2/4">
               <PrimaryChart
                 id={bigChart.id}
                 metricsData={bigChart.data}
                 metricsTime={chartData.labels}
               />
-              <div className="flex justify-center overflow-y-hidden py-2">
+              <div
+                id="step-4"
+                className="flex justify-center overflow-y-hidden py-2">
                 <EditStrategy
                   strategyData={strategyData}
                   editMode={editMode}
@@ -899,6 +1053,17 @@ const Strategy = () => {
             </div>
           </div>
           <Orders strategyId={strategyId} />
+        </div>
+        <div className="absolute bottom-5 right-9 z-20">
+          <TerminalButton
+            text="Start Tour"
+            textSize="text-base"
+            onClick={() => {
+              setState((prev) => ({ ...prev, run: true }))
+            }}
+            className="flex !w-auto items-center justify-center gap-2 text-white ">
+            <BiInfoCircle size={25} />
+          </TerminalButton>
         </div>
       </div>
     </>

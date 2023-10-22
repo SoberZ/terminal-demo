@@ -59,25 +59,28 @@ const Strategies = () => {
     run: false,
     steps: [
       {
-        content: <h2>Let's begin our journey!</h2>,
-        locale: { skip: <strong>SKIP</strong> },
+        title: <strong>Strategies Page</strong>,
+        content: (
+          <div className="flex flex-col gap-2">
+            <h2>
+              this page contains a Compact Overview of all strategies in the
+              system
+            </h2>
+            <h2>
+              Showcasing which pairs and exchange accounts strategies are
+              running, their respective 24h PnL, status and if it’s a demo
+              strategy (i.E. paper trading strategies)
+            </h2>
+            <h2>you can also search or sort/filter strategies per the icons</h2>
+          </div>
+        ),
         placement: 'center',
         target: 'body',
-      },
-      {
-        content: (
-          <h2>
-            Overview of all strategies in the system, gives a compact overview
-            of which pairs and exchange accounts strategies are running on and
-            their respective 24h PnL, status and whether it’s a demo strategy
-            (i.E. paper trading strategies); you can also search or sort
-            strategies.
-          </h2>
-        ),
-
-        placement: 'bottom',
-        target: '#step-0',
-        title: 'First step',
+        styles: {
+          options: {
+            width: 550,
+          },
+        },
       },
     ],
   })
@@ -496,7 +499,7 @@ const Strategies = () => {
           </DataTable>
         </div>
       </div>
-      <div className="absolute bottom-5 right-5 z-20">
+      <div className="absolute bottom-5 right-9 z-20">
         <TerminalButton
           text="Start Tour"
           textSize="text-base"

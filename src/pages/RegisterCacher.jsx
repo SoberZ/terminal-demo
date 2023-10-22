@@ -7,7 +7,8 @@ import { registerCacher } from '../utils/Fetchers/CacherFetchers'
 import AllExchanges from '../data/exchange/exchange.json'
 
 import { fetchExchanges, fetchMarkets } from '../utils/Fetchers/DataFetchers'
-
+import Joyride, { STATUS } from 'react-joyride'
+import { BiInfoCircle } from 'react-icons/bi'
 const endpointOptions = [
   { label: 'Ticker', value: 'ticker' },
   { label: 'Open Interest', value: 'open_interest' },
@@ -174,67 +175,133 @@ const RegisterCacher = () => {
     //   toast.error('Cacher registration failed')
     // }
   }
+  const [{ run, steps }, setState] = useState({
+    run: false,
+    steps: [
+      {
+        title: <strong>Register Cacher Page</strong>,
+        content: (
+          <div className="flex flex-col gap-2">
+            <h2>
+              this page has a form to register a cacher, you can register a
+              cacher for any exchange and any endpoint you select from the menu
+              above
+            </h2>
+          </div>
+        ),
+        placement: 'center',
+        target: 'body',
+        styles: {
+          options: {
+            width: 550,
+          },
+        },
+      },
+    ],
+  })
 
+  const handleJoyrideCallback = (data) => {
+    const { status } = data
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      setState((prev) => ({ ...prev, run: false }))
+    }
+  }
   return (
-    <div className="space-y-5 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
-      <h1 className="text-primary inline-block bg-clip-text text-2xl font-semibold text-transparent dark:text-white">
-        Register a Cacher
-      </h1>
-      <p className="text-sm font-light">
-        Register a cacher to start caching data from exchanges. You can register
-        a cacher for any exchange and any endpoint, market pairs are optional
-        for different endpoints. You can also add parameters to the cacher,{' '}
-        <span className="font-bold">
-          Note that Parameters are optional and are used to name and filter the
-          data
-        </span>
-      </p>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col space-y-5 md:w-[30rem]">
-        {exchanges && (
+    <>
+      <Joyride
+        callback={handleJoyrideCallback}
+        continuous
+        hideCloseButton
+        run={run}
+        scrollToFirstStep
+        showProgress
+        showSkipButton
+        steps={steps}
+        disableOverlay
+        disableScrollParentFix
+        // spotlightPadding={5}
+        // disableOverlayClose
+        // spotlightClicks
+        styles={{
+          options: {
+            zIndex: 1000,
+            primaryColor: '#4432e2',
+          },
+        }}
+        // styles={{ overlay: { height: '100%' } }}
+      />
+      <div className="space-y-5 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
+        <h1 className="inline-block bg-clip-text text-2xl font-semibold text-color-secondary  dark:text-white">
+          Register a Cacher
+        </h1>
+        <p className="text-sm font-light">
+          Register a cacher to start caching data from exchanges. You can
+          register a cacher for any exchange and any endpoint, market pairs are
+          optional for different endpoints. You can also add parameters to the
+          cacher,{' '}
+          <span className="font-bold">
+            Note that Parameters are optional and are used to name and filter
+            the data
+          </span>
+        </p>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col space-y-5 md:w-[30rem]">
+          {exchanges && (
+            <Select
+              label="Exchange"
+              options={exchanges}
+              id="exchange"
+              control={control}
+              useMode
+              setMode={setCurrentExchange}
+            />
+          )}
           <Select
-            label="Exchange"
-            options={exchanges}
-            id="exchange"
+            label="Endpoint"
+            options={endpointOptions}
+            id="endpoint"
             control={control}
-            useMode
-            setMode={setCurrentExchange}
           />
-        )}
-        <Select
-          label="Endpoint"
-          options={endpointOptions}
-          id="endpoint"
-          control={control}
-        />
-        {endpoint && (
-          <Select
-            label="Market"
-            options={markets}
-            id="market"
-            control={control}
-            optional={!isParamRequired}
-          />
-        )}
-
-        <div className="flex justify-between gap-2">
-          <TerminalButton
-            onClick={onAddParamClick}
-            type="button"
-            text={'Add param'}
-            className="w-full"
-          />
-          <TerminalButton
-            onClick={onRemoveParamClick}
-            type="button"
-            text={'Remove param'}
-            className="w-full"
-          />
-        </div>
-        <TerminalButton type="submit" text={'Submit'} className="w-full" />
-      </form>
-    </div>
+          {endpoint && (
+            <Select
+              label="Market"
+              options={markets}
+              id="market"
+              control={control}
+              optional={!isParamRequired}
+            />
+          )}
+          {paramComponents}
+          <div className="flex justify-between gap-2">
+            <TerminalButton
+              onClick={onAddParamClick}
+              type="button"
+              text={'Add param'}
+              className="w-full"
+            />
+            <TerminalButton
+              onClick={onRemoveParamClick}
+              type="button"
+              text={'Remove param'}
+              className="w-full"
+            />
+          </div>
+          <TerminalButton type="submit" text={'Submit'} className="w-full" />
+        </form>
+      </div>
+      <div className="absolute bottom-5 right-9 z-20">
+        <TerminalButton
+          text="Start Tour"
+          textSize="text-base"
+          onClick={() => {
+            setState((prev) => ({ ...prev, run: true }))
+          }}
+          className="flex !w-auto items-center justify-center gap-2 text-white ">
+          <BiInfoCircle size={25} />
+        </TerminalButton>
+      </div>
+    </>
   )
 }
 

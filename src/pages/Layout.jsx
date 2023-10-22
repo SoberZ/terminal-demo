@@ -44,25 +44,18 @@ const Layout = () => {
         target: 'body',
       },
       {
-        title: <strong>Autowhale's Terminal Tour</strong>,
+        title: <strong>Home Page</strong>,
         content: (
-          <>
-            <h2>
-              the Home page here gives you an overview of your trading activity,
-              system-wide performance indicators, market data, PnL, accounts,
-              volume, trades and orders.
-            </h2>
-            <br />
-            <h2>
-              All order tables in the system (Located Below) come with advanced
-              querying and filtering options to quickly find the data you need.
-            </h2>
-          </>
+          <h2>
+            the Home page here gives you an overview of your trading activity,
+            system-wide performance indicators, market data, PnL, accounts,
+            volume, trades and orders.
+          </h2>
         ),
         placement: 'center',
         styles: {
           options: {
-            width: 525,
+            width: 450,
           },
         },
         target: 'body',
@@ -76,13 +69,31 @@ const Layout = () => {
             glance
           </h2>
         ),
+        locale: {
+          back: (
+            <span className="rounded bg-autowhale-blue py-[4.8px] px-2 text-white">
+              Back
+            </span>
+          ),
+        },
         placement: 'bottom',
       },
       {
-        content: <h2>Here is first step!</h2>,
+        title: <strong>Recent Orders & Trades</strong>,
+        content: (
+          <h2>
+            All Order tables in the system come with advanced querying and
+            filtering options with pagination to quickly find the order/data you
+            need, and are Mobile friendly
+          </h2>
+        ),
         placement: 'bottom',
         target: '#step-3',
-        title: 'First step',
+        styles: {
+          options: {
+            width: 450,
+          },
+        },
       },
     ],
   })
@@ -111,28 +122,6 @@ const Layout = () => {
 
   return (
     <>
-      <Joyride
-        callback={handleJoyrideCallback}
-        continuous
-        hideCloseButton
-        run={run}
-        scrollToFirstStep
-        showProgress
-        showSkipButton
-        steps={steps}
-        disableOverlay
-        disableScrollParentFix
-        // spotlightPadding={5}
-        // disableOverlayClose
-        // spotlightClicks
-        styles={{
-          options: {
-            zIndex: 1000,
-            primaryColor: '#4432e2',
-          },
-        }}
-        // styles={{ overlay: { height: '100%' } }}
-      />
       <div className="w-full bg-gray-50  dark:bg-dark-1st" id="AllApp">
         <ClientProvider />
 
