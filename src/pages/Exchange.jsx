@@ -10,6 +10,9 @@ import { ExchangesService } from '../services'
 import ExchangeAccount from '../data/exchange/exchange.json'
 import Balances from '../data/exchange/balances.json'
 
+import Joyride, { STATUS } from 'react-joyride'
+import { BiInfoCircle } from 'react-icons/bi'
+
 const Exchange = () => {
   const { exchangeId } = useParams()
   const [accountData, setAccountData] = useState(null)
@@ -64,9 +67,63 @@ const Exchange = () => {
     fetchBalances()
   }, [])
 
+  const [{ run, steps }, setState] = useState({
+    run: false,
+    steps: [
+      {
+        title: <strong>Exchange Page</strong>,
+        content: (
+          <div className="flex flex-col gap-2">
+            <h2>
+              this contains relevant information about the exchange account you
+              connected, like the status, some balances, and the exchange it’s
+              connected to
+            </h2>
+          </div>
+        ),
+        placement: 'center',
+        target: 'body',
+        styles: {
+          options: {
+            width: 550,
+          },
+        },
+      },
+    ],
+  })
+
+  const handleJoyrideCallback = (data) => {
+    const { status } = data
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      setState((prev) => ({ ...prev, run: false }))
+    }
+  }
+
   return (
     <>
       <ConfirmDialog />
+      <Joyride
+        callback={handleJoyrideCallback}
+        continuous
+        hideCloseButton
+        run={run}
+        scrollToFirstStep
+        showProgress
+        showSkipButton
+        steps={steps}
+        disableOverlay
+        disableScrollParentFix
+        // spotlightPadding={5}
+        // disableOverlayClose
+        // spotlightClicks
+        styles={{
+          options: {
+            zIndex: 1000,
+            primaryColor: '#4432e2',
+          },
+        }}
+        // styles={{ overlay: { height: '100%' } }}
+      />
       <div className="space-y-10 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
         {accountData && (
           <div className="flex flex-col space-y-3 text-sm">
@@ -128,6 +185,17 @@ const Exchange = () => {
             </h1>
           </TerminalButton>
         </div>
+      </div>
+      <div className="absolute bottom-5 right-9 z-20">
+        <TerminalButton
+          text="Start Tour"
+          textSize="text-base"
+          onClick={() => {
+            setState((prev) => ({ ...prev, run: true }))
+          }}
+          className="flex !w-auto items-center justify-center gap-2 text-white ">
+          <BiInfoCircle size={25} />
+        </TerminalButton>
       </div>
     </>
   )

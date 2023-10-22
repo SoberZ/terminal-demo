@@ -6,7 +6,7 @@ import { UsersIcon, LogoutIcon } from '../../assets/icons'
 import { routes } from '../../utils/misc'
 import TerminalButton from '../shared/TerminalButton.shared'
 
-const Sidebar = ({ themeState, setter }) => {
+const Sidebar = ({ themeState }) => {
   const [selected, setSelected] = useSelectRoute()
   const handleClick = (divNum) => () => setSelected(divNum)
 
@@ -67,16 +67,8 @@ const Sidebar = ({ themeState, setter }) => {
                 <span className="ml-3 flex-1 text-left">Log out</span>
               </button>
             </li>
-            <p className="ml-6 italic"> {UserService.getUsername()}</p>
+            <p className="ml-6 italic">trader@xys.com</p>
           </ul>
-        </div>
-        <div className="flex justify-center">
-          <TerminalButton
-            onClick={() => setter((prev) => ({ ...prev, run: true }))}
-            className="flex items-center justify-center gap-2 text-white">
-            Start Tutorial
-            <BiInfoCircle />
-          </TerminalButton>
         </div>
       </div>
     </div>

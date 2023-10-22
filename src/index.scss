@@ -30,6 +30,7 @@
     --highlight-color-hover: #deebff;
     --sb-track-color: #ffffff;
     --sb-thumb-color: #4432e2;
+    overflow-x: hidden !important;
   }
   // it's not regestreing the colorscheme
   :root[data-theme='dark'] {
@@ -50,7 +51,9 @@
     --sb-thumb-color: #ffffff;
   }
 }
-
+.react-joyride__overlay {
+  height: 100% !important;
+}
 body {
   @apply bg-color-primary;
 }
