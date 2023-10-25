@@ -211,7 +211,10 @@ const Cachers = () => {
         title: <strong>Cachers Page</strong>,
         content: (
           <div className="flex flex-col gap-2">
-            <h2>TBD</h2>
+            <h2>
+              This page shows the stored ticker data or order book data from
+              your DB, where you can register in the registration page
+            </h2>
           </div>
         ),
         placement: 'center',
