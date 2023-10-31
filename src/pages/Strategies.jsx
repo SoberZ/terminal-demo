@@ -63,15 +63,27 @@ const Strategies = () => {
         content: (
           <div className="flex flex-col gap-2">
             <h2>
-              this page contains a Compact Overview of all strategies in the
-              system
+              this page contains{' '}
+              <span className="font-bold">
+                {' '}
+                a Compact Overview of all strategies in the system
+              </span>
             </h2>
             <h2>
               Showcasing which pairs and exchange accounts strategies are
-              running, their respective 24h PnL, status and if it’s a demo
-              strategy (i.E. paper trading strategies)
+              running with, their respective 24h PnL, status and if it’s a demo
+              strategy{' '}
+              <span className="font-bold">
+                (i.E. paper trading strategies){' '}
+              </span>
             </h2>
-            <h2>you can also search or sort/filter strategies per the icons</h2>
+            <h2>
+              you can also{' '}
+              <span className="font-bold">
+                search or sort/filter strategies
+              </span>{' '}
+              per the icons
+            </h2>
           </div>
         ),
         placement: 'center',
@@ -335,6 +347,9 @@ const Strategies = () => {
           options: {
             zIndex: 1000,
             primaryColor: '#4432e2',
+            arrowColor: '#fff',
+            backgroundColor: '#fff',
+            textColor: '#171717',
           },
         }}
         // styles={{ overlay: { height: '100%' } }}

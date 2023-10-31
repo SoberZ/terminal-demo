@@ -257,10 +257,16 @@ const Strategy = () => {
         content: (
           <div className="flex flex-col gap-2">
             <h2>
-              this page contains all kinds of KPIs relevant for your strategy,
-              status of the strategy and the exchange account (indicated with
-              the color of the tag), State controllers and Performance Charts
-              and Metrics
+              this page contains all kinds of{' '}
+              <span className="font-bold">
+                {' '}
+                KPIs relevant for your strategy
+              </span>
+              , status of the strategy and the exchange account{' '}
+              <span className="font-bold">
+                (indicated with the color of the tag)
+              </span>
+              , State controllers and Performance Charts and Metrics
             </h2>
             <h2></h2>
             <h2></h2>
@@ -280,11 +286,21 @@ const Strategy = () => {
           <div className="flex flex-col gap-2">
             <h2>
               These are action buttons to change the status of the strategy, you
-              can pause, stop, continue or archive the strategy from here, with
-              some tooltips for more info
+              can <span className="font-bold">pause</span>,{' '}
+              <span className="font-bold">stop</span>,{' '}
+              <span className="font-bold">continue</span> or{' '}
+              <span className="font-bold">archive</span> the strategy from here,
+              with some tooltips for more info
             </h2>
           </div>
         ),
+        locale: {
+          back: (
+            <span className="rounded bg-autowhale-blue py-[4.8px] px-2 text-white">
+              Back
+            </span>
+          ),
+        },
         placement: 'left',
         target: '#step-3',
         styles: {
@@ -298,16 +314,29 @@ const Strategy = () => {
         content: (
           <div className="flex flex-col gap-2">
             <h2>
-              these widgets represent the aggregated metrics for this strategy,
-              you can toggle above to check for the Last 24h Metrics,
+              these widgets represent{' '}
+              <span className="font-bold"> the aggregated metrics</span> for
+              this strategy, you can toggle above to check for the Last 24h
+              Metrics,
             </h2>
             <h2>
               {' '}
-              Some Widgets can be clicked to change the chart on the right to
-              the Metric it represents
+              Some Widgets can be clicked to
+              <span className="font-bold">
+                {' '}
+                change the chart on the right
+              </span>{' '}
+              to the Metric it represents
             </h2>
           </div>
         ),
+        locale: {
+          back: (
+            <span className="rounded bg-autowhale-blue py-[4.8px] px-2 text-white">
+              Back
+            </span>
+          ),
+        },
         placement: 'auto',
         target: '#step-0',
         styles: {
@@ -321,11 +350,20 @@ const Strategy = () => {
         content: (
           <div className="flex flex-col gap-2">
             <h2>
-              This chart represents the performance of the Widget that was
-              clicked on the right, or one of the mini charts (found below)
+              This chart represents{' '}
+              <span className="font-bold"> the performance of the Widget</span>{' '}
+              that was clicked on the right, or one of the mini charts
+              <span className="font-bold"> (found below)</span>
             </h2>
           </div>
         ),
+        locale: {
+          back: (
+            <span className="rounded bg-autowhale-blue py-[4.8px] px-2 text-white">
+              Back
+            </span>
+          ),
+        },
         placement: 'auto',
         target: '#step-1',
         styles: {
@@ -339,11 +377,19 @@ const Strategy = () => {
         content: (
           <div className="flex flex-col gap-2">
             <h2>
-              these inputs would be used to control and fine-tune the strategy's
-              parameters
+              these inputs would be used to{' '}
+              <span className="font-bold"> control and fine-tune</span> the
+              strategy's parameters
             </h2>
           </div>
         ),
+        locale: {
+          back: (
+            <span className="rounded bg-autowhale-blue py-[4.8px] px-2 text-white">
+              Back
+            </span>
+          ),
+        },
         placement: 'left',
         target: '#step-4',
       },
@@ -352,12 +398,22 @@ const Strategy = () => {
         content: (
           <div className="flex flex-col gap-2">
             <h2>
-              these Performance metrics are fetched from our service, that
-              calculates them in a unified fashion, they're also pre-cached in
-              the backend for fast loading!
+              these Performance metrics are fetched from our service, that{' '}
+              <span className="font-bold">
+                calculates them in a unified fashion
+              </span>
+              , they're also <span className="font-bold">pre-cached</span> in
+              the backend for <span className="font-bold">fast loading!</span>
             </h2>
           </div>
         ),
+        locale: {
+          back: (
+            <span className="rounded bg-autowhale-blue py-[4.8px] px-2 text-white">
+              Back
+            </span>
+          ),
+        },
         placement: 'center',
         target: 'body',
         styles: {
@@ -397,6 +453,9 @@ const Strategy = () => {
           options: {
             zIndex: 1000,
             primaryColor: '#4432e2',
+            arrowColor: '#fff',
+            backgroundColor: '#fff',
+            textColor: '#171717',
           },
         }}
         // styles={{ overlay: { height: '100%' } }}
@@ -469,7 +528,7 @@ const Strategy = () => {
           </div>
           <div id="step-3" className="flex flex-wrap justify-center gap-2">
             <TerminalButton
-              text="Continue"
+              text="Start"
               data-pr-tooltip="Starts/Continues the strategy after it's stopped"
               data-pr-position="top"
               data-pr-my="center bottom-10"

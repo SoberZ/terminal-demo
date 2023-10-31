@@ -102,13 +102,17 @@ const CreateStrategy = () => {
         content: (
           <div className="flex flex-col gap-2">
             <h2>
-              this page has the form to create a new strategy, it has all the
-              strategy blueprints that you can base your strategy on and all the
-              required parameters for each strategy instance,
+              this page has the form to create a new strategy, it has{' '}
+              <span className="font-bold"> all the strategy blueprints</span>{' '}
+              that you can base your strategy on and{' '}
+              <span className="font-bold">
+                all the required parameters for each strategy instance
+              </span>
             </h2>
             <h2>
               then you can choose the exchange, market and exchange account that
-              you want to use for your strategy. and you're set!
+              you want to use for your strategy.{' '}
+              <span className="font-bold">and you're set!</span>
             </h2>
           </div>
         ),
@@ -150,6 +154,9 @@ const CreateStrategy = () => {
           options: {
             zIndex: 1000,
             primaryColor: '#4432e2',
+            arrowColor: '#fff',
+            backgroundColor: '#fff',
+            textColor: '#171717',
           },
         }}
         // styles={{ overlay: { height: '100%' } }}

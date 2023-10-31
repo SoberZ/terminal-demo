@@ -226,6 +226,9 @@ const RegisterCacher = () => {
           options: {
             zIndex: 1000,
             primaryColor: '#4432e2',
+            arrowColor: '#fff',
+            backgroundColor: '#fff',
+            textColor: '#171717',
           },
         }}
         // styles={{ overlay: { height: '100%' } }}

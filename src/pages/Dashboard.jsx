@@ -24,7 +24,7 @@ import { BiInfoCircle } from 'react-icons/bi'
 
 const Dashboard = () => {
   const navigate = useNavigate()
-  const [darkMode, setDarkMode] = useDarkMode()
+  const [darkMode] = useDarkMode()
   const [homeData, setHomeData] = useState({
     strategiesRunning: '12',
     pnl: '5341 USD',
@@ -82,9 +82,9 @@ const Dashboard = () => {
             </h2>
             <br />
             <h2>
-              {' '}
               this tour will give you an overview of the features we provide
-              (with fake data of course)
+              <br />
+              <span className="font-bold">(with fake data of course)</span>
             </h2>
           </>
         ),
@@ -94,17 +94,31 @@ const Dashboard = () => {
       {
         title: <strong>Home Page</strong>,
         content: (
-          <h2>
-            the Home page here gives you an overview of your trading activity,
-            system-wide performance indicators, market data, PnL, accounts,
-            volume, trades and orders.
+          <h2 className="text-left">
+            the Home page here gives you{' '}
+            <span className="font-bold">
+              an overview of your trading activity,
+            </span>
+            <br />
+            <br />
+            <div className="flex flex-col items-center">
+              <ul className="list-disc">
+                <li>System-wide performance indicators</li>
+                <li>Market data</li>
+                <li>PnL & Volume</li>
+                <li>Exchange accounts</li>
+                <li>Trades and orders</li>
+              </ul>
+            </div>
           </h2>
         ),
         placement: 'center',
-        styles: {
-          options: {
-            width: 450,
-          },
+        locale: {
+          back: (
+            <span className="rounded bg-autowhale-blue py-[4.8px] px-2 text-white">
+              Back
+            </span>
+          ),
         },
         target: 'body',
       },
@@ -130,9 +144,12 @@ const Dashboard = () => {
         title: <strong>Recent Orders & Trades</strong>,
         content: (
           <h2>
-            All Order tables in the system come with advanced querying and
-            filtering options with pagination to quickly find the order/data you
-            need, and are Mobile friendly
+            All Order tables in the system come with{' '}
+            <span className="font-bold">
+              {' '}
+              advanced querying and filtering options with pagination
+            </span>{' '}
+            to quickly find the order/data you need, and are Mobile friendly
           </h2>
         ),
         placement: 'bottom',
@@ -141,6 +158,13 @@ const Dashboard = () => {
           options: {
             width: 450,
           },
+        },
+        locale: {
+          back: (
+            <span className="rounded bg-autowhale-blue py-[4.8px] px-2 text-white">
+              Back
+            </span>
+          ),
         },
       },
     ],
@@ -152,6 +176,7 @@ const Dashboard = () => {
       setState((prev) => ({ ...prev, run: false }))
     }
   }
+
   return (
     <>
       <Joyride
@@ -165,16 +190,13 @@ const Dashboard = () => {
         steps={steps}
         disableOverlay
         disableScrollParentFix
-        // spotlightPadding={5}
-        // disableOverlayClose
-        // spotlightClicks
         styles={{
           options: {
             zIndex: 1000,
             primaryColor: '#4432e2',
-            arrowColor: !darkMode ? '#1D1D1D' : '#fff',
-            backgroundColor: !darkMode ? '#1D1D1D' : '#fff',
-            textColor: darkMode ? '#171717' : '#fff',
+            arrowColor: '#fff',
+            backgroundColor: '#fff',
+            textColor: '#171717',
           },
         }}
         // styles={{ overlay: { height: '100%' } }}

@@ -171,13 +171,21 @@ const CreateExchangeAccount = () => {
         content: (
           <div className="flex flex-col gap-2">
             <h2>
-              this page contains the form that you'll use to connect to your
-              preferable exchange, as well as the ability to add other params
-              for lesser known exchanges
+              this page contains the form that you'll use to{' '}
+              <span className="font-bold">
+                {' '}
+                connect to your preferable exchange
+              </span>
+              , as well as the ability to add other params for lesser known
+              exchanges
             </h2>
             <h2>
-              You can also create multiple exchange accounts for the same
-              exchange.
+              You can also{' '}
+              <span className="font-bold">
+                {' '}
+                create multiple exchange accounts
+              </span>{' '}
+              for the same exchange.
             </h2>
           </div>
         ),
@@ -218,6 +226,9 @@ const CreateExchangeAccount = () => {
           options: {
             zIndex: 1000,
             primaryColor: '#4432e2',
+            arrowColor: '#fff',
+            backgroundColor: '#fff',
+            textColor: '#171717',
           },
         }}
         // styles={{ overlay: { height: '100%' } }}

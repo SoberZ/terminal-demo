@@ -76,8 +76,12 @@ const Exchange = () => {
           <div className="flex flex-col gap-2">
             <h2>
               this contains relevant information about the exchange account you
-              connected, like the status, some balances, and the exchange it’s
-              connected to
+              connected,{' '}
+              <span className="font-bold">
+                {' '}
+                like the status, some balances, and the exchange it’s connected
+                to
+              </span>
             </h2>
           </div>
         ),
@@ -120,6 +124,9 @@ const Exchange = () => {
           options: {
             zIndex: 1000,
             primaryColor: '#4432e2',
+            arrowColor: '#fff',
+            backgroundColor: '#fff',
+            textColor: '#171717',
           },
         }}
         // styles={{ overlay: { height: '100%' } }}

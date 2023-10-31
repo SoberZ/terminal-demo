@@ -212,8 +212,12 @@ const Cachers = () => {
         content: (
           <div className="flex flex-col gap-2">
             <h2>
-              This page shows the stored ticker data or order book data from
-              your DB, where you can register in the registration page
+              This page shows{' '}
+              <span className="font-bold">
+                {' '}
+                the stored ticker data or order book data from your DB
+              </span>
+              , where you can register in the registration page
             </h2>
           </div>
         ),
@@ -255,6 +259,9 @@ const Cachers = () => {
           options: {
             zIndex: 1000,
             primaryColor: '#4432e2',
+            arrowColor: '#fff',
+            backgroundColor: '#fff',
+            textColor: '#171717',
           },
         }}
         // styles={{ overlay: { height: '100%' } }}

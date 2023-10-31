@@ -151,7 +151,7 @@ const Exchanges = () => {
             <h2>
               this page has all the exchange accounts in the system that you've
               connected using your API keys inside the Create Exchange Account
-              page. (with the button above)
+              page. <span className="font-bold"> (with the button above) </span>
             </h2>
           </div>
         ),
@@ -192,6 +192,9 @@ const Exchanges = () => {
           options: {
             zIndex: 1000,
             primaryColor: '#4432e2',
+            arrowColor: '#fff',
+            backgroundColor: '#fff',
+            textColor: '#171717',
           },
         }}
         // styles={{ overlay: { height: '100%' } }}
