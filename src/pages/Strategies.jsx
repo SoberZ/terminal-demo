@@ -14,7 +14,6 @@ import { StrategiesService, UserService, StateService } from '../services'
 
 import { useWindowSize } from '../hooks'
 import { statusColors } from '../utils/statusColors'
-import { set } from 'react-hook-form'
 
 import StrategiesData from '../data/strategies/strategiesData.json'
 

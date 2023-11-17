@@ -1,0 +1,32 @@
+{
+  "data": [
+    {
+      "name": "BTC",
+      "total": 0.68564,
+      "free": 0.0,
+      "used": 0.68564,
+      "thumb": "https://s2.coinmarketcap.com/static/img/coins/64x64/1.png"
+    },
+    {
+      "name": "LTC",
+      "total": 0.571568,
+      "free": 0.571568,
+      "used": 0,
+      "thumb": "https://s2.coinmarketcap.com/static/img/coins/64x64/2.png"
+    },
+    {
+      "name": "XLM",
+      "total": 302.09,
+      "free": 37.699,
+      "used": 264.391,
+      "thumb": "https://s2.coinmarketcap.com/static/img/coins/64x64/512.png"
+    },
+    {
+      "name": "USDT",
+      "total": 3025.09373,
+      "free": 380.70173,
+      "used": 2644.392,
+      "thumb": "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
+    }
+  ]
+}

@@ -1,14 +1,23 @@
-import { useLayoutEffect, useEffect, useState, useRef } from 'react'
+import { useLayoutEffect, useEffect, useState, Suspense, lazy } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import Joyride, { STATUS } from 'react-joyride'
 import {
   ClientProvider,
   Sidebar,
-  HamburgerSidebar,
   ThemeToggler,
   CompactSidebar,
+  Fallback,
 } from '../components'
+
+import { ProgressSpinner } from 'primereact/progressspinner'
+import { ErrorBoundary } from 'react-error-boundary'
+
+const HamburgerSidebar = lazy(() =>
+  import('../components').then((module) => {
+    return { default: module.HamburgerSidebar }
+  })
+)
 
 import { useDarkMode, useTime, useKeyPress, useWindowSize } from '../hooks'
 
@@ -141,7 +150,9 @@ const Layout = () => {
               }`}>
               <div>
                 {width <= 768 ? (
-                  <HamburgerSidebar themeState={darkMode} />
+                  <Suspense fallback={<ProgressSpinner />}>
+                    <HamburgerSidebar themeState={darkMode} />
+                  </Suspense>
                 ) : null}
               </div>
 
@@ -150,7 +161,11 @@ const Layout = () => {
               ) : null}
               <ThemeToggler checked={darkMode} onChange={handleToggle} />
             </div>
-            <Outlet />
+            <ErrorBoundary FallbackComponent={Fallback}>
+              <Suspense fallback={<ProgressSpinner />}>
+                <Outlet />
+              </Suspense>
+            </ErrorBoundary>
           </div>
         </div>
       </div>{' '}

@@ -1,6 +1,9 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, Suspense } from 'react'
 import { toast } from 'react-hot-toast'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
+
+import { ProgressSpinner } from 'primereact/progressspinner'
+import { ErrorBoundary } from 'react-error-boundary'
 
 import {
   BiArchiveIn,
@@ -9,6 +12,8 @@ import {
   BiStop,
   BiEdit,
   BiXCircle,
+  BiChevronDownCircle,
+  BiInfoCircle,
 } from 'react-icons/bi'
 
 import { Tooltip } from 'primereact/tooltip'
@@ -23,6 +28,8 @@ import {
   PrimaryChart,
   MinionChart,
   SelectInput,
+  Fallback,
+  PopoverTable,
 } from '../components'
 import { getSeverity } from './Strategies'
 import { getSeverity as getSeverityExchange } from './Exchanges'
@@ -35,15 +42,20 @@ import ChartData from '../data/strategyData/charts.json'
 import MetricData from '../data/strategyData/metrics.json'
 import StrategyData from '../data/strategyData/strategy.json'
 import GroupedChart from '../data/strategyData/groupedCharts.json'
+import StrategiesData from '../data/strategies/strategiesData.json'
 import { getBase, getQuote } from '../utils/misc'
 
 import Joyride, { STATUS } from 'react-joyride'
-import { BiInfoCircle } from 'react-icons/bi'
 
 const Strategy = () => {
   const { strategyId } = useParams()
+  const navigate = useNavigate()
   const { width } = useWindowSize()
   const isLoaded = useRef(false)
+  const popoverRef = useRef(null)
+  const [visibleBottom, setVisibleBottom] = useState(false)
+  const [strategies, setStrategies] = useState([])
+  const [strategyPopover, setStrategyPopover] = useState('')
   const [strategyData, setStrategyData] = useState({
     active_status: '-',
     balance_exchange_account: false,
@@ -164,9 +176,11 @@ const Strategy = () => {
   })
 
   useEffect(() => {
+    setStrategyPopover(strategyId)
     setChartData(() => ChartData)
     setFetchedData(() => MetricData)
     setStrategyData(() => StrategyData)
+    setStrategies(() => StrategiesData.data.data)
     isLoaded.current = true
   }, [])
 
@@ -463,9 +477,32 @@ const Strategy = () => {
       <div className="space-y-4 rounded-lg bg-color-secondary p-3.5 text-sm text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800 md:p-10">
         <div className="flex flex-col items-center space-y-2 md:flex md:flex-row md:items-center md:justify-between md:space-y-0">
           <div className="flex flex-wrap justify-center gap-2 md:justify-start">
-            <h1 className="text-primary break-anywhere text-2xl font-semibold dark:text-white md:inline md:text-left">
-              {strategyId}
-            </h1>
+            <div
+              className="flex items-center justify-center gap-2 hover:cursor-pointer"
+              onMouseEnter={(e) => popoverRef?.current?.toggle(e)}
+              onClick={(e) => {
+                setVisibleBottom(true)
+              }}>
+              <h1 className="text-primary break-anywhere tooltip-button text-2xl font-semibold dark:text-white md:inline md:text-left">
+                {strategyPopover}
+              </h1>
+              <BiChevronDownCircle
+                size={30}
+                className="fill-autowhale-blue dark:fill-white"
+              />
+            </div>
+            <ErrorBoundary FallbackComponent={Fallback}>
+              <Suspense fallback={<ProgressSpinner />}>
+                <PopoverTable
+                  strategies={strategies}
+                  navigate={navigate}
+                  ref={popoverRef}
+                  setPopover={setStrategyPopover}
+                  visibleBottom={visibleBottom}
+                  setSidebar={setVisibleBottom}
+                />
+              </Suspense>
+            </ErrorBoundary>
             <div className="flex flex-wrap gap-2">
               <Tag
                 value={strategyData?.active_status}
@@ -490,21 +527,25 @@ const Strategy = () => {
             {`${strategyData?.market} - ${strategyData?.exchange}`}
           </h1>
         </div>
-
-        {strategyData?.err_msg &&
-        (strategyData?.active_status === 'paused_err' ||
-          strategyData?.active_status === 'stop') ? (
-          <div className="w-fit">
-            <p className="font-semibold">Last error message</p>
-            <Message
-              severity={
-                strategyData?.active_status === 'paused_err' ? 'error' : 'info'
-              }
-              text={`${strategyData?.err_msg}`}
-            />
-          </div>
-        ) : null}
-
+        <ErrorBoundary FallbackComponent={Fallback}>
+          <Suspense fallback={<ProgressSpinner />}>
+            {strategyData?.err_msg &&
+            (strategyData?.active_status === 'paused_err' ||
+              strategyData?.active_status === 'stop') ? (
+              <div className="w-fit">
+                <p className="font-semibold">Last error message</p>
+                <Message
+                  severity={
+                    strategyData?.active_status === 'paused_err'
+                      ? 'error'
+                      : 'info'
+                  }
+                  text={`${strategyData?.err_msg}`}
+                />
+              </div>
+            ) : null}
+          </Suspense>
+        </ErrorBoundary>
         <div className="flex w-full flex-col items-center justify-center gap-3 md:flex-row md:justify-between">
           <div className="flex h-fit w-fit rounded-md border-2 leading-none shadow-soft-lg dark:border-neutral-800">
             <button
@@ -587,252 +628,286 @@ const Strategy = () => {
 
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-5 lg:flex-row lg:justify-center">
-            <div className="space-y-3 lg:w-2/4">
-              <div
-                id="step-0"
-                className={`mt-5 grid grid-cols-2 gap-3  xl:mt-0 ${
-                  width > 1024 ? 'automaticGridTiles' : ''
-                } `}>
-                <Tile
-                  description={`${last24MetricsActive ? 'Last 24h' : 'Total'}`}
-                  title={'Total PnL'}
-                  data={`${fetchedData.totalPnl} ${market?.quote ?? '-'}`}
-                  className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
-                  onClick={(e) => {
-                    handleClick(e, 'total_pnl')
-                  }}
-                />
-                <Tile
-                  description={`${last24MetricsActive ? 'Last 24h' : 'Total'}`}
-                  title={'Realized PnL'}
-                  className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
-                  onClick={(e) => {
-                    handleClick(e, 'realized_pnl')
-                  }}
-                  data={`${fetchedData.realizedPnl} ${market?.quote ?? '-'}`}
-                />
-                <Tile
-                  description={`${last24MetricsActive ? 'Last 24h' : 'Total'}`}
-                  title={'Unrealized PnL'}
-                  className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
-                  onClick={(e) => {
-                    handleClick(e, 'unrealized_pnl')
-                  }}
-                  data={`${fetchedData.unrealizedPnl} ${market?.quote ?? '-'} `}
-                />
-                <Tile
-                  description={''}
-                  title={'Last traded price'}
-                  data={`${fetchedData.lastPrice} ${market?.quote ?? '-'}`}
-                />
-                <Tile
-                  description={`${last24MetricsActive ? 'Last 24h' : 'Total'}`}
-                  title={'Avg. execution time'}
-                  className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
-                  onClick={(e) => {
-                    handleClick(e, 'execution_time')
-                  }}
-                  data={`${fetchedData.avgExecution}s`}
-                />
-                <Tile
-                  description={`${last24MetricsActive ? 'Last 24h' : 'Total'}`}
-                  title={'Execution ratio'}
-                  data={fetchedData.executionRatio}
-                />
-                {last24MetricsActive ? (
-                  <Tile
-                    description={`Last 24h`}
-                    title={'Exceeding Inventory'}
-                    data={`${fetchedData.exceedingInventory} ${
-                      market?.quote ?? '-'
-                    }`}
+            <ErrorBoundary FallbackComponent={Fallback}>
+              <Suspense fallback={<ProgressSpinner />}>
+                <div className="space-y-3 lg:w-2/4">
+                  <div
+                    id="step-0"
+                    className={`mt-5 grid grid-cols-2 gap-3  xl:mt-0 ${
+                      width > 1024 ? 'automaticGridTiles' : ''
+                    } `}>
+                    <Tile
+                      description={`${
+                        last24MetricsActive ? 'Last 24h' : 'Total'
+                      }`}
+                      title={'Total PnL'}
+                      data={`${fetchedData.totalPnl} ${market?.quote ?? '-'}`}
+                      className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
+                      onClick={(e) => {
+                        handleClick(e, 'total_pnl')
+                      }}
+                    />
+                    <Tile
+                      description={`${
+                        last24MetricsActive ? 'Last 24h' : 'Total'
+                      }`}
+                      title={'Realized PnL'}
+                      className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
+                      onClick={(e) => {
+                        handleClick(e, 'realized_pnl')
+                      }}
+                      data={`${fetchedData.realizedPnl} ${
+                        market?.quote ?? '-'
+                      }`}
+                    />
+                    <Tile
+                      description={`${
+                        last24MetricsActive ? 'Last 24h' : 'Total'
+                      }`}
+                      title={'Unrealized PnL'}
+                      className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
+                      onClick={(e) => {
+                        handleClick(e, 'unrealized_pnl')
+                      }}
+                      data={`${fetchedData.unrealizedPnl} ${
+                        market?.quote ?? '-'
+                      } `}
+                    />
+                    <Tile
+                      description={''}
+                      title={'Last traded price'}
+                      data={`${fetchedData.lastPrice} ${market?.quote ?? '-'}`}
+                    />
+                    <Tile
+                      description={`${
+                        last24MetricsActive ? 'Last 24h' : 'Total'
+                      }`}
+                      title={'Avg. execution time'}
+                      className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
+                      onClick={(e) => {
+                        handleClick(e, 'execution_time')
+                      }}
+                      data={`${fetchedData.avgExecution}s`}
+                    />
+                    <Tile
+                      description={`${
+                        last24MetricsActive ? 'Last 24h' : 'Total'
+                      }`}
+                      title={'Execution ratio'}
+                      data={fetchedData.executionRatio}
+                    />
+                    {last24MetricsActive ? (
+                      <Tile
+                        description={`Last 24h`}
+                        title={'Exceeding Inventory'}
+                        data={`${fetchedData.exceedingInventory} ${
+                          market?.quote ?? '-'
+                        }`}
+                      />
+                    ) : null}
+                    {last24MetricsActive ? (
+                      <Tile
+                        description={`Last 24h`}
+                        title={'Excess Inventory Cost'}
+                        data={`${fetchedData.excessInventoryCost} ${
+                          market?.base ?? '-'
+                        }`}
+                      />
+                    ) : null}
+                    {last24MetricsActive ? (
+                      <Tile
+                        description={`Last 24h`}
+                        title={'Num of Orders'}
+                        className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
+                        onClick={(e) => {
+                          handleClick(e, 'num_of_orders')
+                        }}
+                        data={fetchedData.numOfOrders}
+                      />
+                    ) : null}
+                    {last24MetricsActive ? (
+                      <Tile
+                        description={`Last 24h`}
+                        title={'Paid Fees'}
+                        data={fetchedData.paidFees}
+                      />
+                    ) : null}
+                    <Tile
+                      description={`${
+                        last24MetricsActive ? 'Last 24h' : 'Total'
+                      }`}
+                      title={'Buy/sell execution ratio'}
+                      className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
+                      onClick={(e) => {
+                        handleClick(e, 'executed_buy_sell_ratio')
+                      }}
+                      data={fetchedData.buySellExecRatio}
+                    />
+                    <Tile
+                      description={`${
+                        last24MetricsActive ? 'Last 24h' : 'Total'
+                      }`}
+                      title={'Volume of strategy'}
+                      className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
+                      onClick={(e) => {
+                        handleClick(e, 'volume')
+                      }}
+                      data={`${fetchedData.volume} ${market?.quote ?? '-'}`}
+                    />
+                    <Tile
+                      description={`${
+                        last24MetricsActive ? 'Last 24h' : 'Total'
+                      }`}
+                      title={'Supplied Buy liquidity'}
+                      className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
+                      onClick={(e) => {
+                        handleClick(e, 'buy_liquidity_supplied')
+                      }}
+                      data={`${fetchedData.buyLiquidity} ${
+                        market?.base ?? '-'
+                      }`}
+                    />
+                    <Tile
+                      description={`${
+                        last24MetricsActive ? 'Last 24h' : 'Total'
+                      }`}
+                      title={'Supplied Sell liquidity'}
+                      className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
+                      onClick={(e) => {
+                        handleClick(e, 'sell_liquidity_supplied')
+                      }}
+                      data={`${fetchedData.sellLiquidity} ${
+                        market?.base ?? '-'
+                      }`}
+                    />
+                    {!last24MetricsActive ? (
+                      <Tile
+                        description={'Total'}
+                        title={'Open position break even'}
+                        className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
+                        onClick={(e) => {
+                          handleClick(e, 'open_position_break_even_price')
+                        }}
+                        data={`${fetchedData.openPositionBreakeven} ${
+                          market?.quote ?? '-'
+                        }`}
+                      />
+                    ) : null}
+                    {!last24MetricsActive ? (
+                      <Tile
+                        description={'Total'}
+                        title={'Open position cost'}
+                        className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
+                        onClick={(e) => {
+                          handleClick(e, 'open_position_cost')
+                        }}
+                        data={`${fetchedData.openPositionCost} ${
+                          market?.quote ?? '-'
+                        }`}
+                      />
+                    ) : null}
+                    {!last24MetricsActive ? (
+                      <Tile
+                        description={'Total'}
+                        title={'Open position size'}
+                        className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
+                        onClick={(e) => {
+                          handleClick(e, 'open_position_size')
+                        }}
+                        data={`${fetchedData.openPositionSize} ${
+                          market?.base ?? '-'
+                        }`}
+                      />
+                    ) : null}
+                    {!last24MetricsActive ? (
+                      <Tile
+                        description={`Total`}
+                        title={'Fees'}
+                        className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
+                        onClick={(e) => {
+                          handleClick(e, 'fees')
+                        }}
+                        data={`${fetchedData.fees} ${market?.quote ?? '-'}`}
+                      />
+                    ) : null}
+                  </div>
+                </div>
+              </Suspense>
+            </ErrorBoundary>
+            <ErrorBoundary FallbackComponent={Fallback}>
+              <Suspense fallback={<ProgressSpinner />}>
+                <div id="step-1" className="space-y-2 lg:w-2/4">
+                  <PrimaryChart
+                    id={bigChart.id}
+                    metricsData={bigChart.data}
+                    metricsTime={chartData.labels}
                   />
-                ) : null}
-                {last24MetricsActive ? (
-                  <Tile
-                    description={`Last 24h`}
-                    title={'Excess Inventory Cost'}
-                    data={`${fetchedData.excessInventoryCost} ${
-                      market?.base ?? '-'
-                    }`}
-                  />
-                ) : null}
-                {last24MetricsActive ? (
-                  <Tile
-                    description={`Last 24h`}
-                    title={'Num of Orders'}
-                    className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
-                    onClick={(e) => {
-                      handleClick(e, 'num_of_orders')
-                    }}
-                    data={fetchedData.numOfOrders}
-                  />
-                ) : null}
-                {last24MetricsActive ? (
-                  <Tile
-                    description={`Last 24h`}
-                    title={'Paid Fees'}
-                    data={fetchedData.paidFees}
-                  />
-                ) : null}
-                <Tile
-                  description={`${last24MetricsActive ? 'Last 24h' : 'Total'}`}
-                  title={'Buy/sell execution ratio'}
-                  className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
-                  onClick={(e) => {
-                    handleClick(e, 'executed_buy_sell_ratio')
-                  }}
-                  data={fetchedData.buySellExecRatio}
-                />
-                <Tile
-                  description={`${last24MetricsActive ? 'Last 24h' : 'Total'}`}
-                  title={'Volume of strategy'}
-                  className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
-                  onClick={(e) => {
-                    handleClick(e, 'volume')
-                  }}
-                  data={`${fetchedData.volume} ${market?.quote ?? '-'}`}
-                />
-                <Tile
-                  description={`${last24MetricsActive ? 'Last 24h' : 'Total'}`}
-                  title={'Supplied Buy liquidity'}
-                  className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
-                  onClick={(e) => {
-                    handleClick(e, 'buy_liquidity_supplied')
-                  }}
-                  data={`${fetchedData.buyLiquidity} ${market?.base ?? '-'}`}
-                />
-                <Tile
-                  description={`${last24MetricsActive ? 'Last 24h' : 'Total'}`}
-                  title={'Supplied Sell liquidity'}
-                  className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
-                  onClick={(e) => {
-                    handleClick(e, 'sell_liquidity_supplied')
-                  }}
-                  data={`${fetchedData.sellLiquidity} ${market?.base ?? '-'}`}
-                />
-                {!last24MetricsActive ? (
-                  <Tile
-                    description={'Total'}
-                    title={'Open position break even'}
-                    className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
-                    onClick={(e) => {
-                      handleClick(e, 'open_position_break_even_price')
-                    }}
-                    data={`${fetchedData.openPositionBreakeven} ${
-                      market?.quote ?? '-'
-                    }`}
-                  />
-                ) : null}
-                {!last24MetricsActive ? (
-                  <Tile
-                    description={'Total'}
-                    title={'Open position cost'}
-                    className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
-                    onClick={(e) => {
-                      handleClick(e, 'open_position_cost')
-                    }}
-                    data={`${fetchedData.openPositionCost} ${
-                      market?.quote ?? '-'
-                    }`}
-                  />
-                ) : null}
-                {!last24MetricsActive ? (
-                  <Tile
-                    description={'Total'}
-                    title={'Open position size'}
-                    className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
-                    onClick={(e) => {
-                      handleClick(e, 'open_position_size')
-                    }}
-                    data={`${fetchedData.openPositionSize} ${
-                      market?.base ?? '-'
-                    }`}
-                  />
-                ) : null}
-                {!last24MetricsActive ? (
-                  <Tile
-                    description={`Total`}
-                    title={'Fees'}
-                    className="hover:cursor-pointer hover:border-autowhale-blue/40 hover:dark:border-neutral-300"
-                    onClick={(e) => {
-                      handleClick(e, 'fees')
-                    }}
-                    data={`${fetchedData.fees} ${market?.quote ?? '-'}`}
-                  />
-                ) : null}
-              </div>
-            </div>
-            <div id="step-1" className="space-y-2 lg:w-2/4">
-              <PrimaryChart
-                id={bigChart.id}
-                metricsData={bigChart.data}
-                metricsTime={chartData.labels}
-              />
-              <div
-                id="step-4"
-                className="flex justify-center overflow-y-hidden py-2">
-                <EditStrategy
-                  strategyData={strategyData}
-                  editMode={editMode}
-                  setEditMode={setEditMode}
-                />
-              </div>
-              <Tooltip target=".tooltip" />
+                  <div
+                    id="step-4"
+                    className="flex justify-center overflow-y-hidden py-2">
+                    <EditStrategy
+                      strategyData={strategyData}
+                      editMode={editMode}
+                      setEditMode={setEditMode}
+                    />
+                  </div>
+                  <Tooltip target=".tooltip" />
 
-              <div className="flex flex-wrap justify-center gap-2 text-center">
-                <TerminalButton
-                  text={editMode ? 'Edit' : 'Save'}
-                  data-pr-tooltip="Edit the strategy's parameters, editing is only possible in paused state"
-                  data-pr-position="top"
-                  data-pr-my="center bottom-10"
-                  className={`tooltip inline-flex w-[8rem] flex-row-reverse items-center justify-center gap-2 px-4  ${
-                    (strategyData &&
-                      strategyData['active_status'] === 'stopped') ||
-                    strategyData['active_status'] === 'active' ||
-                    strategyData['active_status'] === 'pausing' ||
-                    strategyData['active_status'] === 'new'
-                      ? 'pointer-events-none bg-neutral-400 dark:bg-neutral-800'
-                      : ''
-                  }`}
-                  type="submit"
-                  form="editForm">
-                  <BiEdit color="white" size={23} />
-                </TerminalButton>
-                {!editMode && (
-                  <TerminalButton
-                    data-pr-tooltip="Cancel the strategy's changes"
-                    data-pr-position="top"
-                    data-pr-my="center bottom-10"
-                    text={'Cancel'}
-                    className={`tooltip inline-flex w-[8rem] flex-row-reverse items-center justify-center gap-2 px-4`}
-                    onClick={() => {
-                      setEditMode(!editMode)
-                      setResetForm(true)
-                    }}>
-                    <BiXCircle color="white" size={20} />
-                  </TerminalButton>
-                )}
-                {editMode && (
-                  <TerminalButton
-                    text="Archive"
-                    data-pr-tooltip="Pauses the strategy in the next iteration and archives it. Cannot be rerun again. Archive also works for strategies in STOP."
-                    data-pr-position="top"
-                    data-pr-my="center bottom-10"
-                    className={`tooltip inline-flex w-[8rem] flex-row-reverse items-center justify-center gap-2 px-4 ${
-                      strategyData['active_status'] === 'stopped' ||
-                      strategyData['active_status'] === 'pausing' ||
-                      strategyData['active_status'] === 'active' ||
-                      strategyData['active_status'] === 'new'
-                        ? 'pointer-events-none bg-neutral-400 dark:bg-neutral-800'
-                        : ''
-                    }`}
-                    onClick={() => handleSetStrategyStatus('stopped')}>
-                    <BiArchiveIn color="white" size={20} />
-                  </TerminalButton>
-                )}
-              </div>
-            </div>
+                  <div className="flex flex-wrap justify-center gap-2 text-center">
+                    <TerminalButton
+                      text={editMode ? 'Edit' : 'Save'}
+                      data-pr-tooltip="Edit the strategy's parameters, editing is only possible in paused state"
+                      data-pr-position="top"
+                      data-pr-my="center bottom-10"
+                      className={`tooltip inline-flex w-[8rem] flex-row-reverse items-center justify-center gap-2 px-4  ${
+                        (strategyData &&
+                          strategyData['active_status'] === 'stopped') ||
+                        strategyData['active_status'] === 'active' ||
+                        strategyData['active_status'] === 'pausing' ||
+                        strategyData['active_status'] === 'new'
+                          ? 'pointer-events-none bg-neutral-400 dark:bg-neutral-800'
+                          : ''
+                      }`}
+                      type="submit"
+                      form="editForm">
+                      <BiEdit color="white" size={23} />
+                    </TerminalButton>
+                    {!editMode && (
+                      <TerminalButton
+                        data-pr-tooltip="Cancel the strategy's changes"
+                        data-pr-position="top"
+                        data-pr-my="center bottom-10"
+                        text={'Cancel'}
+                        className={`tooltip inline-flex w-[8rem] flex-row-reverse items-center justify-center gap-2 px-4`}
+                        onClick={() => {
+                          setEditMode(!editMode)
+                          setResetForm(true)
+                        }}>
+                        <BiXCircle color="white" size={20} />
+                      </TerminalButton>
+                    )}
+                    {editMode && (
+                      <TerminalButton
+                        text="Archive"
+                        data-pr-tooltip="Pauses the strategy in the next iteration and archives it. Cannot be rerun again. Archive also works for strategies in STOP."
+                        data-pr-position="top"
+                        data-pr-my="center bottom-10"
+                        className={`tooltip inline-flex w-[8rem] flex-row-reverse items-center justify-center gap-2 px-4 ${
+                          strategyData['active_status'] === 'stopped' ||
+                          strategyData['active_status'] === 'pausing' ||
+                          strategyData['active_status'] === 'active' ||
+                          strategyData['active_status'] === 'new'
+                            ? 'pointer-events-none bg-neutral-400 dark:bg-neutral-800'
+                            : ''
+                        }`}
+                        onClick={() => handleSetStrategyStatus('stopped')}>
+                        <BiArchiveIn color="white" size={20} />
+                      </TerminalButton>
+                    )}
+                  </div>
+                </div>
+              </Suspense>
+            </ErrorBoundary>
           </div>
 
           <div className="flex w-full justify-center md:justify-start">
@@ -859,259 +934,267 @@ const Strategy = () => {
           </div>
 
           {/* //? the Charts, no charts is better performance for the big chart  */}
-          <div
-            className={`relative mb-5 rounded-lg border px-5 pb-5 ${
-              !totalChartMetricsActive ? 'pt-20' : 'pt-5'
-            }  dark:border-neutral-700 dark:bg-neutral-900`}>
-            {!totalChartMetricsActive ? (
-              <SelectInput
-                options={timeFrames}
-                handler={handleSelectWrapper}
-                className="!absolute !top-5 !left-5 !z-10 w-80 xl:w-96"
-              />
-            ) : null}
+          <ErrorBoundary FallbackComponent={Fallback}>
+            <Suspense fallback={<ProgressSpinner />}>
+              <div
+                className={`relative mb-5 rounded-lg border px-5 pb-5 ${
+                  !totalChartMetricsActive ? 'pt-20' : 'pt-5'
+                }  dark:border-neutral-700 dark:bg-neutral-900`}>
+                {!totalChartMetricsActive ? (
+                  <SelectInput
+                    options={timeFrames}
+                    handler={handleSelectWrapper}
+                    className="!absolute !top-5 !left-5 !z-10 w-80 xl:w-96"
+                  />
+                ) : null}
 
-            <div className="flex gap-5 overflow-x-scroll pb-5">
-              <div
-                className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                onClick={handleClick}>
-                <MinionChart
-                  id="Total Pnl"
-                  value="total_pnl"
-                  metricsData={chartData.total_pnl}
-                  metricsTime={chartData.labels}
-                  className="w-72 xl:w-[40rem]"
-                  handler={handleWrapper}
-                />
-              </div>
-              <div
-                className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                onClick={handleClick}>
-                <MinionChart
-                  id="Realized Pnl"
-                  value="realized_pnl"
-                  metricsData={chartData.realized_pnl}
-                  metricsTime={chartData.labels}
-                  className="w-72 xl:w-[40rem]"
-                  handler={handleWrapper}
-                />
-              </div>
-              <div
-                className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                onClick={handleClick}>
-                <MinionChart
-                  id="Unrealized Profit & Loss (PnL)"
-                  value="unrealized_pnl"
-                  metricsData={chartData.unrealized_pnl}
-                  metricsTime={chartData.labels}
-                  className="w-72 xl:w-[40rem]"
-                  handler={handleWrapper}
-                />
-              </div>
-              <div
-                className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                onClick={handleClick}>
-                <MinionChart
-                  id="Volume"
-                  value="volume"
-                  metricsData={chartData.volume}
-                  metricsTime={chartData.labels}
-                  className="w-72 xl:w-[40rem]"
-                  handler={handleWrapper}
-                />
-              </div>
+                <div className="flex gap-5 overflow-x-scroll pb-5">
+                  <div
+                    className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                    onClick={handleClick}>
+                    <MinionChart
+                      id="Total Pnl"
+                      value="total_pnl"
+                      metricsData={chartData.total_pnl}
+                      metricsTime={chartData.labels}
+                      className="w-72 xl:w-[40rem]"
+                      handler={handleWrapper}
+                    />
+                  </div>
+                  <div
+                    className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                    onClick={handleClick}>
+                    <MinionChart
+                      id="Realized Pnl"
+                      value="realized_pnl"
+                      metricsData={chartData.realized_pnl}
+                      metricsTime={chartData.labels}
+                      className="w-72 xl:w-[40rem]"
+                      handler={handleWrapper}
+                    />
+                  </div>
+                  <div
+                    className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                    onClick={handleClick}>
+                    <MinionChart
+                      id="Unrealized Profit & Loss (PnL)"
+                      value="unrealized_pnl"
+                      metricsData={chartData.unrealized_pnl}
+                      metricsTime={chartData.labels}
+                      className="w-72 xl:w-[40rem]"
+                      handler={handleWrapper}
+                    />
+                  </div>
+                  <div
+                    className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                    onClick={handleClick}>
+                    <MinionChart
+                      id="Volume"
+                      value="volume"
+                      metricsData={chartData.volume}
+                      metricsTime={chartData.labels}
+                      className="w-72 xl:w-[40rem]"
+                      handler={handleWrapper}
+                    />
+                  </div>
 
-              {totalChartMetricsActive ? (
-                <div
-                  className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                  onClick={handleClick}>
-                  <MinionChart
-                    id="Open position size"
-                    value="open_position_size"
-                    metricsData={chartData.open_position_size}
-                    metricsTime={chartData.labels}
-                    className="w-72 xl:w-[40rem]"
-                    handler={handleWrapper}
-                  />
-                </div>
-              ) : null}
+                  {totalChartMetricsActive ? (
+                    <div
+                      className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                      onClick={handleClick}>
+                      <MinionChart
+                        id="Open position size"
+                        value="open_position_size"
+                        metricsData={chartData.open_position_size}
+                        metricsTime={chartData.labels}
+                        className="w-72 xl:w-[40rem]"
+                        handler={handleWrapper}
+                      />
+                    </div>
+                  ) : null}
 
-              {totalChartMetricsActive ? (
-                <div
-                  className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                  onClick={handleClick}>
-                  <MinionChart
-                    id="Open position cost"
-                    value="open_position_cost"
-                    metricsData={chartData.open_position_cost}
-                    metricsTime={chartData.labels}
-                    className="w-72 xl:w-[40rem]"
-                    handler={handleWrapper}
-                  />
-                </div>
-              ) : null}
+                  {totalChartMetricsActive ? (
+                    <div
+                      className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                      onClick={handleClick}>
+                      <MinionChart
+                        id="Open position cost"
+                        value="open_position_cost"
+                        metricsData={chartData.open_position_cost}
+                        metricsTime={chartData.labels}
+                        className="w-72 xl:w-[40rem]"
+                        handler={handleWrapper}
+                      />
+                    </div>
+                  ) : null}
 
-              {totalChartMetricsActive ? (
-                <div
-                  className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                  onClick={handleClick}>
-                  <MinionChart
-                    id="Open position break even price"
-                    value="open_position_break_even_price"
-                    metricsData={chartData.open_position_break_even_price}
-                    metricsTime={chartData.labels}
-                    className="w-72 xl:w-[40rem]"
-                    handler={handleWrapper}
-                  />
-                </div>
-              ) : null}
-              <div
-                className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                onClick={handleClick}>
-                <MinionChart
-                  id="Buy Liquidity Supplied"
-                  value="buy_liquidity_supplied"
-                  metricsData={chartData.buy_liquidity_supplied}
-                  metricsTime={chartData.labels}
-                  className="w-72 xl:w-[40rem]"
-                  handler={handleWrapper}
-                />
-              </div>
-              <div
-                className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                onClick={handleClick}>
-                <MinionChart
-                  id="Sell Liquidity Supplied"
-                  value="sell_liquidity_supplied"
-                  metricsData={chartData.sell_liquidity_supplied}
-                  metricsTime={chartData.labels}
-                  className="w-72 xl:w-[40rem]"
-                  handler={handleWrapper}
-                />
-              </div>
-              <div
-                className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                onClick={handleClick}>
-                <MinionChart
-                  id="Number of orders"
-                  value="num_of_orders"
-                  metricsData={chartData.num_of_orders}
-                  metricsTime={chartData.labels}
-                  className="w-72 xl:w-[40rem]"
-                  handler={handleWrapper}
-                />
-              </div>
+                  {totalChartMetricsActive ? (
+                    <div
+                      className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                      onClick={handleClick}>
+                      <MinionChart
+                        id="Open position break even price"
+                        value="open_position_break_even_price"
+                        metricsData={chartData.open_position_break_even_price}
+                        metricsTime={chartData.labels}
+                        className="w-72 xl:w-[40rem]"
+                        handler={handleWrapper}
+                      />
+                    </div>
+                  ) : null}
+                  <div
+                    className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                    onClick={handleClick}>
+                    <MinionChart
+                      id="Buy Liquidity Supplied"
+                      value="buy_liquidity_supplied"
+                      metricsData={chartData.buy_liquidity_supplied}
+                      metricsTime={chartData.labels}
+                      className="w-72 xl:w-[40rem]"
+                      handler={handleWrapper}
+                    />
+                  </div>
+                  <div
+                    className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                    onClick={handleClick}>
+                    <MinionChart
+                      id="Sell Liquidity Supplied"
+                      value="sell_liquidity_supplied"
+                      metricsData={chartData.sell_liquidity_supplied}
+                      metricsTime={chartData.labels}
+                      className="w-72 xl:w-[40rem]"
+                      handler={handleWrapper}
+                    />
+                  </div>
+                  <div
+                    className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                    onClick={handleClick}>
+                    <MinionChart
+                      id="Number of orders"
+                      value="num_of_orders"
+                      metricsData={chartData.num_of_orders}
+                      metricsTime={chartData.labels}
+                      className="w-72 xl:w-[40rem]"
+                      handler={handleWrapper}
+                    />
+                  </div>
 
-              {totalChartMetricsActive ? (
-                <div
-                  className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                  onClick={handleClick}>
-                  <MinionChart
-                    id="Inventory Cost"
-                    value="inventory_cost"
-                    metricsData={chartData.inventory_cost}
-                    metricsTime={chartData.labels}
-                    className="w-72 xl:w-[40rem]"
-                    handler={handleWrapper}
-                  />
-                </div>
-              ) : null}
-              {totalChartMetricsActive ? (
-                <div
-                  className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                  onClick={handleClick}>
-                  <MinionChart
-                    id="Inventory Size"
-                    value="inventory_size"
-                    metricsData={chartData.inventory_size}
-                    metricsTime={chartData.labels}
-                    className="w-72 xl:w-[40rem]"
-                    handler={handleWrapper}
-                  />
-                </div>
-              ) : null}
-              <div
-                className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                onClick={handleClick}>
-                <MinionChart
-                  id="Execution time"
-                  value="execution_time"
-                  metricsData={chartData.execution_time}
-                  metricsTime={chartData.labels}
-                  className="w-72 xl:w-[40rem]"
-                  handler={handleWrapper}
-                />
-              </div>
-              <div
-                className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                onClick={handleClick}>
-                <MinionChart
-                  id="Executed buy/sell ratio"
-                  value="executed_buy_sell_ratio"
-                  metricsData={chartData.executed_buy_sell_ratio}
-                  metricsTime={chartData.labels}
-                  className="w-72 xl:w-[40rem]"
-                  handler={handleWrapper}
-                />
-              </div>
-              {!totalChartMetricsActive ? (
-                <div
-                  className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                  onClick={handleClick}>
-                  <MinionChart
-                    id="Exceeding inventory"
-                    value="exceeding_inventory"
-                    metricsData={chartData.exceeding_inventory}
-                    metricsTime={chartData.exceeding_inventory_labels}
-                    className="w-72 xl:w-[40rem]"
-                    handler={handleWrapper}
-                  />
-                </div>
-              ) : null}
-              {!totalChartMetricsActive ? (
-                <div
-                  className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                  onClick={handleClick}>
-                  <MinionChart
-                    id="Excess inventory cost"
-                    value="excess_inventory_cost"
-                    metricsData={chartData.excess_inventory_cost}
-                    metricsTime={chartData.excess_inventory_cost_labels}
-                    className="w-72 xl:w-[40rem]"
-                    handler={handleWrapper}
-                  />
-                </div>
-              ) : null}
+                  {totalChartMetricsActive ? (
+                    <div
+                      className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                      onClick={handleClick}>
+                      <MinionChart
+                        id="Inventory Cost"
+                        value="inventory_cost"
+                        metricsData={chartData.inventory_cost}
+                        metricsTime={chartData.labels}
+                        className="w-72 xl:w-[40rem]"
+                        handler={handleWrapper}
+                      />
+                    </div>
+                  ) : null}
+                  {totalChartMetricsActive ? (
+                    <div
+                      className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                      onClick={handleClick}>
+                      <MinionChart
+                        id="Inventory Size"
+                        value="inventory_size"
+                        metricsData={chartData.inventory_size}
+                        metricsTime={chartData.labels}
+                        className="w-72 xl:w-[40rem]"
+                        handler={handleWrapper}
+                      />
+                    </div>
+                  ) : null}
+                  <div
+                    className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                    onClick={handleClick}>
+                    <MinionChart
+                      id="Execution time"
+                      value="execution_time"
+                      metricsData={chartData.execution_time}
+                      metricsTime={chartData.labels}
+                      className="w-72 xl:w-[40rem]"
+                      handler={handleWrapper}
+                    />
+                  </div>
+                  <div
+                    className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                    onClick={handleClick}>
+                    <MinionChart
+                      id="Executed buy/sell ratio"
+                      value="executed_buy_sell_ratio"
+                      metricsData={chartData.executed_buy_sell_ratio}
+                      metricsTime={chartData.labels}
+                      className="w-72 xl:w-[40rem]"
+                      handler={handleWrapper}
+                    />
+                  </div>
+                  {!totalChartMetricsActive ? (
+                    <div
+                      className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                      onClick={handleClick}>
+                      <MinionChart
+                        id="Exceeding inventory"
+                        value="exceeding_inventory"
+                        metricsData={chartData.exceeding_inventory}
+                        metricsTime={chartData.exceeding_inventory_labels}
+                        className="w-72 xl:w-[40rem]"
+                        handler={handleWrapper}
+                      />
+                    </div>
+                  ) : null}
+                  {!totalChartMetricsActive ? (
+                    <div
+                      className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                      onClick={handleClick}>
+                      <MinionChart
+                        id="Excess inventory cost"
+                        value="excess_inventory_cost"
+                        metricsData={chartData.excess_inventory_cost}
+                        metricsTime={chartData.excess_inventory_cost_labels}
+                        className="w-72 xl:w-[40rem]"
+                        handler={handleWrapper}
+                      />
+                    </div>
+                  ) : null}
 
-              <div
-                className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                onClick={handleClick}>
-                <MinionChart
-                  id="fees"
-                  value="fees"
-                  metricsData={chartData.fees}
-                  metricsTime={chartData.labels}
-                  className="w-72 xl:w-[40rem]"
-                  handler={handleWrapper}
-                />
-              </div>
-              {!totalChartMetricsActive ? (
-                <div
-                  className="w-72 hover:cursor-pointer xl:w-[40rem]"
-                  onClick={handleClick}>
-                  <MinionChart
-                    id="Fees paid"
-                    value="fees_paid"
-                    metricsData={chartData.fees_paid}
-                    metricsTime={chartData.fees_paid_labels}
-                    className="w-72 xl:w-[40rem]"
-                    handler={handleWrapper}
-                  />
+                  <div
+                    className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                    onClick={handleClick}>
+                    <MinionChart
+                      id="fees"
+                      value="fees"
+                      metricsData={chartData.fees}
+                      metricsTime={chartData.labels}
+                      className="w-72 xl:w-[40rem]"
+                      handler={handleWrapper}
+                    />
+                  </div>
+                  {!totalChartMetricsActive ? (
+                    <div
+                      className="w-72 hover:cursor-pointer xl:w-[40rem]"
+                      onClick={handleClick}>
+                      <MinionChart
+                        id="Fees paid"
+                        value="fees_paid"
+                        metricsData={chartData.fees_paid}
+                        metricsTime={chartData.fees_paid_labels}
+                        className="w-72 xl:w-[40rem]"
+                        handler={handleWrapper}
+                      />
+                    </div>
+                  ) : null}
                 </div>
-              ) : null}
-            </div>
-          </div>
-          <Orders strategyId={strategyId} />
+              </div>
+            </Suspense>
+          </ErrorBoundary>
+          <ErrorBoundary FallbackComponent={Fallback}>
+            <Suspense fallback={<ProgressSpinner />}>
+              <Orders strategyId={strategyId} />
+            </Suspense>
+          </ErrorBoundary>
         </div>
         <div className="absolute bottom-5 right-9 z-20">
           <TerminalButton

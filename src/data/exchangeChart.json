@@ -1,0 +1,254 @@
+{
+  "data": [
+    {
+      "balances": {
+        "BTC": {
+          "free": 0.123456,
+          "total": 0.123456,
+          "used": 0.0
+        },
+        "LTC": {
+          "free": 0.654321,
+          "total": 0.654321,
+          "used": 0.0
+        },
+        "USDT": {
+          "free": 0.987654,
+          "total": 0.987654,
+          "used": 0.0
+        },
+        "XLM": {
+          "free": 0.13579,
+          "total": 0.13579,
+          "used": 0.0
+        }
+      },
+      "timestamp_unix": 1697822480
+    },
+    {
+      "balances": {
+        "BTC": {
+          "free": 0.234567,
+          "total": 0.234567,
+          "used": 0.0
+        },
+        "LTC": {
+          "free": 0.765432,
+          "total": 0.765432,
+          "used": 0.0
+        },
+        "USDT": {
+          "free": 0.876543,
+          "total": 0.876543,
+          "used": 0.0
+        },
+        "XLM": {
+          "free": 0.2468,
+          "total": 0.2468,
+          "used": 0.0
+        }
+      },
+      "timestamp_unix": 1697826080
+    },
+    {
+      "balances": {
+        "BTC": {
+          "free": 0.345678,
+          "total": 0.345678,
+          "used": 0.0
+        },
+        "LTC": {
+          "free": 0.876543,
+          "total": 0.876543,
+          "used": 0.0
+        },
+        "USDT": {
+          "free": 0.765432,
+          "total": 0.765432,
+          "used": 0.0
+        },
+        "XLM": {
+          "free": 0.3579,
+          "total": 0.3579,
+          "used": 0.0
+        }
+      },
+      "timestamp_unix": 1697829680
+    },
+    {
+      "balances": {
+        "BTC": {
+          "free": 0.456789,
+          "total": 0.456789,
+          "used": 0.0
+        },
+        "LTC": {
+          "free": 0.987654,
+          "total": 0.987654,
+          "used": 0.0
+        },
+        "USDT": {
+          "free": 0.654321,
+          "total": 0.654321,
+          "used": 0.0
+        },
+        "XLM": {
+          "free": 0.469,
+          "total": 0.469,
+          "used": 0.0
+        }
+      },
+      "timestamp_unix": 1697833280
+    },
+    {
+      "balances": {
+        "BTC": {
+          "free": 0.56789,
+          "total": 0.56789,
+          "used": 0.0
+        },
+        "LTC": {
+          "free": 0.098765,
+          "total": 0.098765,
+          "used": 0.0
+        },
+        "USDT": {
+          "free": 0.54321,
+          "total": 0.54321,
+          "used": 0.0
+        },
+        "XLM": {
+          "free": 0.58,
+          "total": 0.58,
+          "used": 0.0
+        }
+      },
+      "timestamp_unix": 1697836880
+    },
+    {
+      "balances": {
+        "BTC": {
+          "free": 0.678901,
+          "total": 0.678901,
+          "used": 0.0
+        },
+        "LTC": {
+          "free": 0.109876,
+          "total": 0.109876,
+          "used": 0.0
+        },
+        "USDT": {
+          "free": 0.432109,
+          "total": 0.432109,
+          "used": 0.0
+        },
+        "XLM": {
+          "free": 0.691,
+          "total": 0.691,
+          "used": 0.0
+        }
+      },
+      "timestamp_unix": 1697840480
+    },
+    {
+      "balances": {
+        "BTC": {
+          "free": 0.789012,
+          "total": 0.789012,
+          "used": 0.0
+        },
+        "LTC": {
+          "free": 0.120987,
+          "total": 0.120987,
+          "used": 0.0
+        },
+        "USDT": {
+          "free": 0.321098,
+          "total": 0.321098,
+          "used": 0.0
+        },
+        "XLM": {
+          "free": 0.802,
+          "total": 0.802,
+          "used": 0.0
+        }
+      },
+      "timestamp_unix": 1697844080
+    },
+    {
+      "balances": {
+        "BTC": {
+          "free": 0.890123,
+          "total": 0.890123,
+          "used": 0.0
+        },
+        "LTC": {
+          "free": 0.131098,
+          "total": 0.131098,
+          "used": 0.0
+        },
+        "USDT": {
+          "free": 0.210987,
+          "total": 0.210987,
+          "used": 0.0
+        },
+        "XLM": {
+          "free": 0.913,
+          "total": 0.913,
+          "used": 0.0
+        }
+      },
+      "timestamp_unix": 1697847680
+    },
+    {
+      "balances": {
+        "BTC": {
+          "free": 0.901234,
+          "total": 0.901234,
+          "used": 0.0
+        },
+        "LTC": {
+          "free": 0.142109,
+          "total": 0.142109,
+          "used": 0.0
+        },
+        "USDT": {
+          "free": 0.109876,
+          "total": 0.109876,
+          "used": 0.0
+        },
+        "XLM": {
+          "free": 0.924,
+          "total": 0.924,
+          "used": 0.0
+        }
+      },
+      "timestamp_unix": 1697851280
+    },
+    {
+      "balances": {
+        "BTC": {
+          "free": 0.012345,
+          "total": 0.012345,
+          "used": 0.0
+        },
+        "LTC": {
+          "free": 0.15321,
+          "total": 0.15321,
+          "used": 0.0
+        },
+        "USDT": {
+          "free": 0.098765,
+          "total": 0.098765,
+          "used": 0.0
+        },
+        "XLM": {
+          "free": 0.135,
+          "total": 0.135,
+          "used": 0.0
+        }
+      },
+      "timestamp_unix": 1697854880
+    }
+  ]
+}

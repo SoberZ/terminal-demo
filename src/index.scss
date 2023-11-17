@@ -30,7 +30,6 @@
     --highlight-color-hover: #deebff;
     --sb-track-color: #ffffff;
     --sb-thumb-color: #4432e2;
-    overflow-x: hidden !important;
   }
   // it's not regestreing the colorscheme
   :root[data-theme='dark'] {
@@ -51,9 +50,7 @@
     --sb-thumb-color: #ffffff;
   }
 }
-.react-joyride__overlay {
-  height: 100% !important;
-}
+
 body {
   @apply bg-color-primary;
 }
@@ -291,10 +288,6 @@ tr:hover {
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
 
-.apexcharts-tooltip-marker {
-  background: var(--autowhale-blue) !important;
-}
-
 .apexcharts-menu-icon,
 .apexcharts-pan-icon,
 .apexcharts-reset-icon,
@@ -312,4 +305,15 @@ tr:hover {
 .apexcharts-canvas .apexcharts-selection-icon.apexcharts-selected svg,
 .apexcharts-canvas .apexcharts-zoom-icon.apexcharts-selected svg {
   fill: var(--autowhale-blue) !important;
+}
+.p-overlaypanel,
+.p-overlaypanel-content {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+}
+.p-overlaypanel:after {
+  border-bottom-color: rgb(var(--bg-color-secondary)) !important;
+}
+
+.p-overlaypanel:before {
+  border-bottom-color: rgb(var(--bg-color-primary) / 0.6) !important;
 }

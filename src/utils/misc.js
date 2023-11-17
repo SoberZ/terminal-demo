@@ -61,6 +61,15 @@ export function formatDate(inputDate) {
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
 }
 
+export function isObjectEmpty(obj) {
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      return false
+    }
+  }
+  return true
+}
+
 export const routes = [
   {
     path: '/',
@@ -83,3 +92,9 @@ export const routes = [
     component: StatsIcon,
   },
 ]
+
+export function numberFormatting(value) {
+  return Intl.NumberFormat('en-US', {
+    notation: 'standard',
+  }).format(value)
+}
