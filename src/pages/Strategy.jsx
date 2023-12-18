@@ -2,7 +2,6 @@ import { useEffect, useRef, useState, Suspense } from 'react'
 import { toast } from 'react-hot-toast'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 
-import { ProgressSpinner } from 'primereact/progressspinner'
 import { ErrorBoundary } from 'react-error-boundary'
 
 import {
@@ -30,6 +29,7 @@ import {
   SelectInput,
   Fallback,
   PopoverTable,
+  Loader,
 } from '../components'
 import { getSeverity } from './Strategies'
 import { getSeverity as getSeverityExchange } from './Exchanges'
@@ -492,7 +492,7 @@ const Strategy = () => {
               />
             </div>
             <ErrorBoundary FallbackComponent={Fallback}>
-              <Suspense fallback={<ProgressSpinner />}>
+              <Suspense fallback={<Loader />}>
                 <PopoverTable
                   strategies={strategies}
                   navigate={navigate}
@@ -530,7 +530,7 @@ const Strategy = () => {
           </h1>
         </div>
         <ErrorBoundary FallbackComponent={Fallback}>
-          <Suspense fallback={<ProgressSpinner />}>
+          <Suspense fallback={<Loader />}>
             {strategyData?.err_msg &&
             (strategyData?.active_status === 'paused_err' ||
               strategyData?.active_status === 'stop') ? (
@@ -631,7 +631,7 @@ const Strategy = () => {
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-5 lg:flex-row lg:justify-center">
             <ErrorBoundary FallbackComponent={Fallback}>
-              <Suspense fallback={<ProgressSpinner />}>
+              <Suspense fallback={<Loader />}>
                 <div className="space-y-3 lg:w-2/4">
                   <div
                     id="step-0"
@@ -837,7 +837,7 @@ const Strategy = () => {
               </Suspense>
             </ErrorBoundary>
             <ErrorBoundary FallbackComponent={Fallback}>
-              <Suspense fallback={<ProgressSpinner />}>
+              <Suspense fallback={<Loader />}>
                 <div id="step-1" className="space-y-2 lg:w-2/4">
                   <PrimaryChart
                     id={bigChart.id}
@@ -937,7 +937,7 @@ const Strategy = () => {
 
           {/* //? the Charts, no charts is better performance for the big chart  */}
           <ErrorBoundary FallbackComponent={Fallback}>
-            <Suspense fallback={<ProgressSpinner />}>
+            <Suspense fallback={<Loader />}>
               <div
                 className={`relative mb-5 rounded-lg border md:px-5 md:pb-5 ${
                   !totalChartMetricsActive ? 'pt-20' : 'pt-2 md:pt-5'
@@ -1193,7 +1193,7 @@ const Strategy = () => {
             </Suspense>
           </ErrorBoundary>
           <ErrorBoundary FallbackComponent={Fallback}>
-            <Suspense fallback={<ProgressSpinner />}>
+            <Suspense fallback={<Loader />}>
               <Orders strategyId={strategyId} />
             </Suspense>
           </ErrorBoundary>

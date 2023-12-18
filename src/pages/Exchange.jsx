@@ -9,6 +9,7 @@ import {
   TerminalButton,
   NewBalancePieChart,
   Fallback,
+  Loader,
 } from '../components'
 
 import FakeLineChartData from '../data/exchangeChart.json'
@@ -16,7 +17,6 @@ import FakePieChartData from '../data/exchangePiechart.json'
 import FakeTableData from '../data/exchangeTable.json'
 
 import { ErrorBoundary } from 'react-error-boundary'
-import { ProgressSpinner } from 'primereact/progressspinner'
 import ExchangeAccount from '../data/exchange/exchange.json'
 import Balances from '../data/exchange/balances.json'
 
@@ -220,7 +220,7 @@ const Exchange = () => {
 
         <div className="flex flex-col gap-5 lg:flex-row lg:justify-start">
           <ErrorBoundary FallbackComponent={Fallback}>
-            <Suspense fallback={<ProgressSpinner />}>
+            <Suspense fallback={<Loader />}>
               <NewBalancePieChart
                 balances={pieChartData.data}
                 labels={pieChartData.labels}
@@ -229,7 +229,7 @@ const Exchange = () => {
           </ErrorBoundary>
           <div className="w-full space-y-2">
             <ErrorBoundary FallbackComponent={Fallback}>
-              <Suspense fallback={<ProgressSpinner />}>
+              <Suspense fallback={<Loader />}>
                 <BalancesLineChart
                   id="Balances"
                   metricsData={lineChartData.data}

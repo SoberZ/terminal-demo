@@ -317,3 +317,23 @@ tr:hover {
 .p-overlaypanel:before {
   border-bottom-color: rgb(var(--bg-color-primary) / 0.6) !important;
 }
+
+.p-listbox {
+  background-color: rgb(var(--bg-color-primary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+  @apply dark:border-neutral-700;
+}
+.p-listbox-header {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+  border-bottom: none !important;
+}
+.p-listbox-list-wrapper {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+}
+.p-listbox-item {
+  &:hover {
+    background-color: var(--highlight-color-hover) !important;
+  }
+}

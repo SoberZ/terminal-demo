@@ -16,9 +16,10 @@ import EditStrategy from './strategies/EditStrategy.comp'
 import PrimaryChart from './shared/PrimaryChart.shared'
 import MinionChart from './shared/MinionChart.shared'
 import PopoverTable from './strategies/PopoverTable.comp'
+import PerformancePrimaryChart from './performanceDashboard/PerformancePrimaryChart'
+import PerformanceMinionChart from './shared/PerformanceMinionChart.shared'
 
 //? Shared Components
-import LineChart from './shared/LineChart.shared'
 import Input from './shared/Input.shared'
 import Select from './shared/Select.shared'
 import SelectChart from './shared/SelectChart.shared'
@@ -29,15 +30,15 @@ import TerminalButton from './shared/TerminalButton.shared'
 import Tile from './shared/Tile.shared'
 import BalancePieChart from './exchangeAccounts/BalancePieChart'
 import BalancesLineChart from './exchangeAccounts/BalancesLineChart'
-import NewBalancePieChart from './exchangeAccounts/NewBalancePieChart'
 import Fallback from './shared/Fallback.shared'
+import Loader from './shared/Loader.shared'
 
 export {
   ClientProvider,
   Sidebar,
   Select,
   SelectChart,
-  LineChart,
+  PerformanceMinionChart,
   Spotlight,
   SpotlightCard,
   SelectInput,
@@ -58,7 +59,8 @@ export {
   MinionChart,
   BalancePieChart,
   BalancesLineChart,
-  NewBalancePieChart,
   Fallback,
   PopoverTable,
+  Loader,
+  PerformancePrimaryChart,
 }

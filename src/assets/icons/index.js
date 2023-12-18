@@ -4,5 +4,14 @@ import KeyIcon from './KeyIcon'
 import LogoutIcon from './LogoutIcon'
 import StatsIcon from './StatsIcon'
 import UsersIcon from './UsersIcon'
+import DataAnalysis from './DataAnalysis'
 
-export { HomeIcon, ChartIcon, KeyIcon, LogoutIcon, StatsIcon, UsersIcon }
+export {
+  HomeIcon,
+  ChartIcon,
+  KeyIcon,
+  LogoutIcon,
+  StatsIcon,
+  UsersIcon,
+  DataAnalysis,
+}

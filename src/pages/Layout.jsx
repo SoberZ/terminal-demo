@@ -8,9 +8,9 @@ import {
   ThemeToggler,
   CompactSidebar,
   Fallback,
+  Loader,
 } from '../components'
 
-import { ProgressSpinner } from 'primereact/progressspinner'
 import { ErrorBoundary } from 'react-error-boundary'
 
 const HamburgerSidebar = lazy(() =>
@@ -155,7 +155,7 @@ const Layout = () => {
             }`}>
             <div>
               {width <= 768 ? (
-                <Suspense fallback={<ProgressSpinner />}>
+                <Suspense fallback={<Loader />}>
                   <HamburgerSidebar themeState={darkMode} />
                 </Suspense>
               ) : null}
@@ -168,7 +168,7 @@ const Layout = () => {
           </div>
 
           <ErrorBoundary FallbackComponent={Fallback}>
-            <Suspense fallback={<ProgressSpinner />}>
+            <Suspense fallback={<Loader />}>
               <Outlet />
             </Suspense>
           </ErrorBoundary>

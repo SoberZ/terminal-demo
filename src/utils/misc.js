@@ -1,5 +1,5 @@
 import {
-  UsersIcon,
+  DataAnalysis,
   ChartIcon,
   HomeIcon,
   KeyIcon,
@@ -82,6 +82,11 @@ export const routes = [
     component: ChartIcon,
   },
   {
+    path: '/performance-metrics-dashboard',
+    name: 'Performance Metrics Dashboard',
+    component: DataAnalysis,
+  },
+  {
     path: '/exchanges',
     name: 'Exchange Accounts',
     component: KeyIcon,
@@ -97,4 +102,10 @@ export function numberFormatting(value) {
   return Intl.NumberFormat('en-US', {
     notation: 'standard',
   }).format(value)
+}
+export function snakeCaseToTitleCase(inputStr) {
+  return inputStr
+    .split('_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
 }

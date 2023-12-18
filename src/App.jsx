@@ -7,6 +7,7 @@ const Strategies = lazy(() => import('./pages/Strategies'))
 const Users = lazy(() => import('./pages/Users'))
 const CreateStrategy = lazy(() => import('./pages/CreateStrategy'))
 const Strategy = lazy(() => import('./pages/Strategy'))
+const PerformanceDashboard = lazy(() => import('./pages/PerformanceDashboard'))
 const NoMatch = lazy(() => import('./pages/NoMatch'))
 const Layout = lazy(() => import('./pages/Layout'))
 const CreateExchangeAccount = lazy(() =>
@@ -31,6 +32,9 @@ const App = () => {
               <Route path="create" element={<CreateStrategy />} />
               {/* )} */}
               <Route path=":strategyId" element={<Strategy />} />
+            </Route>
+            <Route path="performance-metrics-dashboard">
+              <Route index element={<PerformanceDashboard />} />
             </Route>
             {/* {UserService.hasRole(['admin']) && ( */}
             <Route path="users">
