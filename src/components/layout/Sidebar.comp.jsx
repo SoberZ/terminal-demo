@@ -11,7 +11,7 @@ const Sidebar = ({ themeState }) => {
   const handleClick = (divNum) => () => setSelected(divNum)
 
   return (
-    <div className="flex h-screen max-w-[20rem] flex-col overflow-hidden shadow">
+    <div className="fixed top-0 left-0 flex h-[1247px] max-w-[20rem] flex-col overflow-hidden shadow">
       <div className="relative flex h-[90%] flex-col justify-between space-y-10 p-5">
         <div className="p-3">
           <Link to="/" onClick={handleClick(1)}>

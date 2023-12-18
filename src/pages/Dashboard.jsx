@@ -201,7 +201,7 @@ const Dashboard = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
-      <div className="flex flex-col space-y-10">
+      <div className="flex flex-col space-y-6">
         <div id={`step-2`} className="flex flex-col space-y-10">
           {width > 768 ? (
             <Spotlight className="group grid grid-cols-2 gap-6 lg:grid-cols-3 2xl:grid-cols-6">

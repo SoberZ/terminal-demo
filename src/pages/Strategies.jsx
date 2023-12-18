@@ -353,15 +353,7 @@ const Strategies = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
-      <div className=" flex flex-col space-y-10 overflow-y-hidden">
-        <TerminalButton styles="ml-2 md:ml-0">
-          <Link to="/strategies/create">
-            <h1 className="text-sm font-semibold text-white">
-              Create a new strategy
-            </h1>
-          </Link>
-        </TerminalButton>
-
+      <div className="flex flex-col space-y-10 overflow-y-hidden">
         <div
           id="step-0"
           className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
@@ -370,20 +362,29 @@ const Strategies = () => {
               Find an overview over all strategies in the system here. It gives
               a compact overview of which pairs and exchange accounts the
               strategies are running on as well as their respective 24h PnL,
-              status and whether it’s a demo strategy. To create a new strategy
+              status and whether it’s a demo strategy, To create a new strategy
               the “Create new strategy” button will direct to the corresponding
               form.{' '}
               <span className="font-bold">
-                Note that only traders can create or modify strategies.
+                Note that only traders can create or modify strategies
               </span>
             </p>
           </div>
-          <InputText
-            className="h-10 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 md:w-1/3"
-            placeholder="Search a strategy"
-            value={globalFilterValue}
-            onChange={onGlobalFilterChange}
-          />
+          <div className="flex flex-wrap gap-3">
+            <TerminalButton styles="ml-2 md:ml-0">
+              <Link to="/strategies/create">
+                <h1 className="text-sm font-semibold text-white">
+                  Create a new strategy
+                </h1>
+              </Link>
+            </TerminalButton>
+            <InputText
+              className="h-11 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 md:w-1/3"
+              placeholder="Search a strategy"
+              value={globalFilterValue}
+              onChange={onGlobalFilterChange}
+            />
+          </div>
           <DataTable
             value={sortedStrategies}
             filters={filters}

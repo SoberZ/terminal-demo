@@ -268,14 +268,6 @@ const Cachers = () => {
       />
 
       <div className="space-y-10">
-        <Link to="/cachers/create">
-          <TerminalButton className="ml-2 md:ml-0">
-            <h1 className="text-sm font-semibold text-white">
-              Register a new Cacher
-            </h1>
-          </TerminalButton>
-        </Link>
-
         <div className="w-full space-y-5 rounded-lg bg-color-secondary p-5 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
           <p className="text-sm font-light">
             Find an overview over all cachers in the system here. it gives a
@@ -288,12 +280,22 @@ const Cachers = () => {
             </span>
           </p>
           <div className="flex items-center justify-between">
-            <InputText
-              className="h-10 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 md:w-1/3"
-              placeholder="Global search for a cacher (status, endpoint, market, etc.)"
-              value={globalFilterValue}
-              onChange={onGlobalFilterChange}
-            />
+            <div className="flex grow flex-wrap justify-start gap-3">
+              <Link to="/cachers/create">
+                <TerminalButton>
+                  <h1 className="text-sm font-semibold text-white">
+                    Register a new Cacher
+                  </h1>
+                </TerminalButton>
+              </Link>
+
+              <InputText
+                className="h-11 border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 md:w-1/3"
+                placeholder="Global search for a cacher (status, endpoint, market, etc.)"
+                value={globalFilterValue}
+                onChange={onGlobalFilterChange}
+              />
+            </div>
             <button className="mx-2" onClick={handleRefresh}>
               <i className="pi pi-refresh text-xl"></i>
             </button>

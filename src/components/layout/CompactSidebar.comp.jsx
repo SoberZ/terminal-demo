@@ -14,8 +14,8 @@ const CompactSidebar = ({ themeState, setter }) => {
   const handleClick = (divNum) => () => setSelected(divNum)
 
   return (
-    <div className="flex h-screen min-w-[5rem] flex-col overflow-hidden pt-4 shadow">
-      <div className="relative flex h-[90%]  flex-col space-y-10 p-4">
+    <div className="fixed top-0 left-0 flex h-[1247px] min-w-[5rem] flex-col overflow-hidden pt-4 shadow">
+      <div className="relative flex flex-col space-y-10 p-4">
         <div className="flex items-center justify-center">
           <Link to="/" onClick={handleClick(1)}>
             <img

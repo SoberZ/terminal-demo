@@ -130,46 +130,51 @@ const Layout = () => {
   }
 
   return (
-    <>
-      <div className="w-full bg-gray-50  dark:bg-dark-1st" id="AllApp">
-        <ClientProvider />
+    <div className="w-full bg-gray-50 dark:bg-dark-1st">
+      <ClientProvider />
+      <div className="flex bg-gray-50 dark:bg-dark-1st ">
+        {(width > 768 && width < 1270) ||
+        (width > 1270 && !location.pathname.match(/\/$/)) ? (
+          <CompactSidebar themeState={darkMode} />
+        ) : width >= 1270 ? (
+          <Sidebar themeState={darkMode} />
+        ) : null}
 
-        <div className="flex bg-gray-50 dark:bg-dark-1st ">
-          {(width > 768 && width < 1270) ||
-          (width > 1270 && !location.pathname.match(/\/$/)) ? (
-            <CompactSidebar themeState={darkMode} />
-          ) : width >= 1270 ? (
-            <Sidebar themeState={darkMode} setter={setState} />
-          ) : null}
-
+        <div
+          className={` h-full w-full overflow-x-hidden ${
+            (width > 768 && width < 1270) ||
+            (width > 1270 && !location.pathname.match(/\/$/))
+              ? 'ml-[80px]'
+              : width >= 1270
+              ? 'ml-[320px]'
+              : 'ml-0'
+          }  px-2 md:py-5 md:px-5`}>
           <div
-            className={`h-screen w-screen overflow-y-scroll px-2 md:py-5 md:px-5`}>
-            <div
-              className={`my-5 flex items-center justify-between px-2 md:my-0 ${
-                width > 768 ? 'md:justify-end' : ''
-              }`}>
-              <div>
-                {width <= 768 ? (
-                  <Suspense fallback={<ProgressSpinner />}>
-                    <HamburgerSidebar themeState={darkMode} />
-                  </Suspense>
-                ) : null}
-              </div>
-
-              {width > 768 ? (
-                <p className="px-2 text-xl text-color-secondary">{time}</p>
+            className={`my-5 flex items-center justify-between px-2 md:my-0 ${
+              width > 768 ? 'md:justify-end' : ''
+            }`}>
+            <div>
+              {width <= 768 ? (
+                <Suspense fallback={<ProgressSpinner />}>
+                  <HamburgerSidebar themeState={darkMode} />
+                </Suspense>
               ) : null}
-              <ThemeToggler checked={darkMode} onChange={handleToggle} />
             </div>
-            <ErrorBoundary FallbackComponent={Fallback}>
-              <Suspense fallback={<ProgressSpinner />}>
-                <Outlet />
-              </Suspense>
-            </ErrorBoundary>
+
+            {width > 768 ? (
+              <p className="px-2 text-xl text-color-secondary">{time}</p>
+            ) : null}
+            <ThemeToggler checked={darkMode} onChange={handleToggle} />
           </div>
+
+          <ErrorBoundary FallbackComponent={Fallback}>
+            <Suspense fallback={<ProgressSpinner />}>
+              <Outlet />
+            </Suspense>
+          </ErrorBoundary>
         </div>
-      </div>{' '}
-    </>
+      </div>
+    </div>
   )
 }
 

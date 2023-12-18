@@ -200,14 +200,6 @@ const Exchanges = () => {
         // styles={{ overlay: { height: '100%' } }}
       />
       <div className="space-y-10">
-        <Link to="/exchanges/create">
-          <TerminalButton>
-            <h1 className="text-sm font-semibold text-white">
-              Create Exchange Account
-            </h1>
-          </TerminalButton>
-        </Link>
-
         <div className="space-y-5 rounded-lg bg-color-secondary p-5 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
           <p className="text-sm font-light ">
             Find on overview of all exchange accounts in the system. By clicking
@@ -218,12 +210,23 @@ const Exchanges = () => {
             in mind that any strategy associated to that exchange account that
             is not paused or stopped will restart as well.
           </p>
-          <InputText
-            className="h-10 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 md:w-1/3"
-            placeholder="Global search for a exchange account (status, exchange, account, etc.)"
-            value={globalFilterValue}
-            onChange={onGlobalFilterChange}
-          />
+          <div className="flex flex-wrap gap-3">
+            <Link to="/exchanges/create">
+              <TerminalButton>
+                <h1 className="text-sm font-semibold text-white">
+                  Create Exchange Account
+                </h1>
+              </TerminalButton>
+            </Link>
+
+            <InputText
+              className="h-11 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 md:w-1/3"
+              placeholder="Global search for a exchange account (status, exchange, account, etc.)"
+              value={globalFilterValue}
+              onChange={onGlobalFilterChange}
+            />
+          </div>
+
           <DataTable
             value={exchangeAccounts}
             filters={filters}
