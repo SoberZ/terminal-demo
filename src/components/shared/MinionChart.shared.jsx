@@ -143,7 +143,7 @@ const MinionChart = ({
   return (
     <div
       onClick={handleChange}
-      className={`relative rounded-lg border bg-color-primary p-2 dark:border-neutral-700 dark:bg-color-secondary ${className}`}>
+      className={`relative rounded-lg border-2 bg-color-primary p-2 transition-colors ease-in hover:cursor-pointer hover:border-autowhale-blue/40 dark:border-neutral-700 dark:bg-color-secondary hover:dark:border-neutral-300 ${className}`}>
       <ReactApexChart
         options={chartData.options}
         series={chartData.series}

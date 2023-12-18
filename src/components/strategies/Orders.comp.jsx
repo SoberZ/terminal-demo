@@ -386,6 +386,7 @@ const OrdersComponent = ({ strategyId }) => {
             breakpoint="0"
             scrollable={width < 768 ? true : false}
             tableStyle={{ minWidth: `${width < 768 ? '145rem' : 'none'}` }}
+            className="text-xs md:text-sm"
             lazy
             sortMode="multiple"
             filters={lazyState.filters}
@@ -401,12 +402,15 @@ const OrdersComponent = ({ strategyId }) => {
                 ? 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink'
                 : 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
             }
+            paginatorClassName="text-xs md:text-inherit"
             globalFilterFields={['price']}>
             <Column
               header="#"
               body={(data, options) => options.rowIndex + 1}
               frozen
-              className={`${width < 768 && 'max-w-[3rem] break-all'}`}
+              className={`max-w-[3rem] ${
+                width < 768 && 'max-w-[2rem] break-all'
+              }`}
             />
             <Column
               field="strategy_id"
@@ -423,7 +427,7 @@ const OrdersComponent = ({ strategyId }) => {
               field="exchange"
               header="Exchange"
               style={{ padding: '0.9em' }}
-              className="max-w-[7rem]"
+              className={`max-w-[7rem] ${width < 768 && 'max-w-[5rem]'}`}
             />
             <Column
               field="execution_date"
@@ -544,6 +548,8 @@ const OrdersComponent = ({ strategyId }) => {
               field="order_status"
               header="Order Status"
               filter
+              frozen
+              alignFrozen="right"
               dataType="text"
               style={{ padding: '0.9em' }}
               body={(order) => (
@@ -556,7 +562,7 @@ const OrdersComponent = ({ strategyId }) => {
               showFilterOperator={false}
               filterMatchModeOptions={equalsFilterOptions}
               filterElement={orderStatusFilterTemplate}
-              className="max-w-[7rem]"
+              className="max-w-[6rem] shadow-[-5px_0px_5px_#00000022] md:max-w-[7rem] md:shadow-none lg:max-w-[10rem]"
             />
           </DataTable>
         </div>

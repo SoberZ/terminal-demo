@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, Suspense } from 'react'
 import { toast } from 'react-hot-toast'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Link } from 'react-router-dom'
 
 import { ProgressSpinner } from 'primereact/progressspinner'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -474,7 +474,7 @@ const Strategy = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
-      <div className="space-y-4 rounded-lg bg-color-secondary p-3.5 text-sm text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800 md:p-10">
+      <div className="space-y-4 rounded-lg bg-color-secondary py-3.5 px-2 text-sm text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800 md:p-10">
         <div className="flex flex-col items-center space-y-2 md:flex md:flex-row md:items-center md:justify-between md:space-y-0">
           <div className="flex flex-wrap justify-center gap-2 md:justify-start">
             <div
@@ -512,15 +512,17 @@ const Strategy = () => {
                 className="text-sm md:text-lg"
               />
               <Tag value={strategyData?.type} className="text-sm md:text-lg" />
-              <Tag
-                value={strategyData?.exchange_account_id}
-                style={{
-                  backgroundColor: getSeverityExchange(
-                    strategyData?.exchange_account_status
-                  ),
-                }}
-                className="text-sm md:text-lg"
-              />
+              <Link to={`/exchanges/${strategyData?.exchange_account_id}`}>
+                <Tag
+                  value={strategyData?.exchange_account_id}
+                  style={{
+                    backgroundColor: getSeverityExchange(
+                      strategyData?.exchange_account_status
+                    ),
+                  }}
+                  className="text-sm md:text-lg"
+                />
+              </Link>
             </div>
           </div>
           <h1 className="pt-1 text-xl text-autowhale-blue dark:text-white md:pt-0 md:text-3xl">
@@ -937,8 +939,8 @@ const Strategy = () => {
           <ErrorBoundary FallbackComponent={Fallback}>
             <Suspense fallback={<ProgressSpinner />}>
               <div
-                className={`relative mb-5 rounded-lg border px-5 pb-5 ${
-                  !totalChartMetricsActive ? 'pt-20' : 'pt-5'
+                className={`relative mb-5 rounded-lg border md:px-5 md:pb-5 ${
+                  !totalChartMetricsActive ? 'pt-20' : 'pt-2 md:pt-5'
                 }  dark:border-neutral-700 dark:bg-neutral-900`}>
                 {!totalChartMetricsActive ? (
                   <SelectInput
@@ -948,7 +950,7 @@ const Strategy = () => {
                   />
                 ) : null}
 
-                <div className="flex gap-5 overflow-x-scroll pb-5">
+                <div className="flex gap-3 overflow-x-scroll pb-2 md:gap-5 md:pb-5">
                   <div
                     className="w-72 hover:cursor-pointer xl:w-[40rem]"
                     onClick={handleClick}>
