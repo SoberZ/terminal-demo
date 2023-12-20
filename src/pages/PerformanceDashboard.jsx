@@ -16,6 +16,8 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { ListBox } from 'primereact/listbox'
 import { useWindowSize } from '../hooks'
 
+import PerformanceData from '../data/performanceDashboard/performanceChartData.json'
+
 const metricsLists = [
   { name: 'Total Pnl', value: 'total_pnl' },
   { name: 'Realized Pnl', value: 'realized_pnl' },
@@ -48,10 +50,8 @@ const PerformanceDashboard = () => {
   const [chartData, setChartData] = useState([])
   const [sortedData, setSortedData] = useState([])
   const [metric, setMetric] = useState('total_pnl')
-  const [favoriteStrategies, setFavoriteStrategies] = useState([])
-  const [loading, setLoading] = useState(false)
-  const username = UserService.getUsername()
 
+  const [loading, setLoading] = useState(false)
   const rowsPerPageOptions = [8, 16, 32, 64]
   const [totalRecords, setTotalRecords] = useState(64)
   const [lazyState, setLazyState] = useState({
@@ -59,41 +59,6 @@ const PerformanceDashboard = () => {
     rows: rowsPerPageOptions[0],
     page: 1,
   })
-
-  // async function refetchChartData() {
-  //   const t = toast.loading(`Refetching ${snakeCaseToTitleCase(metric)} Data`)
-  //   setLoading(true)
-  //   const fetched = await fetchAllRollingMetrics(
-  //     metric,
-  //     lazyState.page,
-  //     lazyState.rows
-  //   )
-  //   setChartData(fetched)
-  //   toast.success(`Refetched ${snakeCaseToTitleCase(metric)} Data`, {
-  //     id: t,
-  //   })
-  //   setLoading(false)
-  // }
-
-  const loadMetricCharts = useCallback(
-    async (newLazyState) => {
-      const t = toast.loading(`Fetching ${snakeCaseToTitleCase(metric)} Data`)
-      setLoading(true)
-      console.log(newLazyState)
-      // const res = await fetchAllRollingMetrics(
-      //   metric,
-      //   newLazyState.page,
-      //   newLazyState.rows
-      // )
-
-      //? set the fetched, and set the total records from the length
-      setChartData(res)
-      // setTotalRecords(res?.length)
-      toast.success(`Fetched ${snakeCaseToTitleCase(metric)} Data`, { id: t })
-      setLoading(false)
-    },
-    [metric]
-  )
 
   const handleClick = (e, chartID) => {
     e.stopPropagation()
@@ -110,29 +75,9 @@ const PerformanceDashboard = () => {
   }
 
   useEffect(() => {
-    // async function fetchChartData() {
-    //   const t = toast.loading(`Fetching ${snakeCaseToTitleCase(metric)} Data`)
-    //   setLoading(true)
-    //   const fetched = await fetchAllRollingMetrics(
-    //     metric,
-    //     lazyState.page,
-    //     lazyState.rows
-    //   )
-
-    //   // setTotalRecords(fetched?.total_result)
-    //   setChartData(fetched)
-    //   toast.success(`Fetched ${snakeCaseToTitleCase(metric)} Data`, { id: t })
-    //   setLoading(false)
-    // }
-
-    loadMetricCharts(lazyState)
-    // fetchChartData()
-
-    const intervalId = setInterval(() => {
-      // refetchChartData()
-    }, 60000)
-    return () => clearInterval(intervalId)
-  }, [metric])
+    setChartData(() => PerformanceData.data)
+    setTotalRecords(() => PerformanceData.total_result)
+  }, [])
 
   // TODO: replace the useEffect here
   useEffect(() => {
@@ -146,41 +91,12 @@ const PerformanceDashboard = () => {
         return strategyData
       })
 
-      if (favoriteStrategies?.length > 0) {
-        const sortedArray = transformedArray.sort((a, b) => {
-          const isAFavorite = favoriteStrategies.includes(a.strategy_id)
-          const isBFavorite = favoriteStrategies.includes(b.strategy_id)
-
-          if (isAFavorite && !isBFavorite) {
-            return -1
-          } else if (!isAFavorite && isBFavorite) {
-            return 1
-          } else {
-            return 0
-          }
-        })
-        setPrimaryChartData(sortedArray[0])
-        setSortedData(sortedArray)
-      } else {
-        setPrimaryChartData(transformedArray[0])
-        setSortedData(transformedArray)
-      }
+      setPrimaryChartData(transformedArray[0])
+      setSortedData(transformedArray)
     }
   }, [chartData])
 
-  const onPageChange = (event) => {
-    console.log('event', event)
-    const newLazyState = {
-      ...lazyState,
-      first: event.first,
-      page: event.page,
-      rows: event.rows,
-    }
-
-    console.log('New Lazy state', newLazyState)
-    setLazyState((_) => newLazyState)
-    loadMetricCharts(newLazyState)
-  }
+  const onPageChange = (event) => {}
 
   const handleRefresh = () => {
     console.log('refreshing')
@@ -209,7 +125,7 @@ const PerformanceDashboard = () => {
                 if (e.value === null) {
                   setMetric('total_pnl')
                 } else {
-                  setMetric(e.value)
+                  setMetric('total_pnl')
                 }
               }}
               options={metricsLists}
