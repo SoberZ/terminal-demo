@@ -2,12 +2,13 @@ import { useState, useEffect, Suspense } from 'react'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 
+import { Avatar } from 'primereact/avatar'
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
 import { BiPause, BiRevision } from 'react-icons/bi'
 import {
   BalancesLineChart,
   TerminalButton,
-  NewBalancePieChart,
+  BalancePieChart,
   Fallback,
   Loader,
 } from '../components'
@@ -35,6 +36,7 @@ const Exchange = () => {
   const [accountData, setAccountData] = useState(null)
   const [balances, setBalances] = useState()
   const [pieChartData, setPieChartData] = useState({})
+  const [singleChart, setSingleChart] = useState(null)
   const [lineChartData, setLineChartData] = useState({})
   const { width } = useWindowSize()
   const handleOnConfirm = async () => {
@@ -128,6 +130,15 @@ const Exchange = () => {
   }
 
   const result = FakeTableData.data
+
+  function handleWidgetClick(ticker) {
+    if (singleChart === ticker) {
+      setSingleChart(null)
+    } else {
+      setSingleChart(ticker)
+    }
+  }
+
   return (
     <>
       <ConfirmDialog />
@@ -221,7 +232,7 @@ const Exchange = () => {
         <div className="flex flex-col gap-5 lg:flex-row lg:justify-start">
           <ErrorBoundary FallbackComponent={Fallback}>
             <Suspense fallback={<Loader />}>
-              <NewBalancePieChart
+              <BalancePieChart
                 balances={pieChartData.data}
                 labels={pieChartData.labels}
               />
@@ -233,10 +244,37 @@ const Exchange = () => {
                 <BalancesLineChart
                   id="Balances"
                   metricsData={lineChartData.data}
+                  singleChart={singleChart}
                 />
               </Suspense>
             </ErrorBoundary>
           </div>
+        </div>
+        <div className="flex gap-5 overflow-x-auto pb-5">
+          {result?.map((balance, idx) => (
+            <div
+              key={idx}
+              onClick={() => handleWidgetClick(balance.ticker)}
+              className={`flex items-center gap-2 rounded border bg-color-secondary py-2 px-3 transition-colors ease-in hover:cursor-pointer hover:border-autowhale-blue/40 dark:border-neutral-700 hover:dark:border-neutral-300 md:gap-3 ${
+                singleChart === balance.ticker
+                  ? 'border-autowhale-blue/40 dark:border-neutral-300'
+                  : ''
+              }`}>
+              <Avatar
+                label={balance.ticker}
+                size="normal"
+                shape="circle"
+                image={balance.thumb}
+              />
+              <div className="flex flex-col">
+                <h2 className="font-bold">{balance.tokenName}</h2>
+                <h3 className="flex gap-1">
+                  {numberFormatting(balance.total)}
+                  <span className="">{` ${balance.ticker}`}</span>
+                </h3>
+              </div>
+            </div>
+          ))}
         </div>
         <DataTable
           value={result}
@@ -261,10 +299,10 @@ const Exchange = () => {
               <div className="flex gap-3">
                 <img
                   src={balance.thumb}
-                  alt={balance.name}
+                  alt={balance.ticker}
                   className="h-6 w-6 rounded-full"
                 />
-                <span>{balance.name}</span>
+                <span>{balance.ticker}</span>
               </div>
             )}
           />
@@ -275,7 +313,7 @@ const Exchange = () => {
             className="break-anywhere min-w-[7rem]"
             body={(balance) => (
               <span>
-                {numberFormatting(balance.total)} {balance.name}
+                {numberFormatting(balance.total)} {balance.ticker}
               </span>
             )}
           />
@@ -286,7 +324,7 @@ const Exchange = () => {
             className="break-anywhere min-w-[7rem]"
             body={(balance) => (
               <span>
-                {numberFormatting(balance.used)} {balance.name}
+                {numberFormatting(balance.used)} {balance.ticker}
               </span>
             )}
           />
@@ -297,7 +335,7 @@ const Exchange = () => {
             className="break-anywhere min-w-[7rem]"
             body={(balance) => (
               <span>
-                {numberFormatting(balance.free)} {balance.name}
+                {numberFormatting(balance.free)} {balance.ticker}
               </span>
             )}
           />
