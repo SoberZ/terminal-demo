@@ -6,6 +6,7 @@ import { FilterMatchMode } from 'primereact/api'
 import { InputText } from 'primereact/inputtext'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
+import UsersData from '../data/users/usersData.json'
 
 export const Users = () => {
   const navigate = useNavigate()
@@ -16,22 +17,19 @@ export const Users = () => {
 
   useEffect(() => {
     toast.dismiss()
-    UserService.updateToken(async () => {
-      const res = await UserService.getUsers()
-      setUsers(res)
-    })
+    setUsers(UsersData)
   }, [])
   return (
-    <div className="w-full flex bg-white shadow-soft-lg p-5 rounded-lg">
+    <div className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
       <div className="w-full space-y-5 text-sm">
-        <p className="font-light text-sm">
+        <p className="text-sm font-light">
           As an admin you have access to this page. Edit, view and assign roles
           to users here. By clicking on an individual user you are directed to
           their corresponding details page.
         </p>
         <InputText
-          className="h-10 md:w-1/3  border-[#757575] text-black dark:bg-color-secondary dark:text-white"
-          placeholder="Search a user"
+          className="h-10 border-[#757575]  text-black dark:bg-color-secondary dark:text-white md:w-1/3"
+          placeholder="Search for a user"
           onInput={(e) =>
             setFilters({
               global: {
@@ -52,6 +50,7 @@ export const Users = () => {
             field="username"
             header="Username"
           />
+          <Column style={{ fontSize: '0.9rem' }} field="email" header="Email" />
           <Column
             style={{ fontSize: '0.9rem' }}
             field="firstName"
@@ -62,7 +61,6 @@ export const Users = () => {
             field="lastName"
             header="Last Name"
           />
-          <Column style={{ fontSize: '0.9rem' }} field="email" header="Email" />
         </DataTable>
       </div>
     </div>

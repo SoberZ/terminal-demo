@@ -1,0 +1,17 @@
+[
+  {
+    "name": "trader",
+    "description": "Trader Role for Autowhale",
+    "clientRole": false
+  },
+  {
+    "name": "new_user",
+    "description": "New-User Role for Autowhale",
+    "clientRole": false
+  },
+  {
+    "name": "admin",
+    "description": "Admin Role for Autowhale",
+    "clientRole": false
+  }
+]

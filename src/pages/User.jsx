@@ -8,6 +8,11 @@ import { InputText } from 'primereact/inputtext'
 import { toast } from 'react-hot-toast'
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
 
+import UserData from '../data/users/userData.json'
+import RolesData from '../data/users/rolesData.json'
+import MappingsData from '../data/users/mappingsData.json'
+import AvailableRolesData from '../data/users/availableRolesData.json'
+
 const AssignRoles = ({ roles, control }) => {
   return roles.allRoles.map((role, i) => {
     let containRole = roles.userRoles.some((e) => e.name === role.name)
@@ -15,7 +20,7 @@ const AssignRoles = ({ roles, control }) => {
       return
     }
     return (
-      <div className="flex space-x-2" key={i}>
+      <div className="flex flex-row-reverse gap-1 " key={i}>
         <Controller
           name={role.name}
           defaultValue={containRole}
@@ -39,32 +44,35 @@ const AssignRoles = ({ roles, control }) => {
 const User = () => {
   const { userId } = useParams()
   const [roles, setRoles] = useState({})
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({
+    id: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    emailVerified: '',
+    enabled: '',
+  })
   const { handleSubmit, control, register } = useForm({
     shouldUnregister: true,
   })
 
   async function getAllRoles() {
-    let res = await UserService.getAllRoles()
     setRoles((prev) => ({
       ...prev,
-      allRoles: res,
+      allRoles: RolesData,
     }))
   }
 
   async function getUser() {
-    let res = await UserService.getUser(userId)
-    setUser((_) => ({ ...res.data[0] }))
+    setUser((_) => ({ ...UserData }))
   }
 
   async function getUserRoles() {
-    let res = await UserService.getUserRoles(user.id)
-    setRoles((prev) => ({ ...prev, userRoles: res.data.realmMappings }))
+    setRoles((prev) => ({ ...prev, userRoles: MappingsData }))
   }
 
   async function getAvailableRoles() {
-    let res = await UserService.getAvailableRoles(user.id)
-    setRoles((prev) => ({ ...prev, availableRoles: res.data }))
+    setRoles((prev) => ({ ...prev, availableRoles: AvailableRolesData }))
   }
 
   useEffect(() => {
@@ -85,45 +93,7 @@ const User = () => {
       message: 'Are you sure you want to proceed?',
       header: 'Confirmation',
       icon: 'pi pi-exclamation-triangle',
-      accept: async () => {
-        // Assign user roles
-        let addRoles = Object.keys(data).filter(
-          (i) => i !== 'password' && data[i]
-        )
-        addRoles = roles.availableRoles
-          .filter((role) => addRoles.includes(role.name))
-          .map((role) => ({ id: role.id, name: role.name }))
-
-        // Remove unchecked roles
-        let oldRoles = Object.keys(data).filter(
-          (i) => i !== 'password' && !data[i]
-        )
-
-        oldRoles = roles.allRoles
-          .filter((role) => oldRoles.includes(role.name))
-          .map((role) => ({ id: role.id, name: role.name }))
-
-        const assignRes = await UserService.setUserRoles(user.id, addRoles)
-        let oldRes = await UserService.removeUserRoles(user.id, oldRoles)
-
-        if (assignRes.status === 204 && oldRes.status === 204) {
-          toast.success('Successfully changed roles!')
-        } else {
-          toast.error('Something went wrong editing user roles')
-        }
-
-        if (data.password.length > 0) {
-          const passwordRes = await UserService.resetPassword(
-            user.id,
-            data.password
-          )
-          if (passwordRes.status === 204) {
-            toast.success('Successfully changed password!')
-          } else {
-            toast.error('Something went wrong changing the password')
-          }
-        }
-      },
+      accept: async () => {},
       reject: () => {},
     })
   }
@@ -131,61 +101,121 @@ const User = () => {
   return (
     <>
       <ConfirmDialog />
-      <div className="bg-white p-10 space-y-5 text-sm">
-        <h1 className="text-2xl font-semibold bg-gradient-to-r bg-autowhale-gradient from-blue-900 to-blue-500 inline-block text-transparent bg-clip-text">
-          {userId}
-        </h1>
-
-        <p className="font-light text-sm">
+      <div className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
+        <div className="flex flex-col items-center space-y-2 md:flex md:flex-row md:items-center md:justify-between md:space-y-0">
+          <h1 className="text-3xl font-semibold text-autowhale-blue dark:text-color-secondary">
+            {userId}
+          </h1>
+          <h1 className="pt-1 text-xl text-autowhale-blue dark:text-white md:pt-0 md:text-xl">
+            User ID: {user?.id}
+          </h1>
+        </div>
+        <p className="text-sm font-light">
           Find the user details of each user here. You can assign roles such as
           admin, trader, analyst and new_user here as well as resetting the
           password for a user
         </p>
 
         {user && (
-          <div className="grid grid-cols-4">
-            <div className="flex-col">
-              <p>User id: </p>
-              <p>Email: </p>
-              <p>First name: </p>
-              <p>Last name: </p>
-              <p>Email verified: </p>
-              <p>Enabled: </p>
+          <div className="flex flex-col  gap-5 md:flex-row">
+            <div className="flex flex-wrap justify-center gap-3 md:justify-start">
+              <label
+                className={`relative block rounded-md border border-gray-200 !text-black/40 shadow transition-all dark:border-neutral-800 dark:bg-color-secondary dark:!text-white/40`}>
+                <input
+                  value={user.email}
+                  disabled={true}
+                  placeholder="Email"
+                  className={`peer border-none bg-transparent placeholder-transparent hover:cursor-not-allowed focus:border-transparent focus:outline-none focus:ring-0`}
+                />
+                <span
+                  className={`pointer-events-none absolute left-2.5 top-0 -translate-y-1/2 bg-color-secondary p-0.5 text-xs transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs `}>
+                  Email
+                </span>
+              </label>
+              <label
+                className={`relative block rounded-md border border-gray-200 !text-black/40 shadow transition-all dark:border-neutral-800 dark:bg-color-secondary dark:!text-white/40`}>
+                <input
+                  value={user.firstName}
+                  disabled={true}
+                  placeholder="First Name"
+                  className={`peer border-none bg-transparent placeholder-transparent hover:cursor-not-allowed focus:border-transparent focus:outline-none focus:ring-0`}
+                />
+                <span
+                  className={`pointer-events-none absolute left-2.5 top-0 -translate-y-1/2 bg-color-secondary p-0.5 text-xs transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs `}>
+                  First Name
+                </span>
+              </label>
+              <label
+                className={`relative block rounded-md border border-gray-200 !text-black/40 shadow transition-all dark:border-neutral-800 dark:bg-color-secondary dark:!text-white/40`}>
+                <input
+                  value={user.lastName}
+                  disabled={true}
+                  placeholder="Last Name"
+                  className={`peer border-none bg-transparent placeholder-transparent hover:cursor-not-allowed focus:border-transparent focus:outline-none focus:ring-0`}
+                />
+                <span
+                  className={`pointer-events-none absolute left-2.5 top-0 -translate-y-1/2 bg-color-secondary p-0.5 text-xs transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs `}>
+                  Last Name
+                </span>
+              </label>
             </div>
-            <div className="flex-col">
-              <p className="font-light">{user.id}</p>
-              <p className="font-light">{user.email}</p>
-              <p className="font-light">{user.firstName}</p>
-              <p className="font-light">{user.lastName}</p>
-              <p className="font-light">{String(user.emailVerified)}</p>
-              <p className="font-light">{String(user.enabled)}</p>
+            <div className="flex flex-wrap justify-center gap-3 md:justify-start">
+              <div className={`flex items-center justify-start gap-5 `}>
+                <p
+                  className={`mb-1 text-xs font-semibold !text-black/40 dark:border-neutral-800 dark:bg-color-secondary dark:!text-white/40`}>
+                  Email Verified
+                </p>
+                <Checkbox
+                  className="hover:cursor-not-allowed"
+                  disabled
+                  checked={user.emailVerified}
+                />
+              </div>
+              <div className={`flex items-center justify-start gap-5 `}>
+                <p
+                  className={`mb-1 text-xs font-semibold !text-black/40 dark:border-neutral-800 dark:bg-color-secondary dark:!text-white/40`}>
+                  Account Enabled
+                </p>
+                <Checkbox
+                  className="hover:cursor-not-allowed"
+                  disabled
+                  checked={user.enabled}
+                />
+              </div>
             </div>
           </div>
         )}
-
-        <form
-          onSubmit={handleSubmit(userEditFields)}
-          id="userEditForm"
-          className="flex space-y-10 flex-col">
-          <div className="">
-            <h1>User Roles</h1>
-            {roles.allRoles && roles.userRoles && (
-              <AssignRoles roles={roles} control={control} />
-            )}
-          </div>
-          <div>
-            <h1>Reset password</h1>
-            <Controller
-              name={'password'}
-              defaultValue={''}
-              control={control}
-              render={({ field }) => {
-                return <InputText className="p-1" id={field.name} {...field} />
-              }}
-            />
-          </div>
-          <TerminalButton text="Save" type="submit" form="userEditForm" />
-        </form>
+        <div className="flex flex-col items-center gap-1 md:items-start">
+          <h1 className="text-lg font-bold">User Roles</h1>
+          <form
+            onSubmit={handleSubmit(userEditFields)}
+            id="userEditForm"
+            className="flex flex-col items-center gap-5 md:items-start">
+            <div className="flex gap-3">
+              {roles.allRoles && roles.userRoles && (
+                <AssignRoles roles={roles} control={control} />
+              )}
+            </div>
+            <div>
+              <Controller
+                name={'password'}
+                defaultValue={''}
+                control={control}
+                render={({ field }) => {
+                  return (
+                    <InputText
+                      className="h-10 border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 "
+                      placeholder="Reset Password"
+                      id={field.name}
+                      {...field}
+                    />
+                  )
+                }}
+              />
+            </div>
+            <TerminalButton text="Save" type="submit" form="userEditForm" />
+          </form>
+        </div>
       </div>
     </>
   )

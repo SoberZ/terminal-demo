@@ -1,0 +1,37 @@
+[
+  {
+    "name": "offline_access",
+    "description": "${role_offline-access}",
+    "clientRole": false
+  },
+  {
+    "name": "trader",
+    "description": "Trader Role for Autowhale",
+    "clientRole": false
+  },
+  {
+    "name": "uma_authorization",
+    "description": "${role_uma_authorization}",
+    "clientRole": false
+  },
+  {
+    "name": "new_user",
+    "description": "New-User Role for Autowhale",
+    "clientRole": false
+  },
+  {
+    "name": "analyst",
+    "description": "Analyst Role for Autowhale",
+    "clientRole": false
+  },
+  {
+    "name": "admin",
+    "description": "Admin Role for Autowhale",
+    "clientRole": false
+  },
+  {
+    "name": "default-roles-autowhale",
+    "description": "${role_default-roles}",
+    "clientRole": false
+  }
+]

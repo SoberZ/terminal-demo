@@ -1,0 +1,19 @@
+[
+  {
+    "name": "offline_access",
+    "clientRole": false
+  },
+  {
+    "name": "uma_authorization",
+    "clientRole": false
+  },
+  {
+    "name": "analyst",
+    "description": "Analyst Role for Autowhale",
+    "clientRole": false
+  },
+  {
+    "name": "default-roles-autowhale",
+    "clientRole": false
+  }
+]

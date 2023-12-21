@@ -39,22 +39,22 @@ const Sidebar = ({ themeState }) => {
                 </li>
               )
             })}
-            {UserService.hasRole(['admin']) && (
-              <li
-                className={`${
-                  selected === 4
-                    ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
-                    : ''
-                } rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
-                <Link
-                  to="/users"
-                  className="flex flex-wrap items-center justify-center"
-                  onClick={handleClick(4)}>
-                  <UsersIcon width="1.5rem" height="1.5rem" />
-                  <span className="ml-3 flex-1">Users</span>
-                </Link>
-              </li>
-            )}
+
+            <li
+              className={`${
+                selected === 6
+                  ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
+                  : ''
+              } rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
+              <Link
+                to="/users"
+                className="flex flex-wrap items-center justify-center"
+                onClick={handleClick(6)}>
+                <UsersIcon width="1.5rem" height="1.5rem" />
+                <span className="ml-3 flex-1">Users</span>
+              </Link>
+            </li>
+
             <li
               className={`${
                 selected === 5

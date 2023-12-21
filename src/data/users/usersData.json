@@ -1,0 +1,32 @@
+[
+  {
+    "username": "testuser@autowhale.net",
+    "firstName": "Test",
+    "lastName": "User",
+    "email": "testuser@autowhale.net"
+  },
+  {
+    "username": "adminuser@xyz.com",
+    "firstName": "Admin",
+    "lastName": "User",
+    "email": "adminuser@xyz.com"
+  },
+  {
+    "username": "newuser@xyz.net",
+    "firstName": "New",
+    "lastName": "User",
+    "email": "newuser@xyz.net"
+  },
+  {
+    "username": "otptrader@xyz.org",
+    "firstName": "OTP",
+    "lastName": "Trader",
+    "email": "otptrader@xyz.org"
+  },
+  {
+    "username": "traderuser@xyz.com",
+    "firstName": "Trader",
+    "lastName": "User",
+    "email": "traderuser@xyz.com"
+  }
+]
