@@ -18,6 +18,7 @@ const Cachers = lazy(() => import('./pages/Cachers'))
 const RegisterCacher = lazy(() => import('./pages/RegisterCacher'))
 const Exchange = lazy(() => import('./pages/Exchange'))
 const User = lazy(() => import('./pages/User'))
+const CreateCategory = lazy(() => import('./pages/CreateCategory'))
 
 const App = () => {
   return (
@@ -39,6 +40,7 @@ const App = () => {
             {/* {UserService.hasRole(['admin']) && ( */}
             <Route path="users">
               <Route index element={<Users />} />
+              <Route path="create-category" element={<CreateCategory />} />
               <Route path=":userId" element={<User />} />
             </Route>
             {/* )} */}

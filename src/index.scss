@@ -337,3 +337,25 @@ tr:hover {
     background-color: var(--highlight-color-hover) !important;
   }
 }
+
+.p-tabview {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+}
+
+.p-tabview .p-tabview-panels {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+  padding: 1rem 0;
+}
+.p-tabview-nav {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+}
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+}
+.p-tabview .p-tabview-nav .p-tabview-ink-bar {
+  background-color: var(--autowhale-blue) !important;
+}
