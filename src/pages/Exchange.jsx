@@ -341,7 +341,7 @@ const Exchange = () => {
           />
         </DataTable>
       </div>
-      <div className="absolute bottom-5 right-9 z-20">
+      <div className="fixed bottom-5 right-9 z-20">
         <TerminalButton
           text="Start Tour"
           textSize="text-base"

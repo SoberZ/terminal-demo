@@ -449,7 +449,7 @@ const Dashboard = () => {
           <AllTrades totalRecords={0} />
         </div>
       </div>
-      <div className="absolute bottom-5 left-5 z-20">
+      <div className="fixed bottom-5 left-5 z-20">
         <TerminalButton
           text="Start Tour"
           textSize="text-base"
