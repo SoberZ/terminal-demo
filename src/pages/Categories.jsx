@@ -43,7 +43,11 @@ const Categories = () => {
     <>
       <div className="flex gap-5">
         <TerminalButton>
-          <Link to="/users/create-category">Create a Category</Link>
+          <Link to="/users/create-category">
+            <h1 className="text-sm font-semibold text-white">
+              Create a Category
+            </h1>
+          </Link>
         </TerminalButton>
 
         <InputText

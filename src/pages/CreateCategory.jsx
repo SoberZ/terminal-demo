@@ -70,7 +70,7 @@ const CreateCategory = () => {
       },
     },
     {
-      label: 'Log it baby',
+      label: 'Log it',
       icon: 'pi pi-fw pi-pencil',
       command: () => {
         console.log(selectedStrategies)
@@ -202,7 +202,7 @@ const CreateCategory = () => {
               ? ''
               : 'bg-neutral-400 hover:cursor-not-allowed dark:bg-neutral-800'
           }>
-          New Category
+          <h1 className="text-sm font-semibold text-white">New Category</h1>
         </TerminalButton>
         <InputText
           className="border-[#757575] py-2 text-black dark:bg-color-secondary dark:text-white md:w-1/3"

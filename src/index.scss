@@ -359,3 +359,42 @@ tr:hover {
 .p-tabview .p-tabview-nav .p-tabview-ink-bar {
   background-color: var(--autowhale-blue) !important;
 }
+
+.p-contextmenu {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+  @apply dark:border-neutral-700;
+}
+
+.p-menuitem-link {
+  &:hover {
+    background-color: var(--highlight-color-hover) !important;
+  }
+}
+.p-menuitem-active {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+  color: rgb(var(--sb-thumb-color)) !important;
+}
+.p-contextmenu .p-menuitem.p-menuitem-active > .p-menuitem-link {
+  background-color: var(--highlight-color-hover) !important;
+}
+
+.p-listbox {
+  background-color: rgb(var(--bg-color-primary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+  @apply dark:border-neutral-700;
+}
+.p-listbox-header {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+  border-bottom: none !important;
+}
+.p-listbox-list-wrapper {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+}
+.p-listbox-item {
+  &:hover {
+    background-color: var(--highlight-color-hover) !important;
+  }
+}
