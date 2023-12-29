@@ -10,7 +10,7 @@ import { InputText } from 'primereact/inputtext'
 import { FilterMatchMode, FilterOperator } from 'primereact/api'
 
 import { TerminalButton } from '../components'
-import { StrategiesService, UserService, StateService } from '../services'
+import { UserService } from '../services'
 
 import { useWindowSize } from '../hooks'
 import { statusColors } from '../utils/statusColors'

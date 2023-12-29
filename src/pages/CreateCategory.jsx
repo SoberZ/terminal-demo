@@ -14,6 +14,9 @@ import { TerminalButton } from '../components'
 
 import { Dialog } from 'primereact/dialog'
 
+import Joyride, { STATUS } from 'react-joyride'
+import { BiInfoCircle } from 'react-icons/bi'
+
 async function fetchStrategies() {
   const res = await StrategiesService.getAll()
   let serviceData = res.data
@@ -189,133 +192,209 @@ const CreateCategory = () => {
     setGlobalFilterValue(value)
   }
 
-  //TODO: i need to put the filters too
-  return (
-    <div className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
-      <p className="text-sm font-light">Create a Category here</p>
-      <div className="flex gap-5">
-        <TerminalButton
-          disabled={selectedStrategies?.length <= 0 ? true : false}
-          onClick={() => setVisible(true)}
-          className={
-            selectedStrategies?.length > 0
-              ? ''
-              : 'bg-neutral-400 hover:cursor-not-allowed dark:bg-neutral-800'
-          }>
-          <h1 className="text-sm font-semibold text-white">New Category</h1>
-        </TerminalButton>
-        <InputText
-          className="border-[#757575] py-2 text-black dark:bg-color-secondary dark:text-white md:w-1/3"
-          placeholder="Search for a Strategy"
-          value={globalFilterValue}
-          onChange={onGlobalFilterChange}
-        />
-
-        <Dialog
-          header="Create Collection"
-          visible={visible}
-          draggable={false}
-          onHide={() => setVisible(false)}>
-          <div className="space-y-3">
-            <InputText
-              className="border-[#757575] py-2 text-black dark:bg-color-secondary dark:text-white "
-              placeholder="Collection Name"
-              value={collectionName}
-              onChange={(e) => setCollectionName(e.target.value)}
-            />
-            <p>{selectedStrategies?.length} Selected Strategies</p>
+  const [{ run, steps }, setState] = useState({
+    run: false,
+    steps: [
+      {
+        title: <strong>Create-a-Category page</strong>,
+        content: (
+          <div className="flex flex-col gap-2">
+            <h2>
+              in this page you can create a category by{' '}
+              <span className="font-bold">
+                {' '}
+                selecting a list of strategies{' '}
+              </span>
+            </h2>
+            <h2>
+              and then adding a name + to
+              <span className="font-bold"> assigning different users </span>
+              this category{' '}
+            </h2>
           </div>
-        </Dialog>
-      </div>
+        ),
+        placement: 'center',
+        target: 'body',
+        styles: {
+          options: {
+            width: 550,
+          },
+        },
+      },
+    ],
+  })
 
-      <p>{selectedStrategies?.length} Selected Strategies</p>
-      <ContextMenu
-        model={items}
-        ref={cm}
-        onHide={() => setSelectedStrategies(null)}
-        className="w-[20rem]"
+  const handleJoyrideCallback = (data) => {
+    const { status } = data
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      setState((prev) => ({ ...prev, run: false }))
+    }
+  }
+  return (
+    <>
+      <Joyride
+        callback={handleJoyrideCallback}
+        continuous
+        hideCloseButton
+        run={run}
+        scrollToFirstStep
+        showProgress
+        showSkipButton
+        steps={steps}
+        disableOverlay
+        disableScrollParentFix
+        // spotlightPadding={5}
+        // disableOverlayClose
+        // spotlightClicks
+        styles={{
+          options: {
+            zIndex: 1000,
+            primaryColor: '#4432e2',
+            arrowColor: '#fff',
+            backgroundColor: '#fff',
+            textColor: '#171717',
+          },
+        }}
+        // styles={{ overlay: { height: '100%' } }}
       />
-      <DataTable
-        dataKey="strategy_id"
-        value={sortedStrategies}
-        filters={filters}
-        paginator
-        breakpoint="0"
-        scrollable
-        dragSelection
-        metaKeySelection={true}
-        selectionMode="multiple"
-        contextMenuSelection={selectedStrategies}
-        onContextMenu={(e) => cm?.current?.show(e.originalEvent)}
-        //? this here is the problem with the context menu
-        // onContextMenuSelectionChange={(e) => console.log(e)}
-        selection={selectedStrategies}
-        onSelectionChange={(e) => setSelectedStrategies(e.value)}
-        paginatorTemplate={
-          width < 768
-            ? 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink'
-            : 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
-        }
-        sortField={'active_status'}
-        sortOrder={1}
-        rows={20}
-        rowsPerPageOptions={[20, 30, 40, 50]}
-        totalRecords={strategies.length}
-        className="text-[0.7rem] md:text-[0.75rem]"
-        // onRowClick={(e) => {
-        // }}
-      >
-        <Column
+
+      <div className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
+        <p className="text-sm font-light">Create a Category here</p>
+        <div className="flex gap-5">
+          <TerminalButton
+            disabled={selectedStrategies?.length <= 0 ? true : false}
+            onClick={() => setVisible(true)}
+            className={
+              selectedStrategies?.length > 0
+                ? ''
+                : 'bg-neutral-400 hover:cursor-not-allowed dark:bg-neutral-800'
+            }>
+            <h1 className="text-sm font-semibold text-white">New Category</h1>
+          </TerminalButton>
+          <InputText
+            className="border-[#757575] py-2 text-black dark:bg-color-secondary dark:text-white md:w-1/3"
+            placeholder="Search for a Strategy"
+            value={globalFilterValue}
+            onChange={onGlobalFilterChange}
+          />
+
+          <Dialog
+            header="Create Collection"
+            visible={visible}
+            draggable={false}
+            onHide={() => setVisible(false)}>
+            <div className="space-y-3">
+              <InputText
+                className="border-[#757575] py-2 text-black dark:bg-color-secondary dark:text-white "
+                placeholder="Collection Name"
+                value={collectionName}
+                onChange={(e) => setCollectionName(e.target.value)}
+              />
+              <p>{selectedStrategies?.length} Selected Strategies</p>
+            </div>
+          </Dialog>
+        </div>
+
+        <p>{selectedStrategies?.length} Selected Strategies</p>
+        <ContextMenu
+          model={items}
+          ref={cm}
+          onHide={() => setSelectedStrategies(null)}
+          className="w-[20rem]"
+        />
+        <DataTable
+          dataKey="strategy_id"
+          value={sortedStrategies}
+          filters={filters}
+          paginator
+          breakpoint="0"
+          scrollable
+          dragSelection
+          metaKeySelection={true}
           selectionMode="multiple"
-          className="max-w-[0.5rem] md:max-w-[3rem]"></Column>
-        <Column
-          sortable
-          field="strategy_id"
-          header="Strategy"
-          className="break-anywhere min-w-[5rem] md:min-w-[15rem] lg:min-w-[18rem]"
-        />
-        <Column
-          sortable
-          field="type"
-          header="Type"
-          className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-        />
-        <Column
-          sortable
-          field="market"
-          header="Market"
-          className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-        />
-        <Column
-          sortable
-          field="exchange_account_id"
-          header="Exchange account"
-          className="min-w-[8rem] md:min-w-[10rem] lg:min-w-[14rem]"
-        />
-        <Column
-          sortable
-          field="is_demo_strategy"
-          header="Demo mode"
-          body={strategyDemoModeBodyTemplate}
-          style={{ minWidth: '7rem' }}
-        />
-        <Column
-          sortable
-          field="active_status"
-          header="Status"
-          sortFunction={statusSortingFunction}
-          body={(strategy) => (
-            <Tag
-              value={strategy.active_status}
-              style={{
-                backgroundColor: getSeverity(strategy.active_status),
-              }}
-              className="text-md"
-            />
-          )}
-        />
-      </DataTable>
-    </div>
+          contextMenuSelection={selectedStrategies}
+          onContextMenu={(e) => cm?.current?.show(e.originalEvent)}
+          //? this here is the problem with the context menu
+          // onContextMenuSelectionChange={(e) => console.log(e)}
+          selection={selectedStrategies}
+          onSelectionChange={(e) => setSelectedStrategies(e.value)}
+          paginatorTemplate={
+            width < 768
+              ? 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink'
+              : 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
+          }
+          sortField={'active_status'}
+          sortOrder={1}
+          rows={20}
+          rowsPerPageOptions={[20, 30, 40, 50]}
+          totalRecords={strategies.length}
+          className="text-[0.7rem] md:text-[0.75rem]"
+          // onRowClick={(e) => {
+          // }}
+        >
+          <Column
+            selectionMode="multiple"
+            className="max-w-[0.5rem] md:max-w-[3rem]"></Column>
+          <Column
+            sortable
+            field="strategy_id"
+            header="Strategy"
+            className="break-anywhere min-w-[5rem] md:min-w-[15rem] lg:min-w-[18rem]"
+          />
+          <Column
+            sortable
+            field="type"
+            header="Type"
+            className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+          />
+          <Column
+            sortable
+            field="market"
+            header="Market"
+            className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+          />
+          <Column
+            sortable
+            field="exchange_account_id"
+            header="Exchange account"
+            className="min-w-[8rem] md:min-w-[10rem] lg:min-w-[14rem]"
+          />
+          <Column
+            sortable
+            field="is_demo_strategy"
+            header="Demo mode"
+            body={strategyDemoModeBodyTemplate}
+            style={{ minWidth: '7rem' }}
+          />
+          <Column
+            sortable
+            field="active_status"
+            header="Status"
+            sortFunction={statusSortingFunction}
+            body={(strategy) => (
+              <Tag
+                value={strategy.active_status}
+                style={{
+                  backgroundColor: getSeverity(strategy.active_status),
+                }}
+                className="text-md"
+              />
+            )}
+          />
+        </DataTable>
+      </div>
+      <div className="fixed bottom-5 right-9 z-20">
+        <TerminalButton
+          text="Start Tour"
+          textSize="text-base"
+          onClick={() => {
+            setState((prev) => ({ ...prev, run: true }))
+          }}
+          className="flex !w-auto items-center justify-center gap-2 text-white ">
+          <BiInfoCircle size={25} />
+        </TerminalButton>
+      </div>
+    </>
   )
 }
 

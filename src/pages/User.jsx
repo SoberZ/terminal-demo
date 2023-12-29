@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import UserService from '../services/UserService'
 import { Checkbox } from 'primereact/checkbox'
 import { TerminalButton } from '../components'
 import { Controller, useForm } from 'react-hook-form'
@@ -12,6 +11,9 @@ import UserData from '../data/users/userData.json'
 import RolesData from '../data/users/rolesData.json'
 import MappingsData from '../data/users/mappingsData.json'
 import AvailableRolesData from '../data/users/availableRolesData.json'
+
+import Joyride, { STATUS } from 'react-joyride'
+import { BiInfoCircle } from 'react-icons/bi'
 
 const AssignRoles = ({ roles, control }) => {
   return roles.allRoles.map((role, i) => {
@@ -98,8 +100,70 @@ const User = () => {
     })
   }
 
+  const [{ run, steps }, setState] = useState({
+    run: false,
+    steps: [
+      {
+        title: <strong>User page</strong>,
+        content: (
+          <div className="flex flex-col gap-2">
+            <h2>
+              in this page you can{' '}
+              <span className="font-bold">
+                reset the password for a certain user
+              </span>
+              , as well as{' '}
+              <span className="font-bold">
+                assigning different roles for them{' '}
+              </span>
+            </h2>
+          </div>
+        ),
+        placement: 'center',
+        target: 'body',
+        styles: {
+          options: {
+            width: 450,
+          },
+        },
+      },
+    ],
+  })
+
+  const handleJoyrideCallback = (data) => {
+    const { status } = data
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      setState((prev) => ({ ...prev, run: false }))
+    }
+  }
+
   return (
     <>
+      <Joyride
+        callback={handleJoyrideCallback}
+        continuous
+        hideCloseButton
+        run={run}
+        scrollToFirstStep
+        showProgress
+        showSkipButton
+        steps={steps}
+        disableOverlay
+        disableScrollParentFix
+        // spotlightPadding={5}
+        // disableOverlayClose
+        // spotlightClicks
+        styles={{
+          options: {
+            zIndex: 1000,
+            primaryColor: '#4432e2',
+            arrowColor: '#fff',
+            backgroundColor: '#fff',
+            textColor: '#171717',
+          },
+        }}
+        // styles={{ overlay: { height: '100%' } }}
+      />
       <ConfirmDialog />
       <div className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
         <div className="flex flex-col items-center space-y-2 md:flex md:flex-row md:items-center md:justify-between md:space-y-0">
@@ -216,6 +280,17 @@ const User = () => {
             <TerminalButton text="Save" type="submit" form="userEditForm" />
           </form>
         </div>
+      </div>
+      <div className="fixed bottom-5 right-9 z-20">
+        <TerminalButton
+          text="Start Tour"
+          textSize="text-base"
+          onClick={() => {
+            setState((prev) => ({ ...prev, run: true }))
+          }}
+          className="flex !w-auto items-center justify-center gap-2 text-white ">
+          <BiInfoCircle size={25} />
+        </TerminalButton>
       </div>
     </>
   )
