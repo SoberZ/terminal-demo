@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
+
 import { Tooltip } from 'primereact/tooltip'
+
 import { UsersIcon, LogoutIcon } from '../../assets/icons'
+
 import useSelectRoute from '../hooks'
 import { routes } from '../../utils/misc'
 

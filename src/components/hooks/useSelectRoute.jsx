@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 
+//! THIS HOOK RUNS EVERY SINGLE SECOND
 export default function useSelectRoute(setVisible) {
   const [selected, setSelected] = useState(0)
   const location = useLocation()
 
   useEffect(() => {
+    //? if it finds 'strategies' string inside anything, it'll default to it, needs to start with it, not globally
     if (location.pathname.match(/strategies.*/g)) {
       setSelected(2)
     } else if (location.pathname.match(/performance-metrics-dashboard.*/g)) {

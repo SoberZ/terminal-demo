@@ -1,15 +1,10 @@
-import { useState, useEffect, useRef } from 'react'
-import { DataTable } from 'primereact/datatable'
-import { Column } from 'primereact/column'
-import { StrategiesService, UserService } from '../services'
+import { useState, useEffect, useRef, Suspense } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useWindowSize } from '../hooks'
-import { Tag } from 'primereact/tag'
+
+import { StrategiesService, UserService } from '../services'
 import { getSeverity } from './Strategies'
-import { FilterMatchMode, FilterOperator } from 'primereact/api'
-import { InputText } from 'primereact/inputtext'
-import { ContextMenu } from 'primereact/contextmenu'
-import { ListBox } from 'primereact/listbox'
-import { TerminalButton } from '../components'
+import { Fallback, Loader, TerminalButton } from '../components'
 
 import {
   demoModeFilterTemplate,
@@ -17,10 +12,19 @@ import {
   strategyTypesFilterTemplate,
 } from './addons/CategoriesAddons'
 
+import { DataTable } from 'primereact/datatable'
+import { Column } from 'primereact/column'
+import { Tag } from 'primereact/tag'
+import { FilterMatchMode, FilterOperator } from 'primereact/api'
 import { Dialog } from 'primereact/dialog'
-
+import { InputText } from 'primereact/inputtext'
+import { InputTextarea } from 'primereact/inputtextarea'
+import { MultiSelect } from 'primereact/multiselect'
+import { ErrorBoundary } from 'react-error-boundary'
 import Joyride, { STATUS } from 'react-joyride'
 import { BiInfoCircle } from 'react-icons/bi'
+
+import UsersData from '../data/users/usersData.json'
 
 async function fetchStrategies() {
   const res = await StrategiesService.getAll()
@@ -46,14 +50,17 @@ const equalsFilterOptions = [{ label: 'Equals', value: FilterMatchMode.EQUALS }]
 
 const CreateCategory = () => {
   const { width } = useWindowSize()
+  const navigate = useNavigate()
   const [strategies, setStrategies] = useState([])
+  const [users, setUsers] = useState([])
+  const [selectedUsers, setSelectedUsers] = useState([])
   const [selectedStrategies, setSelectedStrategies] = useState([])
   const [favoriteStrategies, setFavoriteStrategies] = useState([])
 
   const [visible, setVisible] = useState(false)
-  const [collectionName, setCollectionName] = useState('')
+  const [categoryName, setCategoryName] = useState('')
+  const [categoryDescription, setCategoryDescription] = useState('')
 
-  const cm = useRef(null)
   const favLoaded = useRef(false)
   const username = UserService.getUsername()
 
@@ -78,35 +85,6 @@ const CreateCategory = () => {
     },
   })
 
-  const [selectedMenuStrategy, setSelectedMenuStrategy] = useState(null)
-
-  const items = [
-    {
-      template: (item, options) => {
-        return (
-          <ListBox
-            filter
-            value={selectedMenuStrategy}
-            onChange={(e) => setSelectedMenuStrategy(e.value)}
-            options={selectedStrategies}
-            optionLabel="strategy_id"
-            listStyle={{ height: '250px' }}
-          />
-        )
-      },
-    },
-    {
-      label: 'Log it',
-      icon: 'pi pi-fw pi-pencil',
-      command: () => {
-        console.log(selectedStrategies)
-      },
-    },
-
-    { label: 'Duplicate', icon: 'pi pi-fw pi-copy' },
-    { label: 'Delete', icon: 'pi pi-fw pi-trash' },
-  ]
-
   useEffect(() => {
     async function fetchFavorites() {
       const fetchedFavorites = await UserService.getFavorites(username)
@@ -120,6 +98,9 @@ const CreateCategory = () => {
     }
     fetchFavorites()
     fetchStrategyData()
+
+    const usersIDs = UsersData?.map((user) => user.username)
+    setUsers(usersIDs)
   }, [])
 
   useEffect(() => {
@@ -215,6 +196,10 @@ const CreateCategory = () => {
     setGlobalFilterValue(value)
   }
 
+  const selectedStrategiesIDs = selectedStrategies?.map(
+    (strategy) => strategy.strategy_id
+  )
+
   const [{ run, steps }, setState] = useState({
     run: false,
     steps: [
@@ -282,7 +267,7 @@ const CreateCategory = () => {
       />
 
       <div className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
-        <p className="text-sm font-light">Create a Category here</p>
+        <p className="text-sm font-light">Create a category here</p>
         <div className="flex gap-5">
           <TerminalButton
             disabled={selectedStrategies?.length <= 0 ? true : false}
@@ -292,7 +277,7 @@ const CreateCategory = () => {
                 ? ''
                 : 'bg-neutral-400 hover:cursor-not-allowed dark:bg-neutral-800'
             }>
-            <h1 className="text-sm font-semibold text-white">New Category</h1>
+            New Category
           </TerminalButton>
           <InputText
             className="border-[#757575] py-2 text-black dark:bg-color-secondary dark:text-white md:w-1/3"
@@ -300,123 +285,153 @@ const CreateCategory = () => {
             value={globalFilterValue}
             onChange={onGlobalFilterChange}
           />
-
-          <Dialog
-            header="Create Collection"
-            visible={visible}
-            draggable={false}
-            onHide={() => setVisible(false)}>
-            <div className="space-y-3">
-              <InputText
-                className="border-[#757575] py-2 text-black dark:bg-color-secondary dark:text-white "
-                placeholder="Collection Name"
-                value={collectionName}
-                onChange={(e) => setCollectionName(e.target.value)}
-              />
-              <p>{selectedStrategies?.length} Selected Strategies</p>
-            </div>
-          </Dialog>
+          <ErrorBoundary FallbackComponent={Fallback}>
+            <Suspense fallback={<Loader />}>
+              <Dialog
+                className="w-[20rem]"
+                header="Create Category"
+                visible={visible}
+                draggable={false}
+                onHide={() => {
+                  setCategoryName('')
+                  setCategoryDescription('')
+                  setSelectedUsers([])
+                  setVisible(false)
+                }}>
+                <div className="space-y-3">
+                  <div className="flex flex-col gap-3 ">
+                    <InputText
+                      className="border-[#757575] py-2 text-black dark:bg-color-secondary dark:text-white "
+                      placeholder="Category Name"
+                      value={categoryName}
+                      onChange={(e) => setCategoryName(e.target.value)}
+                    />
+                    <InputTextarea
+                      className="border-[#757575]"
+                      autoResize
+                      placeholder="Category Description"
+                      value={categoryDescription}
+                      onChange={(e) => setCategoryDescription(e.target.value)}
+                      rows={1}
+                      cols={10}
+                    />
+                    <MultiSelect
+                      value={selectedUsers}
+                      onChange={(e) => setSelectedUsers(e.value)}
+                      options={users}
+                      placeholder="Select Users"
+                      maxSelectedLabels={1}
+                      className="md:w-20rem w-full !border-[#757575]"
+                    />
+                  </div>
+                  <p>{selectedStrategies?.length} Selected Strategies</p>
+                  <TerminalButton
+                    className={`w-full ${
+                      categoryName.length >= 3
+                        ? ''
+                        : 'bg-neutral-400 hover:cursor-not-allowed dark:bg-neutral-800'
+                    }`}
+                    onClick={() => {
+                      setVisible(false)
+                      navigate(`/users/categories/${categoryName}`)
+                    }}>
+                    Create {categoryName}
+                  </TerminalButton>
+                </div>
+              </Dialog>
+            </Suspense>
+          </ErrorBoundary>
         </div>
-
         <p>{selectedStrategies?.length} Selected Strategies</p>
-        <ContextMenu
-          model={items}
-          ref={cm}
-          onHide={() => setSelectedStrategies(null)}
-          className="w-[20rem]"
-        />
-        <DataTable
-          dataKey="strategy_id"
-          value={sortedStrategies}
-          filters={filters}
-          paginator
-          breakpoint="0"
-          scrollable
-          dragSelection
-          metaKeySelection={true}
-          selectionMode="multiple"
-          contextMenuSelection={selectedStrategies}
-          onContextMenu={(e) => cm?.current?.show(e.originalEvent)}
-          //? this here is the problem with the context menu
-          // onContextMenuSelectionChange={(e) => console.log(e)}
-          selection={selectedStrategies}
-          onSelectionChange={(e) => setSelectedStrategies(e.value)}
-          paginatorTemplate={
-            width < 768
-              ? 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink'
-              : 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
-          }
-          sortField={'active_status'}
-          sortOrder={1}
-          rows={20}
-          rowsPerPageOptions={[20, 30, 40, 50]}
-          totalRecords={strategies.length}
-          className="text-[0.7rem] md:text-[0.75rem]"
-          // onRowClick={(e) => {
-          // }}
-        >
-          <Column
-            selectionMode="multiple"
-            className="max-w-[0.5rem] md:max-w-[3rem]"></Column>
-          <Column
-            sortable
-            field="strategy_id"
-            header="Strategy"
-            className="break-anywhere min-w-[5rem] md:min-w-[15rem] lg:min-w-[18rem]"
-          />
-          <Column
-            sortable
-            field="type"
-            header="Type"
-            filter
-            className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-            filterMatchModeOptions={equalsFilterOptions}
-            showFilterOperator={false}
-            filterElement={strategyTypesFilterTemplate}
-          />
-          <Column
-            sortable
-            field="market"
-            header="Market"
-            className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-          />
-          <Column
-            sortable
-            field="exchange_account_id"
-            header="Exchange account"
-            className="min-w-[8rem] md:min-w-[10rem] lg:min-w-[14rem]"
-          />
-          <Column
-            sortable
-            field="is_demo_strategy"
-            header="Demo mode"
-            body={strategyDemoModeBodyTemplate}
-            style={{ minWidth: '7rem' }}
-            filter
-            filterMatchModeOptions={equalsFilterOptions}
-            showFilterOperator={false}
-            filterElement={demoModeFilterTemplate}
-          />
-          <Column
-            sortable
-            field="active_status"
-            header="Status"
-            sortFunction={statusSortingFunction}
-            body={(strategy) => (
-              <Tag
-                value={strategy.active_status}
-                style={{
-                  backgroundColor: getSeverity(strategy.active_status),
-                }}
-                className="text-md"
+        <ErrorBoundary FallbackComponent={Fallback}>
+          <Suspense fallback={<Loader />}>
+            <DataTable
+              dataKey="strategy_id"
+              value={sortedStrategies}
+              filters={filters}
+              paginator
+              breakpoint="0"
+              scrollable
+              dragSelection
+              metaKeySelection={true}
+              selectionMode="multiple"
+              selection={selectedStrategies}
+              onSelectionChange={(e) => setSelectedStrategies(e.value)}
+              paginatorTemplate={
+                width < 768
+                  ? 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink'
+                  : 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
+              }
+              sortField={'active_status'}
+              sortOrder={1}
+              rows={20}
+              rowsPerPageOptions={[20, 30, 40, 50]}
+              totalRecords={strategies.length}
+              className="text-[0.7rem] md:text-[0.75rem]">
+              <Column
+                selectionMode="multiple"
+                className="max-w-[0.5rem] md:max-w-[3rem]"></Column>
+              <Column
+                sortable
+                field="strategy_id"
+                header="Strategy"
+                className="break-anywhere min-w-[5rem] md:min-w-[15rem] lg:min-w-[18rem]"
               />
-            )}
-            filter
-            filterMatchModeOptions={equalsFilterOptions}
-            showFilterOperator={false}
-            filterElement={statusFilterTemplate}
-          />
-        </DataTable>
+              <Column
+                sortable
+                field="type"
+                header="Type"
+                filter
+                className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                filterMatchModeOptions={equalsFilterOptions}
+                showFilterOperator={false}
+                filterElement={strategyTypesFilterTemplate}
+              />
+              <Column
+                sortable
+                field="market"
+                header="Market"
+                className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+              />
+              <Column
+                sortable
+                field="exchange_account_id"
+                header="Exchange account"
+                className="min-w-[8rem] md:min-w-[10rem] lg:min-w-[14rem]"
+              />
+              <Column
+                sortable
+                field="is_demo_strategy"
+                header="Demo mode"
+                body={strategyDemoModeBodyTemplate}
+                style={{ minWidth: '7rem' }}
+                filter
+                filterMatchModeOptions={equalsFilterOptions}
+                showFilterOperator={false}
+                filterElement={demoModeFilterTemplate}
+              />
+              <Column
+                sortable
+                field="active_status"
+                header="Status"
+                sortFunction={statusSortingFunction}
+                body={(strategy) => (
+                  <Tag
+                    value={strategy.active_status}
+                    style={{
+                      backgroundColor: getSeverity(strategy.active_status),
+                    }}
+                    className="text-md"
+                  />
+                )}
+                filter
+                filterMatchModeOptions={equalsFilterOptions}
+                showFilterOperator={false}
+                filterElement={statusFilterTemplate}
+              />
+            </DataTable>
+          </Suspense>
+        </ErrorBoundary>
       </div>
       <div className="fixed bottom-5 right-9 z-20">
         <TerminalButton

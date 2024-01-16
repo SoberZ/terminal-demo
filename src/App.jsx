@@ -20,6 +20,7 @@ const Exchange = lazy(() => import('./pages/Exchange'))
 const User = lazy(() => import('./pages/User'))
 const CreateCategory = lazy(() => import('./pages/CreateCategory'))
 const MarketIndicators = lazy(() => import('./pages/MarketIndicators'))
+const Category = lazy(() => import('./pages/Category'))
 
 const App = () => {
   return (
@@ -43,6 +44,7 @@ const App = () => {
               <Route index element={<Users />} />
               <Route path="create-category" element={<CreateCategory />} />
               <Route path=":userId" element={<User />} />
+              <Route path="categories/:categoryId" element={<Category />} />
             </Route>
             <Route path="exchanges">
               <Route index element={<Exchanges />} />
