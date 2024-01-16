@@ -10,12 +10,14 @@ export default function useSelectRoute(setVisible) {
       setSelected(2)
     } else if (location.pathname.match(/performance-metrics-dashboard.*/g)) {
       setSelected(3)
-    } else if (location.pathname.match(/exchanges.*/g)) {
+    } else if (location.pathname.match(/market-indicators.*/g)) {
       setSelected(4)
-    } else if (location.pathname.match(/cachers.*/g)) {
+    } else if (location.pathname.match(/exchanges.*/g)) {
       setSelected(5)
-    } else if (location.pathname.match(/users.*/g)) {
+    } else if (location.pathname.match(/cachers.*/g)) {
       setSelected(6)
+    } else if (location.pathname.match(/users.*/g)) {
+      setSelected(7)
     } else {
       setSelected(1)
     }

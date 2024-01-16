@@ -5,12 +5,17 @@ import { StrategiesService, UserService } from '../services'
 import { useWindowSize } from '../hooks'
 import { Tag } from 'primereact/tag'
 import { getSeverity } from './Strategies'
-import { Menu } from 'primereact/menu'
-import { FilterMatchMode } from 'primereact/api'
+import { FilterMatchMode, FilterOperator } from 'primereact/api'
 import { InputText } from 'primereact/inputtext'
 import { ContextMenu } from 'primereact/contextmenu'
 import { ListBox } from 'primereact/listbox'
 import { TerminalButton } from '../components'
+
+import {
+  demoModeFilterTemplate,
+  statusFilterTemplate,
+  strategyTypesFilterTemplate,
+} from './addons/CategoriesAddons'
 
 import { Dialog } from 'primereact/dialog'
 
@@ -37,6 +42,8 @@ const strategyDemoModeBodyTemplate = (strategy) => {
   )
 }
 
+const equalsFilterOptions = [{ label: 'Equals', value: FilterMatchMode.EQUALS }]
+
 const CreateCategory = () => {
   const { width } = useWindowSize()
   const [strategies, setStrategies] = useState([])
@@ -53,6 +60,22 @@ const CreateCategory = () => {
   const [globalFilterValue, setGlobalFilterValue] = useState('')
   const [filters, setFilters] = useState({
     global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+    active_status: {
+      operator: FilterOperator.AND,
+      constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }],
+    },
+    type: {
+      operator: FilterOperator.AND,
+      constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }],
+    },
+    exchange_account_id: {
+      operator: FilterOperator.AND,
+      constraints: [{ value: null, matchMode: FilterMatchMode.CONTAINS }],
+    },
+    is_demo_strategy: {
+      operator: FilterOperator.AND,
+      constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }],
+    },
   })
 
   const [selectedMenuStrategy, setSelectedMenuStrategy] = useState(null)
@@ -345,7 +368,11 @@ const CreateCategory = () => {
             sortable
             field="type"
             header="Type"
+            filter
             className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+            filterMatchModeOptions={equalsFilterOptions}
+            showFilterOperator={false}
+            filterElement={strategyTypesFilterTemplate}
           />
           <Column
             sortable
@@ -365,6 +392,10 @@ const CreateCategory = () => {
             header="Demo mode"
             body={strategyDemoModeBodyTemplate}
             style={{ minWidth: '7rem' }}
+            filter
+            filterMatchModeOptions={equalsFilterOptions}
+            showFilterOperator={false}
+            filterElement={demoModeFilterTemplate}
           />
           <Column
             sortable
@@ -380,6 +411,10 @@ const CreateCategory = () => {
                 className="text-md"
               />
             )}
+            filter
+            filterMatchModeOptions={equalsFilterOptions}
+            showFilterOperator={false}
+            filterElement={statusFilterTemplate}
           />
         </DataTable>
       </div>

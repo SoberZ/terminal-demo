@@ -318,26 +318,6 @@ tr:hover {
   border-bottom-color: rgb(var(--bg-color-primary) / 0.6) !important;
 }
 
-.p-listbox {
-  background-color: rgb(var(--bg-color-primary)) !important;
-  color: rgb(var(--text-color-secondary)) !important;
-  @apply dark:border-neutral-700;
-}
-.p-listbox-header {
-  background-color: rgb(var(--bg-color-secondary)) !important;
-  color: rgb(var(--text-color-secondary)) !important;
-  border-bottom: none !important;
-}
-.p-listbox-list-wrapper {
-  background-color: rgb(var(--bg-color-secondary)) !important;
-  color: rgb(var(--text-color-secondary)) !important;
-}
-.p-listbox-item {
-  &:hover {
-    background-color: var(--highlight-color-hover) !important;
-  }
-}
-
 .p-tabview {
   background-color: rgb(var(--bg-color-secondary)) !important;
   color: rgb(var(--text-color-secondary)) !important;
@@ -365,6 +345,11 @@ tr:hover {
   color: rgb(var(--text-color-secondary)) !important;
   @apply dark:border-neutral-700;
 }
+.p-menu.p-menu-overlay {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+  @apply dark:border-neutral-700;
+}
 
 .p-menuitem-link {
   &:hover {
@@ -376,6 +361,9 @@ tr:hover {
   color: rgb(var(--sb-thumb-color)) !important;
 }
 .p-contextmenu .p-menuitem.p-menuitem-active > .p-menuitem-link {
+  background-color: var(--highlight-color-hover) !important;
+}
+.p-menu .p-menuitem.p-menuitem-active > .p-menuitem-link {
   background-color: var(--highlight-color-hover) !important;
 }
 
@@ -397,4 +385,48 @@ tr:hover {
   &:hover {
     background-color: var(--highlight-color-hover) !important;
   }
+}
+
+.p-multiselect {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+  @apply dark:border-neutral-700;
+}
+.p-multiselect-header {
+  background-color: rgb(var(--bg-color-primary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+  border-bottom: none !important;
+}
+.p-multiselect-list-wrapper {
+  background-color: rgb(var(--bg-color-primary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+}
+.p-multiselect-item {
+  &:hover {
+    background-color: var(--highlight-color-hover) !important;
+  }
+}
+.p-multiselect-items {
+  background-color: var(--highlight-color) !important;
+}
+.p-multiselect-panel
+  .p-multiselect-items
+  .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
+  background-color: var(--highlight-color-hover) !important;
+}
+
+.p-dialog-header {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+  border-bottom: none !important;
+}
+.p-dialog-content {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+  border-bottom: none !important;
+}
+.p-dialog-footer {
+  background-color: rgb(var(--bg-color-secondary)) !important;
+  color: rgb(var(--text-color-secondary)) !important;
+  border-bottom: none !important;
 }

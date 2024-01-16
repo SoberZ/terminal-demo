@@ -1,14 +1,10 @@
 import { Link } from 'react-router-dom'
-import { UserService } from '../../services'
-
 import { Tooltip } from 'primereact/tooltip'
-import { BiInfoCircle } from 'react-icons/bi'
 import { UsersIcon, LogoutIcon } from '../../assets/icons'
-import TerminalButton from '../shared/TerminalButton.shared'
 import useSelectRoute from '../hooks'
 import { routes } from '../../utils/misc'
 
-const CompactSidebar = ({ themeState, setter }) => {
+const CompactSidebar = ({ themeState }) => {
   const [selected, setSelected] = useSelectRoute()
 
   const handleClick = (divNum) => () => setSelected(divNum)
@@ -47,9 +43,9 @@ const CompactSidebar = ({ themeState, setter }) => {
             <Link
               data-pr-tooltip="Users"
               to="/users"
-              onClick={handleClick(6)}
+              onClick={handleClick(4)}
               className={`flex flex-wrap items-center justify-center ${
-                selected === 6
+                selected === 7
                   ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                   : ''
               } tooltip rounded-xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
@@ -59,7 +55,7 @@ const CompactSidebar = ({ themeState, setter }) => {
             <li
               data-pr-tooltip={`Log out`}
               className={`flex flex-wrap items-center justify-center ${
-                selected === 7
+                selected === 8
                   ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                   : ''
               } tooltip !my-10 rounded-xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:text-red-400 hover:shadow-soft-xl`}>

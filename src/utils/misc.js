@@ -1,5 +1,6 @@
 import {
   DataAnalysis,
+  LiveDataIcon,
   ChartIcon,
   HomeIcon,
   KeyIcon,
@@ -85,6 +86,11 @@ export const routes = [
     path: '/performance-metrics-dashboard',
     name: 'Performance Metrics Dashboard',
     component: DataAnalysis,
+  },
+  {
+    path: '/market-indicators',
+    name: 'Market Indicators',
+    component: LiveDataIcon,
   },
   {
     path: '/exchanges',

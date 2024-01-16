@@ -1,10 +1,7 @@
 import { Link } from 'react-router-dom'
-import { UserService } from '../../services'
 import useSelectRoute from '../hooks'
-import { BiInfoCircle } from 'react-icons/bi'
 import { UsersIcon, LogoutIcon } from '../../assets/icons'
 import { routes } from '../../utils/misc'
-import TerminalButton from '../shared/TerminalButton.shared'
 
 const Sidebar = ({ themeState }) => {
   const [selected, setSelected] = useSelectRoute()
@@ -12,7 +9,7 @@ const Sidebar = ({ themeState }) => {
 
   return (
     <div className="fixed top-0 left-0 flex h-[1247px] max-w-[20rem] flex-col overflow-hidden shadow">
-      <div className="relative flex h-[90%] flex-col justify-between space-y-10 p-5">
+      <div className="relative flex flex-col space-y-10 p-5">
         <div className="p-3">
           <Link to="/" onClick={handleClick(1)}>
             <img src={`/aw-logo-full-${!themeState ? 'light' : 'dark'}.png`} />
@@ -42,14 +39,14 @@ const Sidebar = ({ themeState }) => {
 
             <li
               className={`${
-                selected === 6
+                selected === 7
                   ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                   : ''
               } rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
               <Link
                 to="/users"
                 className="flex flex-wrap items-center justify-center"
-                onClick={handleClick(6)}>
+                onClick={handleClick(4)}>
                 <UsersIcon width="1.5rem" height="1.5rem" />
                 <span className="ml-3 flex-1">Users</span>
               </Link>
@@ -57,7 +54,7 @@ const Sidebar = ({ themeState }) => {
 
             <li
               className={`${
-                selected === 5
+                selected === 8
                   ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                   : ''
               } !my-10 rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:text-red-400 hover:shadow-soft-xl`}

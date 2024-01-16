@@ -19,6 +19,7 @@ const RegisterCacher = lazy(() => import('./pages/RegisterCacher'))
 const Exchange = lazy(() => import('./pages/Exchange'))
 const User = lazy(() => import('./pages/User'))
 const CreateCategory = lazy(() => import('./pages/CreateCategory'))
+const MarketIndicators = lazy(() => import('./pages/MarketIndicators'))
 
 const App = () => {
   return (
@@ -29,34 +30,28 @@ const App = () => {
             <Route index element={<Dashboard />} />
             <Route path="strategies">
               <Route index element={<Strategies />} />
-              {/* {UserService.hasRole(['trader']) && ( */}
               <Route path="create" element={<CreateStrategy />} />
-              {/* )} */}
               <Route path=":strategyId" element={<Strategy />} />
             </Route>
             <Route path="performance-metrics-dashboard">
               <Route index element={<PerformanceDashboard />} />
             </Route>
-            {/* {UserService.hasRole(['admin']) && ( */}
+            <Route path="market-indicators">
+              <Route index element={<MarketIndicators />} />
+            </Route>
             <Route path="users">
               <Route index element={<Users />} />
               <Route path="create-category" element={<CreateCategory />} />
               <Route path=":userId" element={<User />} />
             </Route>
-            {/* )} */}
             <Route path="exchanges">
               <Route index element={<Exchanges />} />
-              {/* {UserService.hasRole(['trader']) && ( */}
               <Route path="create" element={<CreateExchangeAccount />} />
-              {/* )} */}
               <Route path=":exchangeId" element={<Exchange />} />
             </Route>
             <Route path="cachers">
               <Route index element={<Cachers />} />
-              {/* {UserService.hasRole(['trader']) && ( */}
               <Route path="create" element={<RegisterCacher />} />
-              {/* )} */}
-              {/* <Route path=":strategyId" element={<Cachers />} /> */}
             </Route>
             <Route path="*" element={<NoMatch />} />
           </Route>

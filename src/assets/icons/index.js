@@ -3,6 +3,7 @@ import ChartIcon from './ChartIcon'
 import KeyIcon from './KeyIcon'
 import LogoutIcon from './LogoutIcon'
 import StatsIcon from './StatsIcon'
+import LiveDataIcon from './LiveDataIcon'
 import UsersIcon from './UsersIcon'
 import DataAnalysis from './DataAnalysis'
 
@@ -14,4 +15,5 @@ export {
   StatsIcon,
   UsersIcon,
   DataAnalysis,
+  LiveDataIcon,
 }

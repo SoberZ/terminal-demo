@@ -12,6 +12,8 @@ const PerformanceMinionChart = ({
   tooltip,
   loading,
   handler,
+  toggleFavoriteStrategy,
+  favStrategies,
 }) => {
   const handleChange = (selectedOption) => {
     handler(selectedOption, id)
@@ -19,18 +21,8 @@ const PerformanceMinionChart = ({
 
   const [darkModeState] = useDarkMode()
   const [darkMode, setDarkMode] = useState(darkModeState)
+  const [isForbidden, setIsForbidden] = useState(false)
   const { width } = useWindowSize()
-
-  // function subscribe(callback) {
-  //   window.addEventListener('storage', callback)
-  //   return () => {
-  //     window.removeEventListener('storage', callback)
-  //   }
-  // }
-
-  // const darkModeStatus = useSyncExternalStore(subscribe, () =>
-  //   window.localStorage.getItem('dark-mode-enabled')
-  // )
 
   useEffect(() => {
     function checkDarkModeStatus() {
@@ -55,6 +47,7 @@ const PerformanceMinionChart = ({
       const chartData = metricsData.map((item) => item?.toFixed(4))
       return dateTime.map((time, index) => [time, Number(chartData[index])])
     }
+    setIsForbidden(true)
     return []
   }, [metricsData, metricsTime])
 
@@ -101,24 +94,6 @@ const PerformanceMinionChart = ({
           },
         },
       ],
-      // yaxis: {
-      //   forceNiceScale: true,
-      //   decimalsInFloat: 5,
-      //   axisBorder: {
-      //     show: false,
-      //   },
-      //   axisTicks: {
-      //     show: false,
-      //   },
-      //   labels: {
-      //     style: {
-      //       colors: darkMode ? '#939393' : '#8e8da4',
-      //     },
-      //     formatter: (value) => {
-      //       return numberFormatting(value)
-      //     },
-      //   },
-      // },
       yaxis: {
         show: false,
       },
@@ -157,17 +132,51 @@ const PerformanceMinionChart = ({
 
   return (
     <div
-      onClick={handleChange}
-      className={`relative rounded-lg border-2 bg-color-primary p-2 transition-colors ease-in hover:cursor-pointer hover:border-autowhale-blue/40 dark:border-neutral-700 dark:bg-color-secondary hover:dark:border-neutral-300`}>
+      onClick={isForbidden ? null : handleChange}
+      className={`relative rounded-lg border-2 bg-color-primary p-2 transition-colors ease-in ${
+        isForbidden
+          ? 'hover:cursor-not-allowed hover:border-neutral-700 hover:bg-color-primary dark:border-neutral-700 hover:dark:bg-color-primary'
+          : 'hover:cursor-pointer hover:border-autowhale-blue/40 dark:border-neutral-700 hover:dark:border-neutral-300'
+      } dark:bg-color-secondary `}>
       {loading ? (
         <Loader />
       ) : (
-        <ReactApexChart
-          options={chartData.options}
-          series={chartData.series}
-          type="area"
-          height={300}
-        />
+        <>
+          {isForbidden ? null : (
+            <div
+              className="absolute top-3 right-3 z-10"
+              onClick={(e) => {
+                e.stopPropagation()
+                toggleFavoriteStrategy(id)
+              }}>
+              <button className="favorite-icon">
+                {favStrategies.includes(id) ? (
+                  <i
+                    className="pi pi-star-fill color-gradient-to-r from-blue-900 to-blue-500 "
+                    style={{
+                      fontSize: width < 1024 ? '1rem' : '1.4rem',
+                      color: '#c6a907',
+                    }}
+                  />
+                ) : (
+                  <i
+                    className="pi pi-star "
+                    style={{
+                      fontSize: width < 1024 ? '1rem' : '1.4rem',
+                      color: '#c6a907',
+                    }}
+                  />
+                )}
+              </button>
+            </div>
+          )}
+          <ReactApexChart
+            options={chartData.options}
+            series={chartData.series}
+            type="area"
+            height={300}
+          />
+        </>
       )}
     </div>
   )

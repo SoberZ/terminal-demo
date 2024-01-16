@@ -18,6 +18,7 @@ import MinionChart from './shared/MinionChart.shared'
 import PopoverTable from './strategies/PopoverTable.comp'
 import PerformancePrimaryChart from './performanceDashboard/PerformancePrimaryChart'
 import PerformanceMinionChart from './shared/PerformanceMinionChart.shared'
+import MarketIndicatorChart from './marketIndicators/MarketIndicatorChart'
 
 //? Shared Components
 import Input from './shared/Input.shared'
@@ -63,4 +64,5 @@ export {
   PopoverTable,
   Loader,
   PerformancePrimaryChart,
+  MarketIndicatorChart,
 }

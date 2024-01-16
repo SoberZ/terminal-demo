@@ -1,5 +1,5 @@
-import { Suspense, useCallback, useEffect, useState } from 'react'
-import { toast } from 'react-hot-toast'
+import { Suspense, useEffect, useState } from 'react'
+
 import {
   Fallback,
   Loader,
@@ -9,7 +9,6 @@ import {
 
 import { Paginator } from 'primereact/paginator'
 import { snakeCaseToTitleCase } from '../utils/misc'
-import { UserService } from '../services'
 
 import { ErrorBoundary } from 'react-error-boundary'
 
@@ -57,11 +56,12 @@ const PerformanceDashboard = () => {
 
   const [loading, setLoading] = useState(false)
   const rowsPerPageOptions = [8, 16, 32, 64]
+  const [favoriteStrategies, setFavoriteStrategies] = useState([])
   const [totalRecords, setTotalRecords] = useState(64)
   const [lazyState, setLazyState] = useState({
-    first: 1,
+    first: 0,
     rows: rowsPerPageOptions[0],
-    page: 1,
+    page: 0,
   })
 
   const handleClick = (e, chartID) => {
@@ -99,6 +99,20 @@ const PerformanceDashboard = () => {
       setSortedData(transformedArray)
     }
   }, [chartData])
+
+  const toggleFavoriteStrategy = (strategyId) => {
+    if (favoriteStrategies.includes(strategyId)) {
+      const updatedFavorites = favoriteStrategies.filter(
+        (id) => id !== strategyId
+      )
+      setFavoriteStrategies(updatedFavorites)
+      UserService.setPerfFavorites(userObject, updatedFavorites)
+    } else {
+      const updatedFavorites = [...favoriteStrategies, strategyId]
+      setFavoriteStrategies(updatedFavorites)
+      UserService.setPerfFavorites(userObject, updatedFavorites)
+    }
+  }
 
   const onPageChange = (event) => {}
 
@@ -214,7 +228,6 @@ const PerformanceDashboard = () => {
             </div>
           </Suspense>
         </ErrorBoundary>
-
         <ErrorBoundary FallbackComponent={Fallback}>
           <Suspense fallback={<Loader />}>
             <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:gap-5 xl:grid-cols-4">
@@ -228,6 +241,8 @@ const PerformanceDashboard = () => {
                     metricsTime={strategy.date}
                     handler={handleClick}
                     loading={loading}
+                    toggleFavoriteStrategy={toggleFavoriteStrategy}
+                    favStrategies={favoriteStrategies}
                   />
                 )
               })}

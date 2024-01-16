@@ -7,10 +7,7 @@ import { Tooltip } from 'primereact/tooltip'
 import parse from 'html-react-parser'
 
 import { delay } from '../utils/misc'
-import {
-  fetchRequiredParams,
-  createStrategy,
-} from '../utils/Fetchers/StrategyFetchers'
+import { fetchRequiredParams } from '../utils/Fetchers/StrategyFetchers'
 
 import {
   fetchExchanges,
