@@ -158,7 +158,7 @@ const Category = () => {
           {categoryId}
         </h1>
         <p className="text-primary dark:text-white md:inline md:text-left">
-          this is the description, need to find how to fetch it
+          this is the description
         </p>
       </div>
       <div className="flex justify-between">
