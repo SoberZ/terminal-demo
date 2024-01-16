@@ -8,17 +8,17 @@ export default function useSelectRoute(setVisible) {
 
   useEffect(() => {
     //? if it finds 'strategies' string inside anything, it'll default to it, needs to start with it, not globally
-    if (location.pathname.match(/strategies.*/g)) {
+    if (location.pathname.match(/^\/strategies/)) {
       setSelected(2)
-    } else if (location.pathname.match(/performance-metrics-dashboard.*/g)) {
+    } else if (location.pathname.match(/^\/performance-metrics-dashboard/)) {
       setSelected(3)
-    } else if (location.pathname.match(/market-indicators.*/g)) {
+    } else if (location.pathname.match(/^\/market-indicators/)) {
       setSelected(4)
-    } else if (location.pathname.match(/exchanges.*/g)) {
+    } else if (location.pathname.match(/^\/exchanges/)) {
       setSelected(5)
-    } else if (location.pathname.match(/cachers.*/g)) {
+    } else if (location.pathname.match(/^\/cachers/)) {
       setSelected(6)
-    } else if (location.pathname.match(/users.*/g)) {
+    } else if (location.pathname.match(/^\/users/)) {
       setSelected(7)
     } else {
       setSelected(1)

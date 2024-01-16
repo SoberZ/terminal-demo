@@ -154,11 +154,9 @@ const Categories = () => {
                       }}></span>
                   </div>
                   {/* //? description here, needs the actual tailwind update */}
-                  <p className="line-clamp-3">{category[2]}</p>
-                  {/* <div className="space-y-1">
-                    <h3>4 strategies</h3>
-                    <h3>3 exchanges connected</h3>
-                  </div> */}
+                  <p className="line-clamping" title={category[2]}>
+                    {category[2]}
+                  </p>
                 </div>
               </div>
             ))}
