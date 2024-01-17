@@ -203,7 +203,7 @@ const Dashboard = () => {
           'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum%2Cbinancecoin%2Csolana%2Cripple%2Ccardano%2Cpolkadot%2Cavalanche-2%2Cthe-open-network%2Cpolygon%2CLitecoin%2Cchainlink%2Cbitcoin-cash%2Cstellar%2internet-computer&vs_currencies=usd&include_last_updated_at=true',
           {
             headers: {
-              'x-cg-demo-api-key': import.meta.env.VITE_COINGECKO_API_KEY,
+              'x-cg-demo-api-key': 'CG-KFURhuBDU8yeY2CfEfv9CqN4',
             },
           }
         )
