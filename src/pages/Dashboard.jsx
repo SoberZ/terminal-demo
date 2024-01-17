@@ -442,7 +442,7 @@ const Dashboard = () => {
             </div>
           ))} */}
 
-          {newsArticles.map((article, index) => (
+          {newsArticles?.map((article, index) => (
             <a
               href={article.url}
               target="_blank"
