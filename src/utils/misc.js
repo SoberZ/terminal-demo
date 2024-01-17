@@ -109,9 +109,17 @@ export function numberFormatting(value) {
     notation: 'standard',
   }).format(value)
 }
+
 export function snakeCaseToTitleCase(inputStr) {
   return inputStr
     .split('_')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+}
+export function caseToTitleCase(inputStr) {
+  return inputStr
+    .replace(/[0-9]/g, '')
+    .split('-')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
 }

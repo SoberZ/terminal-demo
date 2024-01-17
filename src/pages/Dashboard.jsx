@@ -1,4 +1,4 @@
-import { useEffect, useState, useLayoutEffect } from 'react'
+import { useEffect, useState, useLayoutEffect, useRef } from 'react'
 import { toast } from 'react-hot-toast'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom'
 import { Tag } from 'primereact/tag'
 import { Accordion, AccordionTab } from 'primereact/accordion'
 import Joyride, { STATUS } from 'react-joyride'
+import { motion } from 'framer-motion'
+
 // Import FakeData
 import Data from '../data/homepageData'
 
@@ -21,6 +23,19 @@ import {
 import { useWindowSize, useDarkMode } from '../hooks'
 import { statusColors } from '../utils/statusColors'
 import { BiInfoCircle } from 'react-icons/bi'
+import { numberFormatting, caseToTitleCase } from '../utils/misc'
+
+const TranslateWrapper = ({ children, reverse }) => {
+  return (
+    <motion.div
+      initial={{ translateX: reverse ? '-100%' : '0%' }}
+      animate={{ translateX: reverse ? '0%' : '-100%' }}
+      transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}
+      className="flex gap-5">
+      {children}
+    </motion.div>
+  )
+}
 
 const Dashboard = () => {
   const navigate = useNavigate()
@@ -39,6 +54,10 @@ const Dashboard = () => {
     fundingLabels: [],
   })
   const { width } = useWindowSize()
+  const [tokens, setTokens] = useState({})
+  const [newsArticles, setNewsArticles] = useState([])
+  const [cryptoData, setCryptoData] = useState({})
+  const previousDataRef = useRef(null)
 
   const getSeverity = (input) => {
     switch (input) {
@@ -177,6 +196,96 @@ const Dashboard = () => {
     }
   }
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(
+          'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin%2Cethereum%2Cbinancecoin%2Csolana%2Cripple%2Ccardano%2Cpolkadot%2Cavalanche-2%2Cthe-open-network%2Cpolygon%2CLitecoin%2Cchainlink%2Cbitcoin-cash%2Cstellar%2internet-computer&vs_currencies=usd&include_last_updated_at=true',
+          {
+            headers: {
+              'x-cg-demo-api-key': import.meta.env.VITE_COINGECKO_API_KEY,
+            },
+          }
+        )
+        const data = await response.json()
+        setTokens(data)
+      } catch (error) {
+        // Handle any errors that occur during the fetch
+        console.error(error)
+      }
+    }
+    const fetchNews = async () => {
+      try {
+        const response = await fetch(
+          `https://newsapi.org/v2/everything?q='crypto'&from=2024-01-16&to=2024-01-16&sortBy=relevancy&pageSize=6&language=en&apiKey=7856bc7132644ff593db348b9ec59074`
+        )
+        const data = await response.json()
+        setNewsArticles(data.articles)
+      } catch (error) {
+        // Handle any errors that occur during the fetch
+        console.error(error)
+      }
+    }
+
+    fetchData()
+    fetchNews()
+
+    const interval = setInterval(() => {
+      fetchData()
+    }, 60000)
+
+    return () => {
+      clearInterval(interval)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (tokens && Object.keys(tokens).length > 0) {
+      const newCryptoData = { ...cryptoData }
+
+      for (const key in tokens) {
+        if (tokens[key].usd !== null) {
+          const currentPrice = tokens[key].usd
+
+          // Compare with previous data
+          if (previousDataRef.current && previousDataRef.current[key]) {
+            const previousPrice = previousDataRef.current[key].usd
+            let textColor =
+              currentPrice === previousPrice
+                ? 'text-color-secondary dark:text-white'
+                : currentPrice > previousPrice
+                ? 'text-green-600'
+                : 'text-red-600'
+
+            newCryptoData[key] = { usd: currentPrice, color: textColor }
+          } else {
+            // If no previous data, just set the current price
+            newCryptoData[key] = { usd: currentPrice, color: 'inherit' }
+          }
+        }
+      }
+
+      // Update the current state and the ref to the previous data
+      setCryptoData(newCryptoData)
+      previousDataRef.current = tokens
+    }
+  }, [tokens])
+
+  const TokensList = () => (
+    <>
+      {Object.entries(cryptoData).map(([key, value]) => (
+        <h1 key={key} className="flex items-center gap-1">
+          <span className={`whitespace-nowrap font-bold`}>
+            {caseToTitleCase(key)}:
+          </span>
+          <span className={`font-light ${value.color}`}>
+            ${numberFormatting(value.usd)}
+          </span>
+        </h1>
+      ))}
+    </>
+  )
+
   return (
     <>
       <Joyride
@@ -282,6 +391,99 @@ const Dashboard = () => {
               />
             </div>
           )}
+        </div>
+        <div className="space-y-7 rounded-lg bg-color-secondary p-5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800">
+          {/* <marquee behavior="slide" direction="left">
+            hello
+          </marquee> */}
+          <div className="flex gap-5 overflow-hidden text-color-secondary dark:text-white">
+            <TranslateWrapper>
+              <TokensList />
+            </TranslateWrapper>
+            <TranslateWrapper>
+              <TokensList />
+            </TranslateWrapper>
+            <TranslateWrapper>
+              <TokensList />
+            </TranslateWrapper>
+          </div>
+        </div>
+        {/* bg-[url(${article.urlToImage})] bg-cover bg-center bg-no-repeat w-full  */}
+        <div className="grid grid-cols-3 gap-5">
+          {/* {newsArticles.map((article, index) => (
+            <div
+              key={index}
+              className={`rounded-lg bg-[url(${article.urlToImage})] w-full bg-cover bg-center bg-no-repeat object-cover  p-5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800`}>
+              <a href={article.url} className={`flex `}>
+                <div className="space-y-2">
+                  <h1 className="text-xl font-bold">{article.title}</h1>
+                  <p className="text-sm font-light">{article.description}</p>
+                </div>
+              </a>
+            </div>
+          ))} */}
+
+          {/* {newsArticles.map((article, index) => (
+            <div
+              key={index}
+              className="h-full rounded-lg p-5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800">
+              <a href={article.url} className="flex flex-col space-y-2">
+                <img
+                  src={article.urlToImage}
+                  alt={article.title}
+                  className="h-64 w-full rounded-lg object-cover"
+                />
+
+                <div>
+                  <h1 className="text-xl font-bold">{article.title}</h1>
+                  <p className="text-sm font-light">{article.description}</p>
+                </div>
+              </a>
+            </div>
+          ))} */}
+
+          {newsArticles.map((article, index) => (
+            <a
+              href={article.url}
+              target="_blank"
+              key={index}
+              className="group relative h-64 overflow-hidden rounded-lg border shadow-soft-xl transition-colors ease-in hover:cursor-pointer hover:border-autowhale-blue/40 dark:border-neutral-700 hover:dark:border-neutral-300 ">
+              <img
+                src={article.urlToImage}
+                alt={article.title}
+                className="absolute inset-0 h-full w-full object-cover grayscale ease-in-out group-hover:filter-none group-hover:transition-all"
+              />
+              <div className="absolute inset-0 bg-white bg-opacity-90 group-hover:bg-opacity-80 group-hover:transition-all dark:bg-black dark:bg-opacity-80 dark:group-hover:bg-opacity-50"></div>
+              <div className="absolute inset-0 flex items-center justify-start p-5">
+                <div className="text-start text-color-secondary dark:text-white">
+                  <h1 className="text-xl font-bold drop-shadow-sm">
+                    {article.title}
+                  </h1>
+                  <p className="text-xs text-color-tertiary">
+                    {article.source.name}
+                    {' - '}
+                    <span className="text-xs text-color-tertiary">
+                      {new Date(article.publishedAt).toLocaleDateString(
+                        'en-US',
+                        {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        }
+                      )}
+                    </span>
+                  </p>
+                  <p
+                    className="line-clamping mt-4 text-sm font-medium text-color-tertiary drop-shadow-sm"
+                    title={article.description}>
+                    {article.description}
+                  </p>
+                </div>
+              </div>
+            </a>
+          ))}
         </div>
         <div className="rounded-lg bg-color-secondary p-5 pb-48 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:pb-40 md:pb-32 lg:pb-24">
           <div className="h-96">
