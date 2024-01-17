@@ -37,9 +37,9 @@ const App = () => {
             <Route path="performance-metrics-dashboard">
               <Route index element={<PerformanceDashboard />} />
             </Route>
-            <Route path="market-indicators">
+            {/* <Route path="market-indicators">
               <Route index element={<MarketIndicators />} />
-            </Route>
+            </Route> */}
             <Route path="users">
               <Route index element={<Users />} />
               <Route path="create-category" element={<CreateCategory />} />

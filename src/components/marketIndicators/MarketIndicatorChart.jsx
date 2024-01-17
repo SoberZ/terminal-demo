@@ -50,7 +50,18 @@ const MarketIndicatorChart = ({
       if (data.data == 'ping') {
         websocket.send('pong')
       } else {
-        setLiveChartData((prev) => [...prev, JSON.parse(data.data)])
+        setLiveChartData((prev) => {
+          const newData = JSON.parse(data.data)
+          const updatedData = [...prev, newData]
+
+          const dataLimit = 30
+
+          if (updatedData.length > dataLimit) {
+            updatedData.shift()
+          }
+
+          return updatedData
+        })
       }
     }
     function checkDarkModeStatus() {

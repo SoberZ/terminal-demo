@@ -13,13 +13,13 @@ export default function useSelectRoute(setVisible) {
     } else if (location.pathname.match(/^\/performance-metrics-dashboard/)) {
       setSelected(3)
     } else if (location.pathname.match(/^\/market-indicators/)) {
-      setSelected(4)
+      // setSelected(4)
     } else if (location.pathname.match(/^\/exchanges/)) {
-      setSelected(5)
+      setSelected(4)
     } else if (location.pathname.match(/^\/cachers/)) {
-      setSelected(6)
+      setSelected(5)
     } else if (location.pathname.match(/^\/users/)) {
-      setSelected(7)
+      setSelected(6)
     } else {
       setSelected(1)
     }

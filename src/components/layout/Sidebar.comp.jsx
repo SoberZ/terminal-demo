@@ -39,7 +39,7 @@ const Sidebar = ({ themeState }) => {
 
             <li
               className={`${
-                selected === 7
+                selected === 6
                   ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                   : ''
               } rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
@@ -54,7 +54,7 @@ const Sidebar = ({ themeState }) => {
 
             <li
               className={`${
-                selected === 8
+                selected === 7
                   ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                   : ''
               } !my-10 rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:text-red-400 hover:shadow-soft-xl`}
