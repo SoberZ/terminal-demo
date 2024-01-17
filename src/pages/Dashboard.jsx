@@ -392,7 +392,7 @@ const Dashboard = () => {
             </div>
           )}
         </div>
-        <div className="space-y-7 rounded-lg bg-color-secondary p-5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800">
+        <div className="rounded-lg bg-color-secondary p-5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800">
           {/* <marquee behavior="slide" direction="left">
             hello
           </marquee> */}

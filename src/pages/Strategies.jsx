@@ -16,6 +16,9 @@ import { useWindowSize } from '../hooks'
 import { statusColors } from '../utils/statusColors'
 
 import StrategiesData from '../data/strategies/strategiesData.json'
+import CategoriesData from '../data/categories/allCategories.json'
+import { Menu } from 'primereact/menu'
+import { ListBox } from 'primereact/listbox'
 
 import Joyride, { STATUS } from 'react-joyride'
 import { BiInfoCircle } from 'react-icons/bi'
@@ -119,6 +122,9 @@ const Strategies = () => {
   const navigate = useNavigate()
   const { state } = useLocation()
   const [globalFilterValue, setGlobalFilterValue] = useState('')
+  const [selectedMenuStrategy, setSelectedMenuStrategy] = useState(null)
+  const [categories, setCategories] = useState([])
+  const [currentStrategy, setCurrentCategory] = useState(null)
 
   let username = UserService.getUsername()
 
@@ -149,7 +155,7 @@ const Strategies = () => {
 
   useEffect(() => {
     setStrategies(() => StrategiesData.data.data)
-
+    setCategories(CategoriesData)
     // async function fetchFavorites() {
     //   const fetchedFavorites = await UserService.getFavorites(username)
     //   if (fetchedFavorites) {
@@ -326,6 +332,48 @@ const Strategies = () => {
       setState((prev) => ({ ...prev, run: false }))
     }
   }
+
+  const menuRight = useRef(null)
+  const items = [
+    {
+      template: (item, options) => {
+        return (
+          <div className="flex flex-col gap-3">
+            <ListBox
+              filter
+              //? can't do it unless i can send a list of categories too
+              // multiple
+              value={selectedMenuStrategy}
+              options={categories}
+              onChange={(e) => {
+                setSelectedMenuStrategy(e.value)
+              }}
+              onClick={(e) => {
+                e.stopPropagation()
+              }}
+              optionLabel="1"
+              listStyle={{ height: '250px' }}
+              filterPlaceholder="Search and add to Category"
+            />
+            <TerminalButton
+              className={`w-full 
+                ${
+                  selectedMenuStrategy?.length > 0
+                    ? ''
+                    : 'bg-neutral-400 hover:cursor-not-allowed dark:bg-neutral-800'
+                }
+              `}
+              onClick={() => {
+                //TODO: need to grab the name only
+                menuRight?.current?.hide()
+              }}>
+              Add to Category
+            </TerminalButton>
+          </div>
+        )
+      },
+    },
+  ]
   return (
     <>
       <Joyride
@@ -510,6 +558,27 @@ const Strategies = () => {
               showFilterOperator={false}
               filterElement={statusFilterTemplate}
               className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+            />
+            <Column
+              style={{ flex: '0 0 4rem' }}
+              body={(strategy) => (
+                <>
+                  <Menu
+                    model={items}
+                    popup
+                    ref={menuRight}
+                    popupAlignment="right"
+                    className="w-[20rem]"
+                  />
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setCurrentCategory(strategy.strategy_id)
+                      menuRight?.current?.toggle(e)
+                    }}
+                    className="pi pi-fw pi-ellipsis-h hover:cursor-pointer"></span>
+                </>
+              )}
             />
           </DataTable>
         </div>
