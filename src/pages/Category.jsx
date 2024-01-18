@@ -27,6 +27,7 @@ import { Fallback, Loader, TerminalButton } from '../components'
 
 import AllStrategiesInCategoryData from '../data/categories/allStrategiesInCategory.json'
 import UsersData from '../data/users/usersData.json'
+import StrategiesData from '../data/strategies/strategiesData.json'
 
 const strategyDemoModeBodyTemplate = (strategy) => {
   return (
@@ -45,6 +46,8 @@ const Category = () => {
   const { width } = useWindowSize()
   const [strategies, setStrategies] = useState([])
   const [favoriteStrategies, setFavoriteStrategies] = useState([])
+  const [allStrategies, setAllStrategies] = useState([])
+  const [selectedStrategies, setSelectedStrategies] = useState([])
 
   const [currentCategory, setCurrentCategory] = useState([])
   const [users, setUsers] = useState([])
@@ -79,8 +82,9 @@ const Category = () => {
 
   useEffect(() => {
     const usersIDs = UsersData?.map((user) => user.username)
-    setUsers(usersIDs)
+    setAllStrategies(StrategiesData.data.data)
     setStrategies(AllStrategiesInCategoryData)
+    setUsers(usersIDs)
   }, [])
 
   useEffect(() => {
@@ -150,6 +154,11 @@ const Category = () => {
 
     return data
   }
+  const strategyIds = strategies.map((strategy) => strategy.strategy_id)
+
+  const cleanedStrategies = allStrategies
+    .filter((strategy) => !strategyIds.includes(strategy.strategy_id))
+    .map((strategy) => strategy.strategy_id)
 
   return (
     <div className="flex flex-col space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
@@ -158,7 +167,7 @@ const Category = () => {
           {categoryId}
         </h1>
         <p className="text-primary dark:text-white md:inline md:text-left">
-          this is the description
+          this is a generic description, don't worry about it
         </p>
       </div>
       <div className="flex justify-between">
@@ -196,9 +205,9 @@ const Category = () => {
                 <InputTextarea
                   className="border-[#757575]"
                   autoResize
-                  placeholder={currentCategory[2]}
+                  placeholder="add your description here"
                   //? when i figure out fetching the description, we'll use this
-                  // value={categoryDescription}
+                  value={categoryDescription}
                   onChange={(e) => setCategoryDescription(e.target.value)}
                   rows={1}
                   cols={10}
@@ -208,6 +217,14 @@ const Category = () => {
                   onChange={(e) => setSelectedUsers(e.value)}
                   options={users}
                   placeholder="Select Users"
+                  maxSelectedLabels={1}
+                  className="md:w-20rem w-full !border-[#757575]"
+                />
+                <MultiSelect
+                  value={selectedStrategies}
+                  onChange={(e) => setSelectedStrategies(e.value)}
+                  options={cleanedStrategies}
+                  placeholder="Add Strategies"
                   maxSelectedLabels={1}
                   className="md:w-20rem w-full !border-[#757575]"
                 />

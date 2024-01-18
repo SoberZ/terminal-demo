@@ -408,22 +408,9 @@ const Dashboard = () => {
             </TranslateWrapper>
           </div>
         </div>
-        {/* bg-[url(${article.urlToImage})] bg-cover bg-center bg-no-repeat w-full  */}
-        <div className="grid grid-cols-3 gap-5">
-          {/* {newsArticles.map((article, index) => (
-            <div
-              key={index}
-              className={`rounded-lg bg-[url(${article.urlToImage})] w-full bg-cover bg-center bg-no-repeat object-cover  p-5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800`}>
-              <a href={article.url} className={`flex `}>
-                <div className="space-y-2">
-                  <h1 className="text-xl font-bold">{article.title}</h1>
-                  <p className="text-sm font-light">{article.description}</p>
-                </div>
-              </a>
-            </div>
-          ))} */}
 
-          {/* {newsArticles.map((article, index) => (
+        {/* <div className="grid grid-cols-3 gap-5">
+          {newsArticles.map((article, index) => (
             <div
               key={index}
               className="h-full rounded-lg p-5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800">
@@ -440,7 +427,7 @@ const Dashboard = () => {
                 </div>
               </a>
             </div>
-          ))} */}
+          ))} 
 
           {newsArticles?.map((article, index) => (
             <a
@@ -485,6 +472,7 @@ const Dashboard = () => {
             </a>
           ))}
         </div>
+        */}
         <div className="rounded-lg bg-color-secondary p-5 pb-48 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:pb-40 md:pb-32 lg:pb-24">
           <div className="h-96">
             <div className="flex flex-row items-center space-x-2">
