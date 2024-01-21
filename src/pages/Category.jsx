@@ -221,6 +221,7 @@ const Category = () => {
                   className="md:w-20rem w-full !border-[#757575]"
                 />
                 <MultiSelect
+                  filter
                   value={selectedStrategies}
                   onChange={(e) => setSelectedStrategies(e.value)}
                   options={cleanedStrategies}
