@@ -1,5 +1,6 @@
 import Select from 'react-select'
 import { Controller } from 'react-hook-form'
+import { twMerge } from 'tailwind-merge'
 
 const SelectComponent = ({
   label,
@@ -9,6 +10,8 @@ const SelectComponent = ({
   useMode,
   setMode,
   optional = false,
+  defaulted,
+  className,
 }) => (
   <div className="text-sm">
     <label className="font-semibold ">
@@ -29,7 +32,10 @@ const SelectComponent = ({
             }
           }}
           value={options.find((c) => c.value === value)}
-          className="dark:highlighter hover:cursor-pointer"
+          className={twMerge(
+            'dark:highlighter hover:cursor-pointer',
+            className
+          )}
           classNames={{
             control: () => 'dark:bg-color-secondary dark:text-white',
             menuList: () => 'dark:bg-color-secondary dark:text-white',
@@ -39,6 +45,7 @@ const SelectComponent = ({
           }}
           options={options}
           required
+          defaultValue={defaulted}
         />
       )}
     />

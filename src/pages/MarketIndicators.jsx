@@ -38,34 +38,44 @@ const MarketIndicators = () => {
         select a new exchange and the market, and new data will be fed through
         the charts
       </p>
-      <div className="flex flex-col gap-2 md:grid md:grid-cols-4 md:items-center md:gap-5">
-        <ErrorBoundary FallbackComponent={Fallback}>
-          <Suspense fallback={<Loader />}>
-            <Select
-              label="Exchange"
-              options={exchanges}
-              id="exchange"
-              control={control}
-              useMode
-              setMode={setCurrentExchange}
-              optional
-            />
-          </Suspense>
-        </ErrorBoundary>
-        <ErrorBoundary FallbackComponent={Fallback}>
-          <Suspense fallback={<Loader />}>
-            <Select
-              label="Market"
-              options={markets}
-              id="market"
-              control={control}
-              useMode
-              setMode={setCurrentMarket}
-              optional
-            />
-          </Suspense>
-        </ErrorBoundary>
-        <h1 className="pt-1 text-center text-xl font-bold text-autowhale-blue dark:text-white md:col-span-2 md:pt-0 md:text-right md:text-3xl">
+      <div className="flex flex-col gap-2 lg:grid lg:grid-cols-4 lg:items-center lg:gap-5">
+        <div className="flex gap-2 lg:col-span-2 lg:grid lg:grid-cols-3">
+          <ErrorBoundary FallbackComponent={Fallback}>
+            <Suspense fallback={<Loader />}>
+              <Select
+                defaulted={{
+                  label: 'binance',
+                  value: 'binance',
+                }}
+                label="Exchange"
+                options={exchanges}
+                id="exchange"
+                control={control}
+                useMode
+                setMode={setCurrentExchange}
+                optional
+              />
+            </Suspense>
+          </ErrorBoundary>
+          <ErrorBoundary FallbackComponent={Fallback}>
+            <Suspense fallback={<Loader />}>
+              <Select
+                defaulted={{
+                  label: 'BTC/USDT',
+                  value: 'BTC/USDT',
+                }}
+                label="Market"
+                options={markets}
+                id="market"
+                control={control}
+                useMode
+                setMode={setCurrentMarket}
+                optional
+              />
+            </Suspense>
+          </ErrorBoundary>
+        </div>
+        <h1 className="pt-1 text-center text-xl font-bold capitalize text-autowhale-blue dark:text-white md:col-span-2 md:pt-0 md:text-3xl lg:text-right">
           {`${currentMarket} - ${currentExchange}`}
         </h1>
       </div>

@@ -1,7 +1,7 @@
 import Select from 'react-select'
 import { twMerge } from 'tailwind-merge'
 
-const SelectInput = ({ options, value, handler, className }) => {
+const SelectInput = ({ options, value, handler, className, defaulted }) => {
   const handleChange = (selectedOption) => {
     handler(selectedOption, value)
   }
@@ -18,6 +18,7 @@ const SelectInput = ({ options, value, handler, className }) => {
       }}
       options={options}
       onChange={handleChange}
+      defaultValue={defaulted}
     />
   )
 }

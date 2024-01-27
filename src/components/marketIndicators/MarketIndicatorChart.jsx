@@ -3,6 +3,9 @@ import { useState, useEffect, useMemo } from 'react'
 import ReactApexChart from 'react-apexcharts'
 import { useDarkMode } from '../../hooks'
 import Loader from '../shared/Loader.shared'
+import SelectInput from '../shared/SelectInput.shared'
+import { marketTimeframes } from '../../utils/constants'
+import { numberFormatting } from '../../utils/misc'
 
 const marketIndicators = {
   Volatility: 'volatility',
@@ -11,9 +14,27 @@ const marketIndicators = {
 }
 
 const fixText = (ob, newText) => {
-  const fixedOb = structuredClone(ob)
-
-  fixedOb.title.text = newText
+  const fixedOb = {
+    ...ob,
+    title: {
+      ...ob.title,
+      text: newText,
+    },
+    yaxis: {
+      ...ob.yaxis,
+      labels: {
+        ...ob.yaxis.labels,
+        formatter: ob.yaxis.labels.formatter,
+      },
+    },
+    tooltip: {
+      ...ob.tooltip,
+      y: {
+        ...ob.tooltip.y,
+        formatter: ob.tooltip.y.formatter,
+      },
+    },
+  }
 
   return fixedOb
 }
@@ -27,6 +48,7 @@ const MarketIndicatorChart = ({
   const [darkModeState] = useDarkMode()
   const [darkMode, setDarkMode] = useState(darkModeState)
   const [liveChartData, setLiveChartData] = useState([])
+  const [timeframe, setTimeframe] = useState('1m')
 
   let websocket
   let buysWebsocketData = []
@@ -35,7 +57,11 @@ const MarketIndicatorChart = ({
   let sellLiqWebsocketData = []
   let liqWebsocketData = []
 
+  const volatilityTimeframes =
+    marketIndicators[id] === 'volatility' ? `&timeframe=${timeframe}` : ''
+
   useEffect(() => {
+    setLiveChartData([])
     if (websocket && websocket.readyState === WebSocket.OPEN) {
       websocket.close()
     }
@@ -43,7 +69,7 @@ const MarketIndicatorChart = ({
     let origin = import.meta.env.VITE_API_BASE_URL.replace(/.+?(?=:)/i, 'wss')
 
     websocket = new WebSocket(
-      `${origin}/data/live-data/live-${marketIndicators[id]}?exchange=${exchange}&symbol=${market}`
+      `${origin}/data/live-data/live-${marketIndicators[id]}?exchange=${exchange}&symbol=${market}${volatilityTimeframes}`
     )
 
     websocket.onmessage = (data) => {
@@ -80,12 +106,11 @@ const MarketIndicatorChart = ({
       }
       window.removeEventListener('storage', checkDarkModeStatus)
     }
-  }, [market])
+  }, [market, timeframe])
 
   const data = useMemo(() => {
     if (liveChartData?.length > 0) {
       //? volatility would be dynamic here
-
       if (id === 'Volatility') {
         return liveChartData.map((liveData) => {
           const dateTime = new Date(liveData.date).getTime()
@@ -96,7 +121,6 @@ const MarketIndicatorChart = ({
           const dateTime = new Date(liveData.date).getTime()
           return [dateTime, liveData.buys]
         })
-
         sellsWebsocketData = liveChartData.map((liveData) => {
           const dateTime = new Date(liveData.date).getTime()
           return [dateTime, liveData.sells]
@@ -134,9 +158,9 @@ const MarketIndicatorChart = ({
       },
       animations: {
         enabled: true,
-        easing: 'linear',
+        easing: 'easeinout',
         dynamicAnimation: {
-          speed: 500,
+          speed: 1000,
         },
       },
       toolbar: {
@@ -164,20 +188,9 @@ const MarketIndicatorChart = ({
         },
       },
     },
-    responsive: [
-      {
-        breakpoint: 1024,
-        options: {
-          yaxis: {
-            show: false,
-          },
-        },
-      },
-    ],
     yaxis: {
-      show: false,
       forceNiceScale: true,
-      decimalsInFloat: 10,
+      decimalsInFloat: 5,
       axisBorder: {
         show: false,
       },
@@ -188,9 +201,10 @@ const MarketIndicatorChart = ({
         style: {
           colors: darkMode ? '#939393' : '#8e8da4',
         },
-        // formatter: (value) => {
-        //   return numberFormatting(value)
-        // },
+        //? these crash the page
+        formatter: (value) => {
+          return numberFormatting(value)
+        },
       },
     },
     legend: {
@@ -203,14 +217,15 @@ const MarketIndicatorChart = ({
       x: {
         format: 'hh:mmtt dd MMM yyyy',
       },
-      // y: {
-      //   formatter: function (
-      //     value,
-      //     { series, seriesIndex, dataPointIndex, w }
-      //   ) {
-      //     return numberFormatting(value)
-      //   },
-      // },
+      //? these crash the page
+      y: {
+        formatter: function (
+          value,
+          { series, seriesIndex, dataPointIndex, w }
+        ) {
+          return numberFormatting(value)
+        },
+      },
     },
     grid: {
       borderColor: darkMode ? '#505050' : '#e0e6ed',
@@ -247,6 +262,14 @@ const MarketIndicatorChart = ({
       ],
       liqSeries: [{ name: 'Liquidity', data: liqWebsocketData ?? [] }],
     },
+  }
+
+  const handleSelectWrapper = (select) => {
+    handleSelect(select)
+  }
+
+  const handleSelect = (select) => {
+    setTimeframe(select.value)
   }
 
   return (
@@ -293,12 +316,22 @@ const MarketIndicatorChart = ({
               />
             </>
           ) : (
-            <ReactApexChart
-              options={fixText(sharedOptions, 'Volatility')}
-              series={hardcodedSeries.volatility}
-              type="area"
-              height={300}
-            />
+            <>
+              <div className="absolute top-3 right-3 z-[1]">
+                <SelectInput
+                  options={marketTimeframes}
+                  handler={handleSelectWrapper}
+                  defaulted={{ label: '1 minute', value: '1m' }}
+                  className="w-[7rem] md:w-[10rem] xl:w-[19rem]"
+                />
+              </div>
+              <ReactApexChart
+                options={fixText(sharedOptions, 'Volatility')}
+                series={hardcodedSeries.volatility}
+                type="area"
+                height={300}
+              />
+            </>
           )}
         </>
       )}
