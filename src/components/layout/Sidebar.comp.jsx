@@ -64,7 +64,7 @@ const Sidebar = ({ themeState }) => {
                 <span className="ml-3 flex-1 text-left">Log out</span>
               </button>
             </li>
-            <p className="ml-6 italic">trader@xys.com</p>
+            <p className="ml-6 italic">trader@xyz.com</p>
           </ul>
         </div>
       </div>

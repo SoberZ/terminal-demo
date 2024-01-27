@@ -5,12 +5,13 @@ import { Menu } from 'primereact/menu'
 import { InputText } from 'primereact/inputtext'
 import { Dialog } from 'primereact/dialog'
 import { InputTextarea } from 'primereact/inputtextarea'
-import { MultiSelect } from 'primereact/multiselect'
+
 import { ErrorBoundary } from 'react-error-boundary'
 import { Fallback, Loader, TerminalButton } from '../components'
 
-import UsersData from '../data/users/usersData.json'
 import CategoriesData from '../data/categories/allCategories.json'
+
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
 
 const Categories = () => {
   const navigate = useNavigate()
@@ -18,8 +19,6 @@ const Categories = () => {
   const [currentCategory, setCurrentCategory] = useState([])
   const menuRight = useRef(null)
 
-  const [users, setUsers] = useState([])
-  const [selectedUsers, setSelectedUsers] = useState([])
   const [visible, setVisible] = useState(false)
   const [categoryName, setCategoryName] = useState('')
   const [categoryDescription, setCategoryDescription] = useState('')
@@ -33,7 +32,7 @@ const Categories = () => {
       },
     },
     //? does nothing currently, until the UUID idea is fixed
-    { label: 'Duplicate', icon: 'pi pi-fw pi-copy' },
+    // { label: 'Duplicate', icon: 'pi pi-fw pi-copy' },
     {
       label: 'Delete',
       icon: 'pi pi-fw pi-trash',
@@ -43,16 +42,22 @@ const Categories = () => {
 
   useEffect(() => {
     setCategories(CategoriesData)
-    const usersIDs = UsersData?.map((user) => user.username)
-    setUsers(usersIDs)
   }, [])
 
   function deletingCategory() {
     if (!currentCategory) return
+    confirmDialog({
+      message: `Are you sure you want to proceed?`,
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {},
+      reject: () => {},
+    })
   }
 
   return (
     <>
+      <ConfirmDialog />
       <div className="flex gap-5">
         <TerminalButton>
           <Link to="/users/create-category">Create a Category</Link>
@@ -69,7 +74,6 @@ const Categories = () => {
               setVisible(false)
               setCategoryName('')
               setCategoryDescription('')
-              setSelectedUsers([])
             }}>
             <div className="space-y-3">
               <div className="flex flex-col gap-3 ">
@@ -82,45 +86,24 @@ const Categories = () => {
                 <InputTextarea
                   className="border-[#757575]"
                   autoResize
-                  placeholder={currentCategory[2]}
+                  placeholder="Update your description here"
                   value={categoryDescription}
                   onChange={(e) => setCategoryDescription(e.target.value)}
                   rows={1}
                   cols={10}
                 />
-                <MultiSelect
-                  value={selectedUsers}
-                  onChange={(e) => setSelectedUsers(e.value)}
-                  options={users}
-                  placeholder="Select Users"
-                  maxSelectedLabels={1}
-                  className="md:w-20rem w-full !border-[#757575]"
-                />
               </div>
               <TerminalButton
+                disabled={categoryName.length >= 3 ? false : true}
                 className={`w-full ${
                   categoryName.length >= 3
                     ? ''
                     : 'bg-neutral-400 hover:cursor-not-allowed dark:bg-neutral-800'
                 }`}
                 onClick={() => {
-                  //TODO: to send the users list with the create category request
-                  // updateCategoryData(
-                  //   categoryName,
-                  //   currentCategory[1],
-                  //   categoryDescription,
-                  //   selectedUsers
-                  // )
-                  console.log(
-                    categoryName,
-                    currentCategory[1],
-                    categoryDescription,
-                    selectedUsers
-                  )
                   setVisible(false)
                   setCategoryName('')
                   setCategoryDescription('')
-                  setSelectedUsers([])
                 }}>
                 Edit {categoryName}
               </TerminalButton>
@@ -128,7 +111,7 @@ const Categories = () => {
           </Dialog>
         </Suspense>
       </ErrorBoundary>
-      <div className="grid grid-cols-6 gap-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
         <ErrorBoundary FallbackComponent={Fallback}>
           <Suspense fallback={<Loader />}>
             <Menu model={items} popup ref={menuRight} popupAlignment="right" />
@@ -142,7 +125,7 @@ const Categories = () => {
                   onClick={(e) => {
                     navigate(`categories/${category[1]}`)
                   }}
-                  className="flex h-36 flex-col gap-3  rounded-md border p-5  shadow-soft-lg transition-colors hover:cursor-pointer hover:border-autowhale-blue/40 dark:border-neutral-700 hover:dark:border-neutral-300">
+                  className="flex h-36 flex-col gap-3 rounded-md border p-5 shadow-soft-lg transition-colors hover:cursor-pointer hover:border-autowhale-blue/40 dark:border-neutral-700 hover:dark:border-neutral-300">
                   <div className="flex items-center justify-between">
                     <span className="text-xl font-bold">{category[1]}</span>
                     <span

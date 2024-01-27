@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Checkbox } from 'primereact/checkbox'
 import { TerminalButton } from '../components'
@@ -6,11 +6,14 @@ import { Controller, useForm } from 'react-hook-form'
 import { InputText } from 'primereact/inputtext'
 import { toast } from 'react-hot-toast'
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
+import { Dialog } from 'primereact/dialog'
+import { MultiSelect } from 'primereact/multiselect'
 
 import UserData from '../data/users/userData.json'
 import RolesData from '../data/users/rolesData.json'
 import MappingsData from '../data/users/mappingsData.json'
 import AvailableRolesData from '../data/users/availableRolesData.json'
+import CategoriesData from '../data/categories/allCategories.json'
 
 import Joyride, { STATUS } from 'react-joyride'
 import { BiInfoCircle } from 'react-icons/bi'
@@ -54,6 +57,13 @@ const User = () => {
     emailVerified: '',
     enabled: '',
   })
+
+  const [categories, setCategories] = useState([])
+  const [allCategories, setAllCategories] = useState([])
+  const [selectedCategory, setSelectedCategory] = useState('')
+  const [visible, setVisible] = useState(false)
+  const menuRight = useRef(null)
+
   const { handleSubmit, control, register } = useForm({
     shouldUnregister: true,
   })
@@ -81,6 +91,8 @@ const User = () => {
     toast.dismiss()
     getAllRoles()
     getUser()
+    setCategories(CategoriesData)
+    setAllCategories(CategoriesData)
   }, [])
 
   useEffect(() => {
@@ -136,6 +148,11 @@ const User = () => {
       setState((prev) => ({ ...prev, run: false }))
     }
   }
+  const categoriesNames = categories.map((category) => category[1])
+
+  // const allCategoriesNames = allCategories
+  //   .map((category) => category[1])
+  //   .filter((category) => !categoriesNames.includes(category))
 
   return (
     <>
@@ -181,7 +198,7 @@ const User = () => {
         </p>
 
         {user && (
-          <div className="flex flex-col  gap-5 md:flex-row">
+          <div className="flex flex-col gap-5 md:flex-row">
             <div className="flex flex-wrap justify-center gap-3 md:justify-start">
               <label
                 className={`relative block rounded-md border border-gray-200 !text-black/40 shadow transition-all dark:border-neutral-800 dark:bg-color-secondary dark:!text-white/40`}>
@@ -249,6 +266,78 @@ const User = () => {
             </div>
           </div>
         )}
+        <div className="flex flex-col gap-5">
+          <TerminalButton className="h-11" onClick={() => setVisible(true)}>
+            Add access to category
+          </TerminalButton>
+          <Dialog
+            className="w-[20rem]"
+            header="Give access to Category"
+            visible={visible}
+            draggable={false}
+            onHide={() => {
+              setVisible(false)
+            }}>
+            <div className="space-y-3">
+              <MultiSelect
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.value)}
+                options={categoriesNames}
+                placeholder={`Select a Category`}
+                maxSelectedLabels={1}
+                selectionLimit={1}
+                showSelectAll={false}
+                className="md:w-20rem w-full !border-[#757575]"
+              />
+              <TerminalButton
+                disabled={selectedCategory.length > 0 ? false : true}
+                className={`w-full ${
+                  selectedCategory.length > 0
+                    ? ''
+                    : 'bg-neutral-400 hover:cursor-not-allowed dark:bg-neutral-800'
+                }`}
+                onClick={() => {
+                  setVisible(false)
+                  setSelectedCategory('')
+                }}>
+                Submit User
+              </TerminalButton>
+            </div>
+          </Dialog>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
+            {categories?.map((category, idx) => (
+              <div key={`${category[1]}${idx}`}>
+                <div
+                  onClick={() => {
+                    navigate(`/users/categories/${category[1]}`)
+                  }}
+                  className="flex h-36 flex-col gap-3 rounded-md border p-5 shadow-soft-lg transition-colors hover:cursor-pointer hover:border-autowhale-blue/40 dark:border-neutral-700 hover:dark:border-neutral-300">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xl font-bold">{category[1]}</span>
+                    <span
+                      className="pi pi-fw pi-times-circle flex items-center justify-center rounded py-0.5 px-3 text-red-500 transition-colors hover:cursor-pointer hover:bg-autowhale-blue/10 hover:text-red-700 hover:dark:bg-neutral-700/50"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        confirmDialog({
+                          message: `Are you sure you want to proceed?`,
+                          header: 'Confirmation',
+                          icon: 'pi pi-exclamation-triangle',
+                          accept: () => {},
+                          reject: () => {},
+                        })
+
+                        menuRight?.current?.toggle(e)
+                      }}></span>
+                  </div>
+                  {/* //? description here */}
+                  <p className="line-clamp-3" title={category[2]}>
+                    {category[2]}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
         <div className="flex flex-col items-center gap-1 md:items-start">
           <h1 className="text-lg font-bold">User Roles</h1>
           <form
@@ -280,17 +369,17 @@ const User = () => {
             <TerminalButton text="Save" type="submit" form="userEditForm" />
           </form>
         </div>
-      </div>
-      <div className="fixed bottom-5 right-9 z-20">
-        <TerminalButton
-          text="Start Tour"
-          textSize="text-base"
-          onClick={() => {
-            setState((prev) => ({ ...prev, run: true }))
-          }}
-          className="flex !w-auto items-center justify-center gap-2 text-white ">
-          <BiInfoCircle size={25} />
-        </TerminalButton>
+        <div className="fixed bottom-5 right-9 z-20">
+          <TerminalButton
+            text="Start Tour"
+            textSize="text-base"
+            onClick={() => {
+              setState((prev) => ({ ...prev, run: true }))
+            }}
+            className="flex !w-auto items-center justify-center gap-2 text-white ">
+            <BiInfoCircle size={25} />
+          </TerminalButton>
+        </div>
       </div>
     </>
   )

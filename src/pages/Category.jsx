@@ -16,6 +16,7 @@ import { UserService } from '../services'
 import { Dialog } from 'primereact/dialog'
 import { InputTextarea } from 'primereact/inputtextarea'
 import { MultiSelect } from 'primereact/multiselect'
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
 
 import {
   demoModeFilterTemplate,
@@ -161,191 +162,181 @@ const Category = () => {
     .map((strategy) => strategy.strategy_id)
 
   return (
-    <div className="flex flex-col space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-primary break-anywhere text-2xl font-semibold dark:text-white md:inline md:text-left">
-          {categoryId}
-        </h1>
-        <p className="text-primary dark:text-white md:inline md:text-left">
-          this is a generic description, don't worry about it
-        </p>
-      </div>
-      <div className="flex justify-between">
-        <TerminalButton onClick={() => setVisible(true)}>
-          Edit Category
-        </TerminalButton>
-        <InputText
-          className="border-[#757575] py-2 text-black dark:bg-color-secondary dark:text-white md:w-1/3"
-          placeholder="Search for a Strategy"
-          value={globalFilterValue}
-          onChange={onGlobalFilterChange}
-        />
-      </div>
-      <ErrorBoundary FallbackComponent={Fallback}>
-        <Suspense fallback={<Loader />}>
-          <Dialog
-            className="w-[20rem]"
-            header="Edit Category"
-            visible={visible}
-            draggable={false}
-            onHide={() => {
-              setVisible(false)
-              setCategoryName('')
-              setCategoryDescription('')
-              setSelectedUsers([])
-            }}>
-            <div className="space-y-3">
-              <div className="flex flex-col gap-3 ">
-                <InputText
-                  className="border-[#757575] py-2 text-black dark:bg-color-secondary dark:text-white "
-                  placeholder={categoryId}
-                  value={categoryName}
-                  onChange={(e) => setCategoryName(e.target.value)}
-                />
-                <InputTextarea
-                  className="border-[#757575]"
-                  autoResize
-                  placeholder="add your description here"
-                  //? when i figure out fetching the description, we'll use this
-                  value={categoryDescription}
-                  onChange={(e) => setCategoryDescription(e.target.value)}
-                  rows={1}
-                  cols={10}
-                />
-                <MultiSelect
-                  value={selectedUsers}
-                  onChange={(e) => setSelectedUsers(e.value)}
-                  options={users}
-                  placeholder="Select Users"
-                  maxSelectedLabels={1}
-                  className="md:w-20rem w-full !border-[#757575]"
-                />
-                <MultiSelect
-                  filter
-                  value={selectedStrategies}
-                  onChange={(e) => setSelectedStrategies(e.value)}
-                  options={cleanedStrategies}
-                  placeholder="Add Strategies"
-                  maxSelectedLabels={1}
-                  className="md:w-20rem w-full !border-[#757575]"
-                />
+    <>
+      <ConfirmDialog />
+      <div className="flex flex-col space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-primary break-anywhere text-2xl font-semibold dark:text-white md:inline md:text-left">
+            {categoryId}
+          </h1>
+          <p className="text-primary dark:text-white md:inline md:text-left">
+            this is a generic description, don't worry about it
+          </p>
+        </div>
+        <div className="flex justify-between">
+          <TerminalButton onClick={() => setVisible(true)}>
+            Edit Category
+          </TerminalButton>
+          <InputText
+            className="border-[#757575] py-2 text-black dark:bg-color-secondary dark:text-white md:w-1/3"
+            placeholder="Search for a Strategy"
+            value={globalFilterValue}
+            onChange={onGlobalFilterChange}
+          />
+        </div>
+        <ErrorBoundary FallbackComponent={Fallback}>
+          <Suspense fallback={<Loader />}>
+            <Dialog
+              className="w-[20rem]"
+              header="Edit Category"
+              visible={visible}
+              draggable={false}
+              onHide={() => {
+                setVisible(false)
+                setCategoryName('')
+                setCategoryDescription('')
+              }}>
+              <div className="space-y-3">
+                <div className="flex flex-col gap-3 ">
+                  <InputText
+                    className="border-[#757575] py-2 text-black dark:bg-color-secondary dark:text-white "
+                    placeholder={categoryId}
+                    value={categoryName}
+                    onChange={(e) => setCategoryName(e.target.value)}
+                  />
+                  <InputTextarea
+                    className="border-[#757575]"
+                    autoResize
+                    placeholder="update your description here"
+                    value={categoryDescription}
+                    onChange={(e) => setCategoryDescription(e.target.value)}
+                    rows={1}
+                    cols={10}
+                  />
+                </div>
+                <TerminalButton
+                  disabled={categoryName.length < 3}
+                  className={`w-full ${
+                    categoryName.length >= 3
+                      ? ''
+                      : 'bg-neutral-400 hover:cursor-not-allowed dark:bg-neutral-800'
+                  }`}
+                  onClick={async () => {
+                    setVisible(false)
+                    setCategoryName('')
+                    setCategoryDescription('')
+                  }}>
+                  Edit {categoryName}
+                </TerminalButton>
               </div>
-              <TerminalButton
-                className={`w-full ${
-                  categoryName.length >= 3
-                    ? ''
-                    : 'bg-neutral-400 hover:cursor-not-allowed dark:bg-neutral-800'
-                }`}
-                onClick={() => {
-                  //TODO: to send the users list with the create category request
-                  // updateCategoryData(
-                  //   categoryId,
-                  //   currentCategory[1],
-                  //   categoryDescription,
-                  //   selectedUsers
-                  // )
-                  console.log(
-                    categoryName,
-                    categoryId,
-                    categoryDescription,
-                    selectedUsers
+            </Dialog>
+          </Suspense>
+        </ErrorBoundary>
+        <ErrorBoundary FallbackComponent={Fallback}>
+          <Suspense fallback={<Loader />}>
+            <DataTable
+              value={strategies}
+              filters={filters}
+              paginator
+              breakpoint="0"
+              scrollable
+              paginatorTemplate={
+                width < 768
+                  ? 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink'
+                  : 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
+              }
+              sortField={'active_status'}
+              sortOrder={1}
+              rows={20}
+              rowsPerPageOptions={[20, 30, 40, 50]}
+              totalRecords={strategies?.length}
+              className="text-[0.7rem] md:text-[0.75rem]"
+              onRowClick={(e) => {
+                //? e.data is the strategy object from when david fixes it
+                navigate(`/strategies/${e.data.strategy_id}`)
+              }}>
+              <Column
+                sortable
+                field="strategy_id"
+                header="Strategy"
+                className="break-anywhere min-w-[5rem] md:min-w-[15rem] lg:min-w-[18rem]"
+              />
+              <Column
+                sortable
+                field="type"
+                header="Type"
+                className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                filter
+                filterMatchModeOptions={equalsFilterOptions}
+                showFilterOperator={false}
+                filterElement={strategyTypesFilterTemplate}
+              />
+              <Column
+                sortable
+                field="market"
+                header="Market"
+                className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+              />
+              <Column
+                sortable
+                field="exchange_account_id"
+                header="Exchange account"
+                className="min-w-[8rem] md:min-w-[10rem] lg:min-w-[14rem]"
+              />
+              <Column
+                sortable
+                field="is_demo_strategy"
+                header="Demo mode"
+                body={strategyDemoModeBodyTemplate}
+                style={{ minWidth: '7rem' }}
+                filter
+                filterMatchModeOptions={equalsFilterOptions}
+                showFilterOperator={false}
+                filterElement={demoModeFilterTemplate}
+              />
+              <Column
+                sortable
+                field="active_status"
+                header="Status"
+                sortFunction={statusSortingFunction}
+                body={(strategy) => (
+                  <Tag
+                    value={strategy.active_status}
+                    style={{
+                      backgroundColor: getSeverity(strategy.active_status),
+                    }}
+                    className="text-md"
+                  />
+                )}
+                filter
+                filterMatchModeOptions={equalsFilterOptions}
+                showFilterOperator={false}
+                filterElement={statusFilterTemplate}
+              />
+              <Column
+                className="max-w-[3.6rem]"
+                body={(strategy) => {
+                  return (
+                    <i
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        confirmDialog({
+                          message: `Are you sure you want to proceed?`,
+                          header: 'Confirmation',
+                          icon: 'pi pi-exclamation-triangle',
+                          accept: () => {},
+                          reject: () => {},
+                        })
+                      }}
+                      className="pi pi-trash text-[1.3rem] text-red-500 hover:text-red-700"></i>
                   )
-                  setVisible(false)
-                  setCategoryName('')
-                  setCategoryDescription('')
-                  setSelectedUsers([])
-                }}>
-                Edit {categoryName}
-              </TerminalButton>
-            </div>
-          </Dialog>
-        </Suspense>
-      </ErrorBoundary>
-      <ErrorBoundary FallbackComponent={Fallback}>
-        <Suspense fallback={<Loader />}>
-          <DataTable
-            value={strategies}
-            filters={filters}
-            paginator
-            breakpoint="0"
-            scrollable
-            paginatorTemplate={
-              width < 768
-                ? 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink'
-                : 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
-            }
-            sortField={'active_status'}
-            sortOrder={1}
-            rows={20}
-            rowsPerPageOptions={[20, 30, 40, 50]}
-            totalRecords={strategies?.length}
-            className="text-[0.7rem] md:text-[0.75rem]"
-            onRowClick={(e) => {
-              //? e.data is the strategy object from when david fixes it
-              navigate(`/strategies/${e.data.strategy_id}`)
-            }}>
-            <Column
-              sortable
-              field="strategy_id"
-              header="Strategy"
-              className="break-anywhere min-w-[5rem] md:min-w-[15rem] lg:min-w-[18rem]"
-            />
-            <Column
-              sortable
-              field="type"
-              header="Type"
-              className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-              filter
-              filterMatchModeOptions={equalsFilterOptions}
-              showFilterOperator={false}
-              filterElement={strategyTypesFilterTemplate}
-            />
-            <Column
-              sortable
-              field="market"
-              header="Market"
-              className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-            />
-            <Column
-              sortable
-              field="exchange_account_id"
-              header="Exchange account"
-              className="min-w-[8rem] md:min-w-[10rem] lg:min-w-[14rem]"
-            />
-            <Column
-              sortable
-              field="is_demo_strategy"
-              header="Demo mode"
-              body={strategyDemoModeBodyTemplate}
-              style={{ minWidth: '7rem' }}
-              filter
-              filterMatchModeOptions={equalsFilterOptions}
-              showFilterOperator={false}
-              filterElement={demoModeFilterTemplate}
-            />
-            <Column
-              sortable
-              field="active_status"
-              header="Status"
-              sortFunction={statusSortingFunction}
-              body={(strategy) => (
-                <Tag
-                  value={strategy.active_status}
-                  style={{
-                    backgroundColor: getSeverity(strategy.active_status),
-                  }}
-                  className="text-md"
-                />
-              )}
-              filter
-              filterMatchModeOptions={equalsFilterOptions}
-              showFilterOperator={false}
-              filterElement={statusFilterTemplate}
-            />
-          </DataTable>
-        </Suspense>
-      </ErrorBoundary>
-    </div>
+                }}
+              />
+            </DataTable>
+          </Suspense>
+        </ErrorBoundary>
+      </div>
+    </>
   )
 }
 

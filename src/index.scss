@@ -346,14 +346,14 @@ tr:hover {
   @apply dark:border-neutral-700;
 }
 .p-menu.p-menu-overlay {
-  background-color: rgb(var(--bg-color-secondary)) !important;
+  background-color: rgb(var(--bg-color-primary)) !important;
   color: rgb(var(--text-color-secondary)) !important;
   @apply dark:border-neutral-700;
 }
 
 .p-menuitem-link {
   &:hover {
-    background-color: var(--highlight-color-hover) !important;
+    background-color: var(--highlight-color) !important;
   }
 }
 .p-menuitem-active {
@@ -361,10 +361,10 @@ tr:hover {
   color: rgb(var(--sb-thumb-color)) !important;
 }
 .p-contextmenu .p-menuitem.p-menuitem-active > .p-menuitem-link {
-  background-color: var(--highlight-color-hover) !important;
+  background-color: var(--highlight-color) !important;
 }
 .p-menu .p-menuitem.p-menuitem-active > .p-menuitem-link {
-  background-color: var(--highlight-color-hover) !important;
+  background-color: var(--highlight-color) !important;
 }
 
 .p-listbox {
@@ -436,4 +436,14 @@ tr:hover {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+}
+.p-menuitem-text {
+  color: rgb(var(--text-color-secondary)) !important;
+}
+.p-menuitem-icon {
+  color: rgb(var(--text-color-secondary)) !important;
+}
+
+.p-dropdown-label {
+  align-self: center;
 }

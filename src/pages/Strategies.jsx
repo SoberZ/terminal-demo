@@ -146,7 +146,8 @@ const Strategies = () => {
     'VolumeStrategy',
     'MatrixStrategy',
   ])
-
+  const [dropdownSelect, setDropdownSelect] = useState()
+  const [filteredStrategies, setFilteredStrategies] = useState([])
   const favLoaded = useRef(false)
 
   useLayoutEffect(() => {
@@ -314,6 +315,9 @@ const Strategies = () => {
       setFavoriteStrategies(updatedFavorites)
     }
   }
+
+  const sortingArray = dropdownSelect ? filteredStrategies : strategies
+
   const sortedStrategies = [...strategies].sort((a, b) => {
     const isAFavorite = favoriteStrategies.includes(a.strategy_id)
     const isBFavorite = favoriteStrategies.includes(b.strategy_id)
@@ -338,11 +342,10 @@ const Strategies = () => {
     {
       template: (item, options) => {
         return (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-2">
             <ListBox
               filter
               //? can't do it unless i can send a list of categories too
-              // multiple
               value={selectedMenuStrategy}
               options={categories}
               onChange={(e) => {
@@ -352,11 +355,11 @@ const Strategies = () => {
                 e.stopPropagation()
               }}
               optionLabel="1"
-              listStyle={{ height: '250px' }}
-              filterPlaceholder="Search and add to Category"
+              listStyle={{ height: '200px' }}
+              filterPlaceholder="Add to Category"
             />
             <TerminalButton
-              className={`w-full 
+              className={`mb-2 w-11/12 self-center
                 ${
                   selectedMenuStrategy?.length > 0
                     ? ''
@@ -364,7 +367,6 @@ const Strategies = () => {
                 }
               `}
               onClick={() => {
-                //TODO: need to grab the name only
                 menuRight?.current?.hide()
               }}>
               Add to Category
@@ -426,6 +428,16 @@ const Strategies = () => {
                 </h1>
               </Link>
             </TerminalButton>
+            <Dropdown
+              value={dropdownSelect}
+              onChange={(e) => setDropdownSelect(e.value)}
+              options={categories}
+              optionLabel="1"
+              optionValue="1"
+              showClear
+              placeholder="Select a Category"
+              className="h-11 w-full md:w-[14rem]"
+            />
             <InputText
               className="h-11 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 md:w-1/3"
               placeholder="Search a strategy"
@@ -560,7 +572,9 @@ const Strategies = () => {
               className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
             />
             <Column
-              style={{ flex: '0 0 4rem' }}
+              className="max-w-[3.6rem]"
+              frozen
+              alignFrozen="right"
               body={(strategy) => (
                 <>
                   <Menu
@@ -568,7 +582,7 @@ const Strategies = () => {
                     popup
                     ref={menuRight}
                     popupAlignment="right"
-                    className="w-[20rem]"
+                    className="w-[15rem] !p-0"
                   />
                   <span
                     onClick={(e) => {
@@ -576,7 +590,7 @@ const Strategies = () => {
                       setCurrentCategory(strategy.strategy_id)
                       menuRight?.current?.toggle(e)
                     }}
-                    className="pi pi-fw pi-ellipsis-h hover:cursor-pointer"></span>
+                    className="pi pi-fw pi-ellipsis-h text-[1.3rem] transition-all hover:cursor-pointer hover:opacity-60"></span>
                 </>
               )}
             />
