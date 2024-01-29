@@ -14,6 +14,7 @@ import RolesData from '../data/users/rolesData.json'
 import MappingsData from '../data/users/mappingsData.json'
 import AvailableRolesData from '../data/users/availableRolesData.json'
 import CategoriesData from '../data/categories/allCategories.json'
+import Exchangess from '../data/exchanges.json'
 
 import Joyride, { STATUS } from 'react-joyride'
 import { BiInfoCircle } from 'react-icons/bi'
@@ -59,9 +60,15 @@ const User = () => {
   })
 
   const [categories, setCategories] = useState([])
+  const [exchangeAccounts, setExchangeAccounts] = useState([])
   const [allCategories, setAllCategories] = useState([])
+  const [accessibleExchangeAccounts, setAccessibleExchangeAccounts] = useState(
+    []
+  )
   const [selectedCategory, setSelectedCategory] = useState('')
+  const [selectedExchange, setSelectedExchange] = useState('')
   const [visible, setVisible] = useState(false)
+  const [exchangeVisible, setExchangeVisible] = useState(false)
   const menuRight = useRef(null)
 
   const { handleSubmit, control, register } = useForm({
@@ -93,6 +100,8 @@ const User = () => {
     getUser()
     setCategories(CategoriesData)
     setAllCategories(CategoriesData)
+    setAccessibleExchangeAccounts(Exchangess)
+    setExchangeAccounts(Exchangess)
   }, [])
 
   useEffect(() => {
@@ -150,9 +159,13 @@ const User = () => {
   }
   const categoriesNames = categories.map((category) => category[1])
 
-  // const allCategoriesNames = allCategories
-  //   .map((category) => category[1])
-  //   .filter((category) => !categoriesNames.includes(category))
+  const allCategoriesNames = allCategories
+    .map((category) => category[1])
+    .filter((category) => !categoriesNames.includes(category))
+
+  const exchangesNames = exchangeAccounts.map(
+    (exchange) => exchange.exchange_account_id
+  )
 
   return (
     <>
@@ -333,6 +346,84 @@ const User = () => {
                   <p className="line-clamp-3" title={category[2]}>
                     {category[2]}
                   </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="flex flex-col gap-5">
+          <TerminalButton
+            className="h-11 w-fit"
+            onClick={() => setExchangeVisible(true)}>
+            Add access to Exchange account
+          </TerminalButton>
+          <Dialog
+            className="w-[20rem]"
+            header="Give access to exchange account"
+            visible={exchangeVisible}
+            draggable={false}
+            onHide={() => {
+              setExchangeVisible(false)
+            }}>
+            <div className="space-y-3">
+              <MultiSelect
+                value={selectedExchange}
+                onChange={(e) => setSelectedExchange(e.value)}
+                options={exchangeAccounts}
+                placeholder={`Select an exchange account`}
+                maxSelectedLabels={1}
+                selectionLimit={1}
+                showSelectAll={false}
+                className="md:w-20rem w-full !border-[#757575]"
+              />
+              <TerminalButton
+                disabled={selectedExchange.length > 0 ? false : true}
+                className={`w-full ${
+                  selectedExchange.length > 0
+                    ? ''
+                    : 'bg-neutral-400 hover:cursor-not-allowed dark:bg-neutral-800'
+                }`}
+                onClick={async () => {
+                  await giveAccessToExchangeAccount(userId, selectedExchange)
+                  setExchangeVisible(false)
+                  setSelectedExchange('')
+                }}>
+                Submit User
+              </TerminalButton>
+            </div>
+          </Dialog>
+
+          {/* we can add other metadata here to show it nicely, who created it,
+          when, etc */}
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
+            {accessibleExchangeAccounts?.map((exchangeAccount, idx) => (
+              <div key={`${exchangeAccount.exchange_account_id}${idx}`}>
+                <div
+                  onClick={() => {
+                    navigate(
+                      `/exchanges/${exchangeAccount.exchange_account_id}`
+                    )
+                  }}
+                  className="flex flex-col gap-3 rounded-md border p-5 shadow-soft-lg transition-colors hover:cursor-pointer hover:border-autowhale-blue/40 dark:border-neutral-700 hover:dark:border-neutral-300">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xl font-bold">
+                      {exchangeAccount.exchange_account_id}
+                    </span>
+                    <span
+                      className="pi pi-fw pi-times-circle hover:bg-autowhale-blue/00 flex items-center justify-center rounded py-0.5 px-3 text-red-500 transition-colors hover:cursor-pointer hover:text-red-700 hover:dark:bg-neutral-700/50"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        confirmDialog({
+                          message: `Are you sure you want to proceed?`,
+                          header: 'Confirmation',
+                          icon: 'pi pi-exclamation-triangle',
+                          accept: () => {},
+                          reject: () => {},
+                        })
+
+                        menuRight?.current?.toggle(e)
+                      }}></span>
+                  </div>
                 </div>
               </div>
             ))}
