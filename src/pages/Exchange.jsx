@@ -23,10 +23,6 @@ import Balances from '../data/exchange/balances.json'
 import { FilterMatchMode } from 'primereact/api'
 import { getSeverity } from './Exchanges'
 import { isObjectEmpty, numberFormatting } from '../utils/misc'
-import UsersData from '../data/users/usersData.json'
-
-import { Dialog } from 'primereact/dialog'
-import { MultiSelect } from 'primereact/multiselect'
 
 import Joyride, { STATUS } from 'react-joyride'
 import { BiInfoCircle } from 'react-icons/bi'
@@ -43,16 +39,6 @@ const Exchange = () => {
   const [singleChart, setSingleChart] = useState(null)
   const [lineChartData, setLineChartData] = useState({})
   const { width } = useWindowSize()
-
-  const [selectedUser, setSelectedUser] = useState('')
-  const [visible, setVisible] = useState(false)
-  const [users, setUsers] = useState([])
-
-  const [filters, setFilters] = useState({
-    global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  })
-
-  const username = 'trader@xyz.com'
 
   const handleOnConfirm = async () => {
     confirmDialog({
@@ -103,7 +89,6 @@ const Exchange = () => {
     fetchBalances()
     setLineChartData(() => FakeLineChartData)
     setPieChartData(() => FakePieChartData)
-    setUsers(UsersData)
   }, [])
 
   const [{ run, steps }, setState] = useState({
@@ -154,10 +139,6 @@ const Exchange = () => {
       setSingleChart(ticker)
     }
   }
-
-  const usersIDs = users
-    .map((user) => user.username)
-    .filter((user) => user !== username)
 
   return (
     <>
@@ -360,92 +341,6 @@ const Exchange = () => {
             )}
           />
         </DataTable>
-        <div className="flex flex-col gap-2 pt-5">
-          <div className="flex w-full flex-wrap items-center justify-between gap-4">
-            <h1 className="text-primary text-lg dark:text-white md:text-xl">
-              Users that have access to {exchangeId} and it's strategies
-            </h1>
-            <TerminalButton className="h-11" onClick={() => setVisible(true)}>
-              Add Users
-            </TerminalButton>
-          </div>
-          <Dialog
-            className="w-[20rem]"
-            header="Add User"
-            visible={visible}
-            draggable={false}
-            onHide={() => {
-              setVisible(false)
-            }}>
-            <div className="space-y-3">
-              <MultiSelect
-                value={selectedUser}
-                onChange={(e) => setSelectedUser(e.value)}
-                options={usersIDs}
-                placeholder={`Add User to ${exchangeId}`}
-                selectionLimit={1}
-                maxSelectedLabels={1}
-                showSelectAll={false}
-                className="md:w-20rem w-full !border-[#757575]"
-              />
-              <TerminalButton
-                disabled={selectedUser.length > 0 ? false : true}
-                className={`w-full ${
-                  selectedUser.length > 0
-                    ? ''
-                    : 'bg-neutral-400 hover:cursor-not-allowed dark:bg-neutral-800'
-                }`}
-                onClick={async () => {
-                  setVisible(false)
-                  setSelectedUser([])
-                }}>
-                Submit User
-              </TerminalButton>
-            </div>
-          </Dialog>
-          <DataTable
-            value={users}
-            filters={filters}
-            breakpoint="0"
-            onRowClick={(e) => {
-              navigate(`/users/${e.data.username}`)
-            }}>
-            <Column
-              style={{ fontSize: '0.9rem' }}
-              field="username"
-              header="Username"
-            />
-            <Column
-              style={{ fontSize: '0.9rem' }}
-              field="email"
-              header="Email"
-            />
-            <Column
-              style={{ fontSize: '0.9rem' }}
-              field="firstName"
-              header="First Name"
-            />
-            <Column
-              style={{ fontSize: '0.9rem' }}
-              field="lastName"
-              header="Last Name"
-            />
-            <Column
-              // style={{ flex: '0 0 4rem' }}
-              //? needs to be fixed for mobile
-              className=""
-              body={(user) => {
-                return (
-                  <i
-                    onClick={(e) => {
-                      e.stopPropagation()
-                    }}
-                    className="pi pi-trash text-[1.3rem] text-red-500 hover:text-red-700"></i>
-                )
-              }}
-            />
-          </DataTable>
-        </div>
       </div>
       <div className="fixed bottom-5 right-9 z-20">
         <TerminalButton
