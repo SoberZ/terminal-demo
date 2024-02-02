@@ -369,7 +369,7 @@ const User = () => {
               <MultiSelect
                 value={selectedExchange}
                 onChange={(e) => setSelectedExchange(e.value)}
-                options={exchangeAccounts}
+                options={exchangesNames}
                 placeholder={`Select an exchange account`}
                 maxSelectedLabels={1}
                 selectionLimit={1}
