@@ -12,5 +12,19 @@
     "ip_addr": "localhost:8050",
     "port": "8050",
     "status": "auth_failed"
+  },
+  {
+    "exchange": "kucoin",
+    "exchange_account_id": "kucoin-account-2",
+    "ip_addr": "localhost:8050",
+    "port": "8050",
+    "status": "running"
+  },
+  {
+    "exchange": "gateio",
+    "exchange_account_id": "gateio-account",
+    "ip_addr": "localhost:8050",
+    "port": "8050",
+    "status": "running"
   }
 ]

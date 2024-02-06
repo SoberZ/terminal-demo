@@ -13,9 +13,9 @@ import { BiInfoCircle } from 'react-icons/bi'
 
 const ParamsField = ({ handleChange, id, paramName }) => {
   return (
-    <div className="text-sm">
+    <div className="w-full text-sm">
       <label className="font-semibold">{'Parameter'}</label>
-      <div className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
+      <div className="flex flex-col justify-between gap-4 md:flex-row">
         <input
           className="p-inputtext rounded-lg border border-gray-300 p-2.5 text-color-secondary shadow-sm"
           placeholder={'Parameter Name'}
@@ -25,8 +25,8 @@ const ParamsField = ({ handleChange, id, paramName }) => {
           data-index={id}
           required
         />
-        <input
-          className="rounded-lg  border border-gray-300 text-color-secondary shadow-sm"
+        <Password
+          className="rounded-lg border border-gray-300 text-color-secondary shadow-sm"
           placeholder={'Parameter Value'}
           name="paramValue"
           data-index={id}
