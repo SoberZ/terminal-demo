@@ -148,6 +148,32 @@ const User = () => {
           },
         },
       },
+      {
+        title: <strong>User page</strong>,
+        content: (
+          <div className="flex flex-col gap-2">
+            <h2>
+              you can also{' '}
+              <span className="font-bold">
+                give access to a certain category
+              </span>
+              , and <span className="font-bold">an exchange account</span>
+              <br />
+              <span>
+                which would give them access to strategies that're housed in
+                that exchange account
+              </span>
+            </h2>
+          </div>
+        ),
+        placement: 'center',
+        target: 'body',
+        styles: {
+          options: {
+            width: 450,
+          },
+        },
+      },
     ],
   })
 

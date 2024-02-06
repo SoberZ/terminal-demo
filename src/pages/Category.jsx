@@ -15,7 +15,6 @@ import { UserService } from '../services'
 
 import { Dialog } from 'primereact/dialog'
 import { InputTextarea } from 'primereact/inputtextarea'
-import { MultiSelect } from 'primereact/multiselect'
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
 
 import {
@@ -29,6 +28,9 @@ import { Fallback, Loader, TerminalButton } from '../components'
 import AllStrategiesInCategoryData from '../data/categories/allStrategiesInCategory.json'
 import UsersData from '../data/users/usersData.json'
 import StrategiesData from '../data/strategies/strategiesData.json'
+
+import Joyride, { STATUS } from 'react-joyride'
+import { BiInfoCircle } from 'react-icons/bi'
 
 const strategyDemoModeBodyTemplate = (strategy) => {
   return (
@@ -161,8 +163,75 @@ const Category = () => {
     .filter((strategy) => !strategyIds.includes(strategy.strategy_id))
     .map((strategy) => strategy.strategy_id)
 
+  const [{ run, steps }, setState] = useState({
+    run: false,
+    steps: [
+      {
+        title: <strong>Category page</strong>,
+        content: (
+          <div className="flex flex-col gap-2">
+            <h2>
+              this page is{' '}
+              <span className="font-bold">
+                {' '}
+                only available for admin users,{' '}
+              </span>
+              <br /> and shows all strategies in this category,
+            </h2>
+            <h2>
+              <span className="font-bold">
+                {' '}
+                the admin can add/remove strategies,{' '}
+              </span>
+              and edit the category's name and description
+            </h2>
+          </div>
+        ),
+        placement: 'center',
+        target: 'body',
+        styles: {
+          options: {
+            width: 400,
+          },
+        },
+      },
+    ],
+  })
+
+  const handleJoyrideCallback = (data) => {
+    const { status } = data
+    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
+      setState((prev) => ({ ...prev, run: false }))
+    }
+  }
+
   return (
     <>
+      <Joyride
+        callback={handleJoyrideCallback}
+        continuous
+        hideCloseButton
+        run={run}
+        scrollToFirstStep
+        showProgress
+        showSkipButton
+        steps={steps}
+        disableOverlay
+        disableScrollParentFix
+        // spotlightPadding={5}
+        // disableOverlayClose
+        // spotlightClicks
+        styles={{
+          options: {
+            zIndex: 1000,
+            primaryColor: '#4432e2',
+            arrowColor: '#fff',
+            backgroundColor: '#fff',
+            textColor: '#171717',
+          },
+        }}
+        // styles={{ overlay: { height: '100%' } }}
+      />
       <ConfirmDialog />
       <div className="flex flex-col space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
         <div className="flex flex-col gap-2">
@@ -335,6 +404,17 @@ const Category = () => {
             </DataTable>
           </Suspense>
         </ErrorBoundary>
+      </div>
+      <div className="fixed bottom-5 right-9 z-20">
+        <TerminalButton
+          text="Start Tour"
+          textSize="text-base"
+          onClick={() => {
+            setState((prev) => ({ ...prev, run: true }))
+          }}
+          className="flex !w-auto items-center justify-center gap-2 text-white ">
+          <BiInfoCircle size={25} />
+        </TerminalButton>
       </div>
     </>
   )
