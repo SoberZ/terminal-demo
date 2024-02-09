@@ -10,6 +10,7 @@ import { delay } from '../utils/misc'
 
 import Joyride, { STATUS } from 'react-joyride'
 import { BiInfoCircle } from 'react-icons/bi'
+import { Helmet } from 'react-helmet'
 
 const ParamsField = ({ handleChange, id, paramName }) => {
   return (
@@ -233,7 +234,9 @@ const CreateExchangeAccount = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
-
+      <Helmet>
+        <title>Create Exchange Account</title>
+      </Helmet>
       <div className="space-y-5 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
         <h1 className="inline-block bg-clip-text text-2xl font-semibold text-color-secondary  dark:text-white">
           Create an exchange account

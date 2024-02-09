@@ -25,6 +25,7 @@ import Joyride, { STATUS } from 'react-joyride'
 import { BiInfoCircle } from 'react-icons/bi'
 
 import UsersData from '../data/users/usersData.json'
+import { Helmet } from 'react-helmet'
 
 async function fetchStrategies() {
   const res = await StrategiesService.getAll()
@@ -265,7 +266,9 @@ const CreateCategory = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
-
+      <Helmet>
+        <title>Create Category</title>
+      </Helmet>
       <div className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
         <p className="text-sm font-light">Create a category here</p>
         <div className="flex gap-5">

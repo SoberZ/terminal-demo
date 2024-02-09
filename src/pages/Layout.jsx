@@ -10,7 +10,7 @@ import {
   Fallback,
   Loader,
 } from '../components'
-
+import { Helmet } from 'react-helmet'
 import { ErrorBoundary } from 'react-error-boundary'
 
 const HamburgerSidebar = lazy(() =>
@@ -132,6 +132,9 @@ const Layout = () => {
   return (
     <div className="w-full bg-gray-50 dark:bg-dark-1st">
       <ClientProvider />
+      <Helmet>
+        <title>Autowhale</title>
+      </Helmet>
       <div className="flex bg-gray-50 dark:bg-dark-1st ">
         {(width > 768 && width < 1270) ||
         (width > 1270 && !location.pathname.match(/\/$/)) ? (

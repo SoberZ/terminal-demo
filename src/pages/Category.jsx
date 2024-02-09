@@ -31,6 +31,7 @@ import StrategiesData from '../data/strategies/strategiesData.json'
 
 import Joyride, { STATUS } from 'react-joyride'
 import { BiInfoCircle } from 'react-icons/bi'
+import { Helmet } from 'react-helmet'
 
 const strategyDemoModeBodyTemplate = (strategy) => {
   return (
@@ -232,6 +233,9 @@ const Category = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
+      <Helmet>
+        <title>{categoryId}</title>
+      </Helmet>
       <ConfirmDialog />
       <div className="flex flex-col space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
         <div className="flex flex-col gap-2">

@@ -9,6 +9,8 @@ import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
 import { Dialog } from 'primereact/dialog'
 import { MultiSelect } from 'primereact/multiselect'
 
+import { Helmet } from 'react-helmet'
+
 import UserData from '../data/users/userData.json'
 import RolesData from '../data/users/rolesData.json'
 import MappingsData from '../data/users/mappingsData.json'
@@ -220,6 +222,9 @@ const User = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
+      <Helmet>
+        <title>{userId}</title>
+      </Helmet>
       <ConfirmDialog />
       <div className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
         <div className="flex flex-col items-center space-y-2 md:flex md:flex-row md:items-center md:justify-between md:space-y-0">

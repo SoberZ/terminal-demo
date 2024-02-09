@@ -20,7 +20,7 @@ import FakeTableData from '../data/exchangeTable.json'
 import { ErrorBoundary } from 'react-error-boundary'
 import ExchangeAccount from '../data/exchange/exchange.json'
 import Balances from '../data/exchange/balances.json'
-import { FilterMatchMode } from 'primereact/api'
+import { Helmet } from 'react-helmet'
 import { getSeverity } from './Exchanges'
 import { isObjectEmpty, numberFormatting } from '../utils/misc'
 
@@ -168,6 +168,9 @@ const Exchange = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
+      <Helmet>
+        <title>{exchangeId}</title>
+      </Helmet>
       <div className="space-y-4 rounded-lg bg-color-secondary p-3.5 text-sm text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800 md:p-10">
         {accountData && (
           <div className="flex flex-col  text-sm">

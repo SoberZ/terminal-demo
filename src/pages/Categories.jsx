@@ -12,6 +12,7 @@ import { Fallback, Loader, TerminalButton } from '../components'
 import CategoriesData from '../data/categories/allCategories.json'
 
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog'
+import { Helmet } from 'react-helmet'
 
 const Categories = () => {
   const navigate = useNavigate()
@@ -63,6 +64,9 @@ const Categories = () => {
           <Link to="/users/create-category">Create a Category</Link>
         </TerminalButton>
       </div>
+      <Helmet>
+        <title>Categories</title>
+      </Helmet>
       <ErrorBoundary FallbackComponent={Fallback}>
         <Suspense fallback={<Loader />}>
           <Dialog

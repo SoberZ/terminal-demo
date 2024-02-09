@@ -13,6 +13,8 @@ import { TerminalButton } from '../components'
 import Joyride, { STATUS } from 'react-joyride'
 import { BiInfoCircle } from 'react-icons/bi'
 
+import { Helmet } from 'react-helmet'
+
 import { useWindowSize } from '../hooks'
 import { statusColors } from '../utils/statusColors'
 
@@ -199,6 +201,9 @@ const Exchanges = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
+      <Helmet>
+        <title>Exchanges</title>
+      </Helmet>
       <div className="space-y-10">
         <div className="space-y-5 rounded-lg bg-color-secondary p-5 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
           <p className="text-sm font-light ">

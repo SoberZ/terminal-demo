@@ -1,7 +1,7 @@
 import { useState, useEffect, useLayoutEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
-import { UserService } from '../services'
+import { Helmet } from 'react-helmet'
 
 import { Dropdown } from 'primereact/dropdown'
 import { DataTable } from 'primereact/datatable'
@@ -10,11 +10,7 @@ import { Column } from 'primereact/column'
 import { Tag } from 'primereact/tag'
 import { FilterMatchMode, FilterOperator } from 'primereact/api'
 
-import {
-  fetchCachers,
-  registerCacher,
-  pauseCacher,
-} from '../utils/Fetchers/CacherFetchers'
+import { fetchCachers } from '../utils/Fetchers/CacherFetchers'
 
 import { TerminalButton } from '../components'
 
@@ -266,7 +262,9 @@ const Cachers = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
-
+      <Helmet>
+        <title>Cachers</title>
+      </Helmet>
       <div className="space-y-10">
         <div className="w-full space-y-5 rounded-lg bg-color-secondary p-5 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
           <p className="text-sm font-light">

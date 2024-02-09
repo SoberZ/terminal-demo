@@ -22,6 +22,7 @@ import { ListBox } from 'primereact/listbox'
 
 import Joyride, { STATUS } from 'react-joyride'
 import { BiInfoCircle } from 'react-icons/bi'
+import { Helmet } from 'react-helmet'
 
 //? these are the filter options for the status column
 export const getSeverity = (input) => {
@@ -403,6 +404,9 @@ const Strategies = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
+      <Helmet>
+        <title>Strategies</title>
+      </Helmet>
       <div className="flex flex-col space-y-10 overflow-y-hidden">
         <div
           id="step-0"

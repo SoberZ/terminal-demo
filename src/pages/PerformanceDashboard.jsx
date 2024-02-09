@@ -21,6 +21,8 @@ import { TerminalButton } from '../components'
 import Joyride, { STATUS } from 'react-joyride'
 import { BiInfoCircle } from 'react-icons/bi'
 
+import { Helmet } from 'react-helmet'
+
 const metricsLists = [
   { name: 'Total Pnl', value: 'total_pnl' },
   { name: 'Realized Pnl', value: 'realized_pnl' },
@@ -185,6 +187,9 @@ const PerformanceDashboard = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
+      <Helmet>
+        <title>Performance Dashboard</title>
+      </Helmet>
       <div className="space-y-4 rounded-lg bg-color-secondary p-3.5 text-sm text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800 md:p-10">
         <div className="flex items-center gap-5 ">
           <h2 className="text-2xl font-bold">Performance Metrics Dashboard</h2>

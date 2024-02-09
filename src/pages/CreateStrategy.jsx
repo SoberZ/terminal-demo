@@ -8,6 +8,7 @@ import parse from 'html-react-parser'
 
 import { delay } from '../utils/misc'
 import { fetchRequiredParams } from '../utils/Fetchers/StrategyFetchers'
+import { Helmet } from 'react-helmet'
 
 import {
   fetchExchanges,
@@ -158,7 +159,9 @@ const CreateStrategy = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
-
+      <Helmet>
+        <title>Create Strategy</title>
+      </Helmet>
       <div className="space-y-5 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
         <h1 className="inline-block  text-2xl font-semibold text-color-secondary dark:text-white">
           Create a new strategy

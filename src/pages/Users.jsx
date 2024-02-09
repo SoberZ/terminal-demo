@@ -13,6 +13,7 @@ import UsersData from '../data/users/usersData.json'
 import { TerminalButton } from '../components'
 import Joyride, { STATUS } from 'react-joyride'
 import { BiInfoCircle } from 'react-icons/bi'
+import { Helmet } from 'react-helmet'
 
 export const Users = () => {
   const navigate = useNavigate()
@@ -115,7 +116,9 @@ export const Users = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
-
+      <Helmet>
+        <title>Users</title>
+      </Helmet>
       <div className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
         <div className="w-full space-y-5 text-sm">
           <p className="text-sm font-light">

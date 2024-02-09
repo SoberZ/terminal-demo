@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { Select, TerminalButton } from '../components'
-import { registerCacher } from '../utils/Fetchers/CacherFetchers'
+import { Helmet } from 'react-helmet'
 import AllExchanges from '../data/exchange/exchange.json'
 
 import { fetchExchanges, fetchMarkets } from '../utils/Fetchers/DataFetchers'
@@ -233,6 +233,9 @@ const RegisterCacher = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
+      <Helmet>
+        <title>Register Cacher</title>
+      </Helmet>
       <div className="space-y-5 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
         <h1 className="inline-block bg-clip-text text-2xl font-semibold text-color-secondary  dark:text-white">
           Register a Cacher

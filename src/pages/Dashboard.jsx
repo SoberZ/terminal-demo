@@ -7,6 +7,7 @@ import { Tag } from 'primereact/tag'
 import { Accordion, AccordionTab } from 'primereact/accordion'
 import Joyride, { STATUS } from 'react-joyride'
 import { motion } from 'framer-motion'
+import { Helmet } from 'react-helmet'
 
 // Import FakeData
 import Data from '../data/homepageData'
@@ -310,6 +311,9 @@ const Dashboard = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
+      <Helmet>
+        <title>Main Dashboard</title>
+      </Helmet>
       <div className="flex flex-col space-y-6">
         <div id={`step-2`} className="flex flex-col space-y-10">
           {width > 768 ? (
