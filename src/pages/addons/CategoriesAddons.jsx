@@ -14,11 +14,13 @@ const statuses = [
 
 const demoMode = ['true', 'false']
 const types = [
-  'spread-algo',
-  'depth-algo',
-  'demo-streaming-strategy',
-  'VolumeStrategy',
-  'MatrixStrategy',
+  'Depth Strategy',
+  'Spread Strategy',
+  'Avellaneda Strategy',
+  'Volume Strategy',
+  'Matrix Strategy',
+  'Generic Strategy',
+  'Demo MM Strategy',
 ]
 
 export const strategyDemoModeBodyTemplate = (strategy) => {

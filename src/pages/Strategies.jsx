@@ -141,11 +141,13 @@ const Strategies = () => {
   ])
   const [demoMode] = useState(['true', 'false'])
   const [types] = useState([
-    'spread-algo',
-    'depth-algo',
-    'demo-streaming-strategy',
-    'VolumeStrategy',
-    'MatrixStrategy',
+    'Depth Strategy',
+    'Spread Strategy',
+    'Avellaneda Strategy',
+    'Volume Strategy',
+    'Matrix Strategy',
+    'Generic Strategy',
+    'Demo MM Strategy',
   ])
   const [dropdownSelect, setDropdownSelect] = useState()
   const [filteredStrategies, setFilteredStrategies] = useState([])
