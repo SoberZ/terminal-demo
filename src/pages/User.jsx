@@ -348,7 +348,7 @@ const User = () => {
               </TerminalButton>
             </div>
           </Dialog>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
             {categories?.map((category, idx) => (
               <div key={`${category[1]}${idx}`}>
                 <div
@@ -374,7 +374,9 @@ const User = () => {
                       }}></span>
                   </div>
                   {/* //? description here */}
-                  <p className="line-clamp-3" title={category[2]}>
+                  <p
+                    className="line-clamp-3 overflow-x-auto"
+                    title={category[2]}>
                     {category[2]}
                   </p>
                 </div>
@@ -426,7 +428,7 @@ const User = () => {
 
           {/* we can add other metadata here to show it nicely, who created it,
           when, etc */}
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
             {accessibleExchangeAccounts?.map((exchangeAccount, idx) => (
               <div key={`${exchangeAccount.exchange_account_id}${idx}`}>
                 <div
