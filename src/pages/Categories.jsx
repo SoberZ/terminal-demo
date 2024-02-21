@@ -115,7 +115,7 @@ const Categories = () => {
           </Dialog>
         </Suspense>
       </ErrorBoundary>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
         <ErrorBoundary FallbackComponent={Fallback}>
           <Suspense fallback={<Loader />}>
             <Menu model={items} popup ref={menuRight} popupAlignment="right" />
@@ -129,7 +129,7 @@ const Categories = () => {
                   onClick={(e) => {
                     navigate(`categories/${category[1]}`)
                   }}
-                  className="flex h-36 flex-col gap-3 rounded-md border p-5 shadow-soft-lg transition-colors hover:cursor-pointer hover:border-autowhale-blue/40 dark:border-neutral-700 hover:dark:border-neutral-300">
+                  className="flex h-32 flex-col gap-3 rounded-md border p-5 shadow-soft-lg transition-colors hover:cursor-pointer hover:border-autowhale-blue/40 dark:border-neutral-700 hover:dark:border-neutral-300">
                   <div className="flex items-center justify-between">
                     <span className="text-xl font-bold">{category[1]}</span>
                     <span

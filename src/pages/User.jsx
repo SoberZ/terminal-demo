@@ -355,7 +355,7 @@ const User = () => {
                   onClick={() => {
                     navigate(`/users/categories/${category[1]}`)
                   }}
-                  className="flex h-36 flex-col gap-3 rounded-md border p-5 shadow-soft-lg transition-colors hover:cursor-pointer hover:border-autowhale-blue/40 dark:border-neutral-700 hover:dark:border-neutral-300">
+                  className="flex h-32 flex-col gap-3 rounded-md border p-5 shadow-soft-lg transition-colors hover:cursor-pointer hover:border-autowhale-blue/40 dark:border-neutral-700 hover:dark:border-neutral-300">
                   <div className="flex items-center justify-between">
                     <span className="text-xl font-bold">{category[1]}</span>
                     <span
@@ -374,9 +374,7 @@ const User = () => {
                       }}></span>
                   </div>
                   {/* //? description here */}
-                  <p
-                    className="line-clamp-3 overflow-x-auto"
-                    title={category[2]}>
+                  <p className="line-clamping" title={category[2]}>
                     {category[2]}
                   </p>
                 </div>
