@@ -33,6 +33,8 @@ import BalancePieChart from './exchangeAccounts/BalancePieChart'
 import BalancesLineChart from './exchangeAccounts/BalancesLineChart'
 import Fallback from './shared/Fallback.shared'
 import Loader from './shared/Loader.shared'
+import TradingViewWidget from './shared/TradingViewWidget'
+import TimeDisplay from './shared/TimeDisplay'
 
 export {
   ClientProvider,
@@ -65,4 +67,6 @@ export {
   Loader,
   PerformancePrimaryChart,
   MarketIndicatorChart,
+  TradingViewWidget,
+  TimeDisplay,
 }

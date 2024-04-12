@@ -5,6 +5,7 @@ import {
   HomeIcon,
   KeyIcon,
   StatsIcon,
+  PortfolioIcon,
 } from '../assets/icons'
 
 export const delay = (ms) => new Promise((res) => setTimeout(res, ms))
@@ -87,11 +88,16 @@ export const routes = [
     name: 'Performance Metrics Dashboard',
     component: DataAnalysis,
   },
-  // {
-  //   path: '/market-indicators',
-  //   name: 'Market Indicators',
-  //   component: LiveDataIcon,
-  // },
+  {
+    path: '/market-indicators',
+    name: 'Market Indicators',
+    component: LiveDataIcon,
+  },
+  {
+    path: '/portfolio',
+    name: 'Portfolio',
+    component: PortfolioIcon,
+  },
   {
     path: '/exchanges',
     name: 'Exchange Accounts',

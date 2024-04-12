@@ -4,19 +4,16 @@ import { Tooltip } from 'primereact/tooltip'
 
 import { UsersIcon, LogoutIcon } from '../../assets/icons'
 
-import useSelectRoute from '../hooks'
 import { routes } from '../../utils/misc'
 
-const CompactSidebar = ({ themeState }) => {
-  const [selected, setSelected] = useSelectRoute()
-
-  const handleClick = (divNum) => () => setSelected(divNum)
+const CompactSidebar = ({ themeState, getter, setter }) => {
+  const handleClick = (name) => () => setter(name)
 
   return (
     <div className="fixed top-0 left-0 flex h-[1247px] min-w-[5rem] flex-col overflow-hidden pt-4 shadow">
       <div className="relative flex flex-col space-y-10 p-4">
         <div className="flex items-center justify-center">
-          <Link to="/" onClick={handleClick(1)}>
+          <Link to="/" onClick={handleClick('/')}>
             <img
               src={`/aw-logo-${!themeState ? 'light' : 'dark'}.png`}
               className="h-10"
@@ -32,9 +29,9 @@ const CompactSidebar = ({ themeState }) => {
                   key={index + 1}
                   to={route.path}
                   data-pr-tooltip={route.name}
-                  onClick={handleClick(index)}
+                  onClick={handleClick(route.path)}
                   className={`flex flex-wrap items-center justify-center ${
-                    selected === index + 1
+                    getter === route.path
                       ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                       : ''
                   } tooltip rounded-xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
@@ -42,13 +39,12 @@ const CompactSidebar = ({ themeState }) => {
                 </Link>
               )
             })}
-
             <Link
               data-pr-tooltip="Users"
               to="/users"
-              onClick={handleClick(4)}
+              onClick={handleClick('/users')}
               className={`flex flex-wrap items-center justify-center ${
-                selected === 6
+                getter === '/users'
                   ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                   : ''
               } tooltip rounded-xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
@@ -58,7 +54,7 @@ const CompactSidebar = ({ themeState }) => {
             <li
               data-pr-tooltip={`Log out`}
               className={`flex flex-wrap items-center justify-center ${
-                selected === 7
+                getter === 'logout'
                   ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                   : ''
               } tooltip !my-10 rounded-xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:text-red-400 hover:shadow-soft-xl`}>

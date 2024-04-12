@@ -442,7 +442,7 @@ const Strategies = () => {
               optionValue="1"
               showClear
               placeholder="Select a Category"
-              className="h-11 w-full md:w-[14rem]"
+              className="h-11 w-full !border-[#757575] md:w-[14rem]"
             />
             <InputText
               className="h-11 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 md:w-1/3"

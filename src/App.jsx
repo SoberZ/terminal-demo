@@ -21,6 +21,7 @@ const User = lazy(() => import('./pages/User'))
 const CreateCategory = lazy(() => import('./pages/CreateCategory'))
 const MarketIndicators = lazy(() => import('./pages/MarketIndicators'))
 const Category = lazy(() => import('./pages/Category'))
+const Portfolio = lazy(() => import('./pages/Portfolio'))
 
 const App = () => {
   return (
@@ -37,14 +38,17 @@ const App = () => {
             <Route path="performance-metrics-dashboard">
               <Route index element={<PerformanceDashboard />} />
             </Route>
-            {/* <Route path="market-indicators">
+            <Route path="market-indicators">
               <Route index element={<MarketIndicators />} />
-            </Route> */}
+            </Route>
             <Route path="users">
               <Route index element={<Users />} />
               <Route path="create-category" element={<CreateCategory />} />
               <Route path=":userId" element={<User />} />
               <Route path="categories/:categoryId" element={<Category />} />
+            </Route>
+            <Route path="portfolio">
+              <Route index element={<Portfolio />} />
             </Route>
             <Route path="exchanges">
               <Route index element={<Exchanges />} />

@@ -2,16 +2,14 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { UserService } from '../../services'
 import { Sidebar as PrimeSidebar } from 'primereact/sidebar'
-import useSelectRoute from '../hooks'
 
 import { UsersIcon, LogoutIcon } from '../../assets/icons'
 import { routes } from '../../utils/misc'
 
 const HamburgerSidebar = ({ themeState }) => {
   const [visible, setVisible] = useState(false)
-  const [selected, setSelected] = useSelectRoute(setVisible)
 
-  const handleClick = (divNum) => () => setSelected(divNum)
+  const handleClick = (name) => () => setter(name)
 
   return (
     <div className="">
@@ -25,7 +23,7 @@ const HamburgerSidebar = ({ themeState }) => {
         onHide={() => setVisible(false)}>
         <div className="relative flex h-screen flex-col space-y-10 p-4">
           <div className="p-3">
-            <Link to="/" onClick={handleClick(1)}>
+            <Link to="/" onClick={handleClick('/')}>
               <img
                 src={`/aw-logo-full-${!themeState ? 'light' : 'dark'}.png`}
               />
@@ -36,52 +34,46 @@ const HamburgerSidebar = ({ themeState }) => {
             <ul className="space-y-3 fill-color-secondary pt-2 pb-4 text-color-secondary">
               {routes.map((route, index) => {
                 return (
-                  <li
+                  <Link
                     key={index + 1}
-                    className={`${
-                      selected === index + 1
+                    to={route.path}
+                    onClick={handleClick(route.path)}
+                    className={`flex flex-wrap items-center justify-center ${
+                      getter === route.path
                         ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                         : ''
                     } rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
-                    <Link
-                      to={route.path}
-                      className="flex flex-wrap items-center justify-center"
-                      onClick={handleClick(index)}>
-                      <route.component width="1.5rem" height="1.5rem" />
-                      <span className="ml-3 flex-1">{route.name}</span>
-                    </Link>
-                  </li>
+                    <route.component width="1.5rem" height="1.5rem" />
+                    <span className="ml-3 flex-1">
+                      {route.name}
+                      {getter === route.path}
+                    </span>
+                  </Link>
                 )
               })}
 
-              <li
-                className={`${
-                  selected === 6
+              <Link
+                to="/users"
+                onClick={handleClick('/users')}
+                className={`flex flex-wrap items-center justify-center ${
+                  getter === '/users'
                     ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                     : ''
                 } rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
-                <Link
-                  to="/users"
-                  className="flex flex-wrap items-center justify-center"
-                  onClick={handleClick(6)}>
-                  <UsersIcon width="1.5rem" height="1.5rem" />
-                  <span className="ml-3 flex-1">Users</span>
-                </Link>
-              </li>
+                <UsersIcon width="1.5rem" height="1.5rem" />
+                <span className="ml-3 flex-1">Users</span>
+              </Link>
 
               <li
-                className={`${
-                  selected === 7
+                className={`flex flex-wrap items-center justify-center ${
+                  getter === 'logout'
                     ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                     : ''
-                } !my-10 rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:text-red-400 hover:shadow-soft-xl`}
-                onClick={handleClick(7)}>
-                <button className="flex flex-wrap items-center justify-center">
-                  <LogoutIcon width="1.5rem" height="1.5rem" />
-                  <span className="ml-3 flex-1 text-left">Log out</span>
-                </button>
+                } !my-10 rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:text-red-400 hover:shadow-soft-xl`}>
+                <LogoutIcon width="1.5rem" height="1.5rem" />
+                <span className="ml-3 flex-1 text-left">Log out</span>
               </li>
-              <p className="ml-6 italic"> {UserService.getUsername()}</p>
+              <p className="ml-6 italic">trader@xyz.com</p>
             </ul>
           </div>
         </div>

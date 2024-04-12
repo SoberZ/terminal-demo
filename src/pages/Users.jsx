@@ -127,10 +127,13 @@ export const Users = () => {
             directed to their corresponding details page.
           </p>
           <TabView>
-            <TabPanel header="Users" leftIcon="pi pi-fw pi-user mr-1">
+            <TabPanel
+              header="Users"
+              leftIcon="pi pi-fw pi-user mr-1"
+              className="flex flex-col gap-2">
               <div className="flex items-center gap-5">
                 <InputText
-                  className="h-12 border-[#757575] text-black dark:bg-color-secondary dark:text-white md:w-1/3"
+                  className="h-11 border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 md:w-1/3"
                   placeholder="Search for a user"
                   onInput={(e) =>
                     setFilters({

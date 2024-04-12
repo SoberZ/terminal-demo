@@ -9,6 +9,7 @@ import {
   CompactSidebar,
   Fallback,
   Loader,
+  TimeDisplay,
 } from '../components'
 import { Helmet } from 'react-helmet'
 import { ErrorBoundary } from 'react-error-boundary'
@@ -24,10 +25,13 @@ import { useDarkMode, useTime, useKeyPress, useWindowSize } from '../hooks'
 const Layout = () => {
   const [darkMode, setDarkMode] = useDarkMode()
 
+  const location = useLocation()
   const shiftKey = useKeyPress('Shift')
   const letterDKey = useKeyPress('D')
   const time = useTime()
   const { width } = useWindowSize()
+
+  const [pathname, setPathname] = useState(location.pathname)
 
   const [{ run, steps }, setState] = useState({
     run: false,
@@ -107,8 +111,6 @@ const Layout = () => {
     ],
   })
 
-  const location = useLocation()
-
   useLayoutEffect(() => {
     toast.dismiss()
   }, [location])
@@ -138,9 +140,17 @@ const Layout = () => {
       <div className="flex bg-gray-50 dark:bg-dark-1st ">
         {(width > 768 && width < 1270) ||
         (width > 1270 && !location.pathname.match(/\/$/)) ? (
-          <CompactSidebar themeState={darkMode} />
+          <CompactSidebar
+            themeState={darkMode}
+            getter={pathname}
+            setter={setPathname}
+          />
         ) : width >= 1270 ? (
-          <Sidebar themeState={darkMode} />
+          <Sidebar
+            themeState={darkMode}
+            getter={pathname}
+            setter={setPathname}
+          />
         ) : null}
 
         <div
@@ -159,14 +169,16 @@ const Layout = () => {
             <div>
               {width <= 768 ? (
                 <Suspense fallback={<Loader />}>
-                  <HamburgerSidebar themeState={darkMode} />
+                  <HamburgerSidebar
+                    themeState={darkMode}
+                    getter={pathname}
+                    setter={setPathname}
+                  />
                 </Suspense>
               ) : null}
             </div>
 
-            {width > 768 ? (
-              <p className="px-2 text-xl text-color-secondary">{time}</p>
-            ) : null}
+            {width > 768 ? <TimeDisplay /> : null}
             <ThemeToggler checked={darkMode} onChange={handleToggle} />
           </div>
 

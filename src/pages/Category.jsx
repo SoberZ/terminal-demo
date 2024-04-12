@@ -251,7 +251,7 @@ const Category = () => {
             Edit Category
           </TerminalButton>
           <InputText
-            className="border-[#757575] py-2 text-black dark:bg-color-secondary dark:text-white md:w-1/3"
+            className="h-11 border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 md:w-1/3"
             placeholder="Search for a Strategy"
             value={globalFilterValue}
             onChange={onGlobalFilterChange}
@@ -270,15 +270,15 @@ const Category = () => {
                 setCategoryDescription('')
               }}>
               <div className="space-y-3">
-                <div className="flex flex-col gap-3 ">
+                <div className="flex flex-col gap-3 py-2">
                   <InputText
-                    className="border-[#757575] py-2 text-black dark:bg-color-secondary dark:text-white "
+                    className="border-[#757575] py-2 text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500"
                     placeholder={categoryId}
                     value={categoryName}
                     onChange={(e) => setCategoryName(e.target.value)}
                   />
                   <InputTextarea
-                    className="border-[#757575]"
+                    className="border-[#757575] py-2 text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500"
                     autoResize
                     placeholder="update your description here"
                     value={categoryDescription}

@@ -1,5 +1,5 @@
 import ReactECharts from 'echarts-for-react'
-
+import { twMerge } from 'tailwind-merge'
 import { useDarkMode, useWindowSize } from '../../hooks'
 import { useEffect, useState } from 'react'
 
@@ -27,7 +27,7 @@ const defaultDarkColors = [
   '#1b145a',
 ]
 
-const BalancePieChart = ({ balances, labels }) => {
+const BalancePieChart = ({ balances, labels, styling, className }) => {
   const { width } = useWindowSize()
   const [darkModeState] = useDarkMode()
   const [darkMode, setDarkMode] = useState(darkModeState)
@@ -93,7 +93,7 @@ const BalancePieChart = ({ balances, labels }) => {
       fontSize: 20,
       fontWeight: 'bold',
       textStyle: {
-        color: darkMode ? '#D4D4D4' : '#4432e2',
+        color: darkMode ? '#D4D4D4' : '#344767',
       },
       // top: 'center',
       // right: 'center',
@@ -121,10 +121,14 @@ const BalancePieChart = ({ balances, labels }) => {
 
   return (
     <ReactECharts
-      className="relative rounded-lg border bg-color-secondary p-2 dark:border-neutral-700 dark:bg-color-primary "
+      className={twMerge(
+        'relative rounded-lg border bg-color-secondary dark:border-neutral-700 dark:bg-color-primary md:p-2',
+        className
+      )}
       style={{
         width: width > 1024 ? '60rem' : '100%',
         height: width > 1024 ? '550px' : '450px',
+        ...styling,
       }}
       option={options}
     />
