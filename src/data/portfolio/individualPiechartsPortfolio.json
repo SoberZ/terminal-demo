@@ -1,0 +1,22 @@
+[
+  {
+    "data": [81.24, 437.82, 4312, 20, 222],
+    "exchange_account_id": "kucoin-account",
+    "labels": ["BTC", "LTC", "ETH", "DOGE", "XRP"]
+  },
+  {
+    "exchange_account_id": "GATE_TEST",
+    "data": [100, 56.3, 230.51, 7.12],
+    "labels": ["BTC", "LTC", "USDT", "XLM"]
+  },
+  {
+    "exchange_account_id": "kucoin-acc-2",
+    "data": [350.13, 5.2, 3952.48, 56.9, 284],
+    "labels": ["USDT", "XLM", "ADA", "DOGE", "XRP"]
+  },
+  {
+    "exchange_account_id": "gateio-account",
+    "data": [65.3, 163.98, 8.21, 1342, 84.23, 5643.68, 62],
+    "labels": ["BTC", "LTC", "XLM", "ETH", "BNB", "ADA", "XRP"]
+  }
+]
