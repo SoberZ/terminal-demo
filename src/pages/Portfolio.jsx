@@ -81,6 +81,7 @@ const Portfolio = () => {
   const [balances, setBalances] = useState({})
   const [pieChartData, setPieChartData] = useState({})
   const [markets, setMarkets] = useState([])
+  const [buyActive, setBuyActive] = useState(true)
   const watchedSymbol = watch('symbol')
 
   //? I'll only use the template if i need to access what's inside
@@ -152,7 +153,7 @@ const Portfolio = () => {
   useEffect(() => {
     async function fetchAndCombineBalances() {
       if (!activeExchangeAccount) {
-        setActiveExchangeAccount('all')
+        setActiveExchangeAccount(activeExchangeAccounts[0])
       }
       if (activeExchangeAccount === 'all') {
         try {
@@ -334,7 +335,7 @@ const Portfolio = () => {
               }}
               render={({ field }) => (
                 <Dropdown
-                  className="h-11 w-full !border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500"
+                  className="h-10 w-full !border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500"
                   id={field.name}
                   value={field.value}
                   filter
@@ -345,6 +346,29 @@ const Portfolio = () => {
                 />
               )}
             /> */}
+              <div className="flex rounded-lg border leading-none dark:border-neutral-800">
+                <TerminalButton
+                  text="Buy"
+                  type="button"
+                  onClick={() => setBuyActive(true)}
+                  className={`w-full items-center transition-colors ${
+                    buyActive
+                      ? '!bg-green-500 dark:!bg-green-700'
+                      : 'bg-color-secondary !text-color-secondary/50 hover:!text-color-secondary dark:border-neutral-700 dark:bg-color-primary dark:hover:!text-white'
+                  } `}
+                />
+
+                <TerminalButton
+                  text="Sell"
+                  type="button"
+                  onClick={() => setBuyActive(false)}
+                  className={`w-full items-center transition-colors ${
+                    !buyActive
+                      ? '!bg-red-500 dark:!bg-red-700'
+                      : 'bg-color-secondary !text-color-secondary/50 hover:!text-color-secondary dark:border-neutral-700 dark:bg-color-primary dark:hover:!text-white'
+                  } `}
+                />
+              </div>
               <div className="my-2 flex gap-3">
                 <button
                   type="button"
@@ -392,7 +416,7 @@ const Portfolio = () => {
                   }}
                   render={({ field }) => (
                     <Dropdown
-                      className="h-11 w-full !border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500"
+                      className="h-10 w-full !border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500"
                       id={field.name}
                       value={field.value}
                       filter
@@ -415,7 +439,7 @@ const Portfolio = () => {
                       keyfilter="pnum"
                       disabled={activeType !== 'Limit' ? true : false}
                       className={
-                        'h-11 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500'
+                        'h-10 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500'
                       }
                       placeholder={
                         activeType !== 'Limit' ? 'Market Price' : 'Price'
@@ -438,7 +462,7 @@ const Portfolio = () => {
                     </i>
                     <InputText
                       keyfilter="pnum"
-                      className="h-11 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500"
+                      className="h-10 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500"
                       placeholder="Amount"
                       // placeholder={`Amount ${
                       //   watchedSymbol && `(${watchedSymbol.split('/')[1]})`
@@ -468,7 +492,7 @@ const Portfolio = () => {
                   render={({ field }) => (
                     <InputText
                       keyfilter="pnum"
-                      className="h-11 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500"
+                      className="h-10 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500"
                       placeholder="Stop loss price"
                       {...field}
                     />
@@ -483,7 +507,7 @@ const Portfolio = () => {
                   render={({ field }) => (
                     <InputText
                       keyfilter="pnum"
-                      className="h-11 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500"
+                      className="h-10 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500"
                       placeholder="Take Profit price"
                       {...field}
                     />
@@ -492,20 +516,15 @@ const Portfolio = () => {
               </div>
               <div className="flex gap-1">
                 <TerminalButton
-                  text={`Buy ${watchedSymbol.split('/')[0] || ''}`}
-                  type="submit"
-                  className={`w-full transition-all ${
-                    isValid
-                      ? '!bg-green-500 hover:!bg-green-600 dark:!bg-green-700 dark:hover:!bg-green-700/80'
-                      : 'bg-neutral-400 hover:cursor-not-allowed dark:bg-neutral-800'
+                  text={`${buyActive ? 'Buy' : 'Sell'} ${
+                    watchedSymbol.split('/')[0] || ''
                   }`}
-                />
-                <TerminalButton
-                  text={`Sell ${watchedSymbol.split('/')[0] || ''}`}
                   type="submit"
                   className={`w-full transition-all ${
                     isValid
-                      ? '!bg-red-500 hover:!bg-red-600 dark:!bg-red-700 dark:hover:!bg-red-700/80'
+                      ? buyActive
+                        ? '!bg-green-500 hover:!bg-green-600 dark:!bg-green-700 dark:hover:!bg-green-700/80'
+                        : '!bg-red-500 hover:!bg-red-600 dark:!bg-red-700 dark:hover:!bg-red-700/80'
                       : 'bg-neutral-400 hover:cursor-not-allowed dark:bg-neutral-800'
                   }`}
                 />
