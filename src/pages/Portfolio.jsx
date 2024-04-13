@@ -506,6 +506,8 @@ const Portfolio = () => {
                   control={control}
                   rules={{
                     required: true,
+                    max: maxBalance,
+                    min: 0.0000001,
                   }}
                   render={({ field }) => (
                     <span className="p-input-icon-right w-1/2 gap-2">
