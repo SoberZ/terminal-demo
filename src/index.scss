@@ -21,7 +21,6 @@
     // --text-color-tertiary: rgb(108, 119, 141);
     // --bg-color-primary: #f9fafb;
     // --bg-color-secondary:  #ffffff;
-
     --text-color-secondary: 52 71 103;
     --text-color-tertiary: 108 119 141;
     --bg-color-primary: 249 250 251;
@@ -546,4 +545,7 @@ tr:hover {
   .p-dropdown-items
   .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
   background-color: var(--highlight-color-hover) !important;
+}
+.p-input-icon-right > .p-inputtext {
+  padding-right: 3.4rem !important;
 }

@@ -8,6 +8,7 @@ function TradingViewWidget({ activeSymbol, activeExchange }) {
   const { width } = useWindowSize()
 
   const dark = darkMode ? 'Dark' : 'Light'
+  const darkBg = darkMode ? '#171717' : '#FFFFFF'
 
   useEffect(() => {
     function checkDarkModeStatus() {
@@ -33,12 +34,14 @@ function TradingViewWidget({ activeSymbol, activeExchange }) {
   return (
     <TDwidget
       symbol={constructedSymbol}
-      height={width > 1024 ? 800 : 420}
+      height={width > 1024 ? 750 : 420}
       width="100%"
       interval="D"
       timezone="etc/UTC"
       theme={dark}
-      hide_side_toolbar={false}
+      hide_top_toolbar={true}
+      // hide_side_toolbar={false}
+      backgroundColor={darkBg}
     />
   )
 }
