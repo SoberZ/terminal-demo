@@ -28,7 +28,7 @@ const Layout = () => {
   const location = useLocation()
   const shiftKey = useKeyPress('Shift')
   const letterDKey = useKeyPress('D')
-  const time = useTime()
+
   const { width } = useWindowSize()
 
   const [pathname, setPathname] = useState(location.pathname)

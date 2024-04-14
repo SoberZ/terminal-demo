@@ -6,7 +6,7 @@ import { Sidebar as PrimeSidebar } from 'primereact/sidebar'
 import { UsersIcon, LogoutIcon } from '../../assets/icons'
 import { routes } from '../../utils/misc'
 
-const HamburgerSidebar = ({ themeState }) => {
+const HamburgerSidebar = ({ themeState, setter, getter }) => {
   const [visible, setVisible] = useState(false)
 
   const handleClick = (name) => () => setter(name)
