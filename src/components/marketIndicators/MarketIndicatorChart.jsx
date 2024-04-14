@@ -66,7 +66,7 @@ const MarketIndicatorChart = ({
       websocket.close()
     }
 
-    let origin = import.meta.env.VITE_API_BASE_URL.replace(/.+?(?=:)/i, 'wss')
+    let origin = 'wss://api.autowhale.net'
 
     websocket = new WebSocket(
       `${origin}/data/live-data/live-${marketIndicators[id]}?exchange=${exchange}&symbol=${market}${volatilityTimeframes}`
