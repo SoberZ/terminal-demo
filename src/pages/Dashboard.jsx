@@ -1,4 +1,4 @@
-import { useEffect, useState, useLayoutEffect, useRef } from 'react'
+import { useEffect, useState, useLayoutEffect, useRef, Suspense } from 'react'
 import { toast } from 'react-hot-toast'
 import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
@@ -8,6 +8,7 @@ import { Accordion, AccordionTab } from 'primereact/accordion'
 import Joyride, { STATUS } from 'react-joyride'
 import { motion } from 'framer-motion'
 import { Helmet } from 'react-helmet'
+import { ErrorBoundary } from 'react-error-boundary'
 
 // Import FakeData
 import Data from '../data/homepageData'
@@ -19,12 +20,18 @@ import {
   AllOrders,
   AllTrades,
   Spotlight,
+  Fallback,
+  Loader,
+  BalancesLineChart,
+  TradingViewWidget,
+  LiveDashboardChart,
 } from '../components'
 
 import { useWindowSize, useDarkMode } from '../hooks'
 import { statusColors } from '../utils/statusColors'
 import { BiInfoCircle } from 'react-icons/bi'
 import { numberFormatting, caseToTitleCase } from '../utils/misc'
+import FakeLineChartData from '../data/exchangeChart.json'
 
 const TranslateWrapper = ({ children, reverse }) => {
   return (
@@ -59,6 +66,9 @@ const Dashboard = () => {
   const [newsArticles, setNewsArticles] = useState([])
   const [cryptoData, setCryptoData] = useState({})
   const previousDataRef = useRef(null)
+
+  const [lineChartData, setLineChartData] = useState({})
+  const [singleChart, setSingleChart] = useState(null)
 
   const getSeverity = (input) => {
     switch (input) {
@@ -230,6 +240,8 @@ const Dashboard = () => {
 
     fetchData()
     fetchNews()
+
+    setLineChartData(FakeLineChartData)
 
     const interval = setInterval(() => {
       fetchData()
@@ -477,29 +489,72 @@ const Dashboard = () => {
           ))}
         </div>
         */}
-        <div className="rounded-lg bg-color-secondary p-5 pb-48 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:pb-40 md:pb-32 lg:pb-24">
-          <div className="h-96">
-            <div className="flex flex-row items-center space-x-2">
-              <div className="demo__projects">
-                <h6 className="text-secondary text-md font-semibold">
-                  Bitcoin Funding Rates
-                </h6>
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          <div className="rounded-lg bg-color-secondary p-5 pb-48 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:pb-40 md:pb-32 lg:pb-24">
+            <div className="h-96">
+              <div className="flex flex-row items-center space-x-2">
+                <div className="demo__projects">
+                  <h6 className="text-secondary text-md font-semibold">
+                    Bitcoin Funding Rates
+                  </h6>
+                </div>
               </div>
+              <p className="text-sm font-light">
+                Find an example usage of data casher here where funding rates
+                for some BTCUSD futures markets are cashed. Per default data
+                casher, cashes all markets of strategies and some large markets
+                including BTCUSD, ETHUSD, BTCETH, BNBUSD, etc.{' '}
+              </p>
+              <FundingRatesLineChart
+                data={homeData.fundingRates}
+                labels={homeData.fundingLabels}
+              />
             </div>
-            <p className="text-sm font-light">
-              Find an example usage of data casher here where funding rates for
-              some BTCUSD futures markets are cashed. Per default data casher,
-              cashes all markets of strategies and some large markets including
-              BTCUSD, ETHUSD, BTCETH, BNBUSD, etc.{' '}
-            </p>
-            <FundingRatesLineChart
-              data={homeData.fundingRates}
-              labels={homeData.fundingLabels}
-            />
+          </div>
+          <div className="rounded-lg bg-color-secondary text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 ">
+            <ErrorBoundary FallbackComponent={Fallback}>
+              <Suspense fallback={<Loader />}>
+                <TradingViewWidget
+                  activeExchange={'BINANCE'}
+                  activeSymbol={'BTCUSDT'}
+                  dashboard
+                />
+              </Suspense>
+            </ErrorBoundary>
           </div>
         </div>
+        {/* <div className="grid grid-cols-2 gap-5">
+          <div className="rounded-lg bg-color-secondary p-5 pb-48 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:pb-40 md:pb-32 lg:pb-24">
+            <div className="h-96">
+              <div className="flex flex-row items-center space-x-2">
+                <div className="demo__projects">
+                  <h6 className="text-secondary text-md font-semibold">
+                    Bitcoin Funding Rates
+                  </h6>
+                </div>
+              </div>
+              <p className="text-sm font-light">
+                Find an example usage of data casher here where funding rates
+                for some BTCUSD futures markets are cashed. Per default data
+                casher, cashes all markets of strategies and some large markets
+                including BTCUSD, ETHUSD, BTCETH, BNBUSD, etc.{' '}
+              </p>
+              <FundingRatesLineChart
+                data={homeData.fundingRates}
+                labels={homeData.fundingLabels}
+              />
+            </div>
+          </div>
+          <div className="rounded-lg bg-color-secondary text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 ">
+            <ErrorBoundary FallbackComponent={Fallback}>
+              <Suspense fallback={<Loader />}>
+                <LiveDashboardChart />
+              </Suspense>
+            </ErrorBoundary>
+          </div>
+        </div> */}
 
-        <div className="this grid grid-cols-1 lg:grid-cols-1">
+        <div className="grid grid-cols-1 lg:grid-cols-1">
           <div className="space-y-7 rounded-lg bg-color-secondary p-5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800">
             <div className="">
               <h6 className="text-md font-semibold text-color-secondary">

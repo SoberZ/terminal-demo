@@ -35,6 +35,7 @@ import Fallback from './shared/Fallback.shared'
 import Loader from './shared/Loader.shared'
 import TradingViewWidget from './shared/TradingViewWidget'
 import TimeDisplay from './shared/TimeDisplay'
+import { LiveDashboardChart } from './shared/LiveDashboardChart'
 
 export {
   ClientProvider,
@@ -69,4 +70,5 @@ export {
   MarketIndicatorChart,
   TradingViewWidget,
   TimeDisplay,
+  LiveDashboardChart,
 }
