@@ -72,12 +72,10 @@ const Portfolio = () => {
   const [activeExchangeAccount, setActiveExchangeAccount] = useState('')
   const [activeType, setActiveType] = useState('Limit')
   const [headerBadge, setHeaderBadge] = useState({
-    all: 4,
     open: 4,
     closed: 0,
   })
 
-  const [balances, setBalances] = useState({})
   const [pieChartData, setPieChartData] = useState({})
   const [markets, setMarkets] = useState([])
   const [buyActive, setBuyActive] = useState(true)
@@ -88,24 +86,9 @@ const Portfolio = () => {
   const headerTemplates = ({ titleElement, onClick }) => {
     return (
       <>
-        {/* <a
-          role="tab"
-          class="p-tabview-nav-link"
-          id="pr_id_23_header_1"
-          aria-controls="pr_id_23_content_1"
-          aria-selected="false"
-          tabindex="0">
-          <span class="p-tabview-title">Open Orders</span>
-        </a> */}
         <div
           className="flex cursor-pointer items-center gap-2 p-3"
           onClick={onClick}>
-          {/* <Avatar
-          image="https://primefaces.org/cdn/primevue/images/avatar/ionibowcher.png"
-          shape="circle"
-        />
-       
-        */}
           <span className="white-space-nowrap font-bold">
             {titleElement.props.children}
           </span>
@@ -115,6 +98,7 @@ const Portfolio = () => {
   }
 
   const submitHandler = (submittedData) => {
+    //? what if not all exchanges have the symbol ? does it partially create them ?
     const exchangeAccountList =
       activeExchangeAccount !== 'all'
         ? activeExchangeAccount
@@ -140,16 +124,6 @@ const Portfolio = () => {
     setAccessibleExchangeAccounts(ExchangesJson)
   }, [])
 
-  // useEffect(() => {
-  //   FakePortfolioChartsData.forEach((data) => {
-  //     if (data.exchange_account_id === activeExchangeAccount) {
-  //       console.log(exchange_account_id)
-  //       console.log(activeExchangeAccount)
-  //       setPieChartData(data)
-  //     }
-  //   })
-  // }, [balances])
-
   useEffect(() => {
     async function fetchAndCombineBalances() {
       if (!activeExchangeAccount) {
@@ -160,8 +134,6 @@ const Portfolio = () => {
           setPieChartData(FakePortfolioChartData)
         } catch (error) {
           console.error('Error fetching balances:', error)
-
-          setBalances({})
         }
       } else {
         try {
@@ -172,8 +144,6 @@ const Portfolio = () => {
           })
         } catch (error) {
           console.error('Error fetching balances:', error)
-
-          setBalances({})
         }
       }
     }
@@ -222,21 +192,28 @@ const Portfolio = () => {
     run: false,
     steps: [
       {
-        title: <strong>Exchange Page</strong>,
+        title: <strong>Portfolio Page</strong>,
         content: (
           <div className="flex flex-col gap-2">
             <h2>
-              this contains relevant information about the exchange account you
-              connected,{' '}
+              you can execute trades in this page
               <span className="font-bold">
                 {' '}
-                like the status, some balances, and the exchange it’s connected
-                to,{' '}
+                by inputting the correct data.{' '}
               </span>
-              You can also see different kind of charts
-              <span className="font-bold"> (fake data here) </span> to follow
-              their progress over time
             </h2>
+            <h2>
+              you can also see the status of your orders/trades,
+              <span className="font-bold">
+                {' '}
+                and the balances of of all exchange accounts you've connected.{' '}
+              </span>
+            </h2>
+            <span className="font-bold">
+              {' '}
+              Keep in mind that the selected exchange account is where the order
+              will be executed.{' '}
+            </span>
           </div>
         ),
         placement: 'center',
@@ -319,7 +296,10 @@ const Portfolio = () => {
                     onClick={() => {
                       activeExchangeAccount === exchange
                         ? setActiveExchangeAccount('all')
-                        : setActiveExchangeAccount(exchange)
+                        : (() => {
+                            trigger('price')
+                            setActiveExchangeAccount(exchange)
+                          })()
                     }}
                     className={`${
                       activeExchangeAccount === exchange
@@ -343,26 +323,6 @@ const Portfolio = () => {
                   />
                 </Suspense>
               </ErrorBoundary>
-              {/* <Controller
-              name="exchange_account_id"
-              control={control}
-              rules={{
-                required: true,
-                min: { value: 1, message: 'Select an exchange account' },
-              }}
-              render={({ field }) => (
-                <Dropdown
-                  className="h-10 w-full dark:!border-neutral-700 text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500"
-                  id={field.name}
-                  value={field.value}
-                  filter
-                  focusInputRef={field.ref}
-                  onChange={(e) => field.onChange(e.value)}
-                  options={activeExchangeAccounts || []}
-                  placeholder="Select an exchange account"
-                />
-              )}
-            /> */}
 
               <div className="flex gap-2 ">
                 <div className="flex h-10 w-full rounded-lg border dark:border-neutral-700 dark:bg-color-secondary">
@@ -443,45 +403,6 @@ const Portfolio = () => {
                   />
                 </div>
               </div>
-
-              {/* <div className="my-2 flex gap-3">
-                <button
-                  type="button"
-                  className={`font-semibold transition-all hover:text-autowhale-blue  ${
-                    activeType === 'Limit' ? 'text-autowhale-blue' : ''
-                  } `}
-                  onClick={() => {
-                    trigger('price')
-                    setActiveType('Limit')
-                  }}>
-                  Limit
-                </button>
-                <button
-                  type="button"
-                  className={`font-semibold transition-all hover:text-autowhale-blue  ${
-                    activeType === 'Market' ? 'text-autowhale-blue' : ''
-                  } `}
-                  onClick={() => {
-                    resetField('price')
-                    trigger('price')
-                    setActiveType('Market')
-                  }}>
-                  Market
-                </button>
-                <button
-                  type="button"
-                  className={`font-semibold transition-all hover:text-autowhale-blue  ${
-                    activeType === 'Other' ? 'text-autowhale-blue' : ''
-                  } `}
-                  onClick={() => {
-                    resetField('price')
-                    trigger('price')
-                    setActiveType('Other')
-                  }}>
-                  Other
-                </button>
-              </div> */}
-
               <div className="flex gap-2">
                 <Controller
                   name="price"
@@ -570,9 +491,6 @@ const Portfolio = () => {
                 <Controller
                   name="stop_loss_price"
                   control={control}
-                  rules={{
-                    required: true,
-                  }}
                   render={({ field }) => (
                     <InputText
                       keyfilter="pnum"
@@ -585,9 +503,6 @@ const Portfolio = () => {
                 <Controller
                   name="take_profit_price"
                   control={control}
-                  rules={{
-                    required: true,
-                  }}
                   render={({ field }) => (
                     <InputText
                       keyfilter="pnum"
@@ -619,12 +534,7 @@ const Portfolio = () => {
             <Suspense fallback={<Loader />}>
               <TabView>
                 <TabPanel
-                  header={
-                    <HeaderTemplate
-                      title="All Orders"
-                      badgeValue={headerBadge.all}
-                    />
-                  }
+                  header={<HeaderTemplate title="All Orders" badgeValue={0} />}
                   className="text-xs md:text-base">
                   <DataTable
                     value={[

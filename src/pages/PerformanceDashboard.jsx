@@ -205,7 +205,7 @@ const PerformanceDashboard = () => {
         </p>
         <ErrorBoundary FallbackComponent={Fallback}>
           <Suspense fallback={<Loader />}>
-            <div className="grid grid-cols-1 space-y-3 lg:grid-cols-3 lg:space-y-0 xl:grid-cols-5 xl:gap-5">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-4 lg:gap-0 xl:grid-cols-5 xl:gap-5">
               <ListBox
                 filter
                 value={metric}
@@ -221,6 +221,7 @@ const PerformanceDashboard = () => {
                 optionValue="value"
                 filterPlaceholder="Search for a Performance Metric"
                 listStyle={{ maxHeight: width > 1024 ? '600px' : '300px' }}
+                className="col-span-1 "
               />
               <PerformancePrimaryChart
                 id={primaryChartData?.strategy_id}
@@ -228,7 +229,7 @@ const PerformanceDashboard = () => {
                 metricsData={primaryChartData?.data}
                 metricsTime={primaryChartData?.date}
                 loading={loading}
-                className="col-span-1 hidden md:col-span-4 md:block"
+                className="col-span-1 hidden sm:col-span-3 sm:block"
               />
             </div>
           </Suspense>

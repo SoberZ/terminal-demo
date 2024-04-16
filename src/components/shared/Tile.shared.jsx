@@ -31,7 +31,7 @@ const Tile = ({
             } ${dashboard ? 'dark:bg-dark-2nd' : 'dark:bg-[#111111]'} `}>
             <h1
               className={`text-center font-bold ${
-                fontSize ?? 'text-xl md:text-3xl'
+                fontSize ?? 'text-base md:text-xl'
               } text-primary break-anywhere mb-1 dark:text-white md:mb-3 `}>
               {data ? commaSeparator(data) : data ?? 0}
             </h1>
@@ -53,7 +53,7 @@ const Tile = ({
         } ${dashboard ? 'dark:bg-dark-2nd' : 'dark:bg-[#111111]'} `}>
         <h1
           className={`text-center font-bold ${
-            fontSize ?? 'text-xl md:text-3xl'
+            fontSize ?? 'text-base md:text-2xl'
           } text-primary break-anywhere mb-1 dark:text-white md:mb-3`}>
           {data ? commaSeparator(data) : data ?? 0}
         </h1>
@@ -74,9 +74,11 @@ const Tile = ({
       )}>
       <h1
         className={`text-center font-bold ${
-          fontSize ?? 'text-xl md:text-3xl'
+          fontSize ?? 'text-base md:text-2xl'
         } text-primary break-anywhere mb-1 dark:text-white md:mb-3 `}>
-        {data ? commaSeparator(data) : data ?? 0}
+        {data && title !== 'Last traded price'
+          ? commaSeparator(data)
+          : data ?? 0}
       </h1>
       <h2 className="break-words text-center text-xs font-semibold text-color-secondary md:text-sm">
         {title}

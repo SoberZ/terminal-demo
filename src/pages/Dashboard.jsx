@@ -50,7 +50,9 @@ const Dashboard = () => {
   const [darkMode] = useDarkMode()
   const [homeData, setHomeData] = useState({
     strategiesRunning: '12',
-    pnl: '5341 USD',
+    totalPnl: '15341 USD',
+    realizedPnL: '11828 USD',
+    unrealizedPnL: '3513 USD',
     liveExchangeAccounts: '6',
     tradingVolume: '1249823',
     tradesExecuted: '4653',
@@ -329,7 +331,7 @@ const Dashboard = () => {
       <div className="flex flex-col space-y-6">
         <div id={`step-2`} className="flex flex-col space-y-10">
           {width > 768 ? (
-            <Spotlight className="group grid grid-cols-2 gap-6 lg:grid-cols-3 2xl:grid-cols-6">
+            <Spotlight className="group grid grid-cols-2 gap-6 lg:grid-cols-4 2xl:grid-cols-8">
               <Tile
                 dashboard
                 data={homeData.strategiesRunning}
@@ -338,9 +340,21 @@ const Dashboard = () => {
               />
               <Tile
                 dashboard
-                data={homeData.pnl}
-                title="PnL"
-                description={'Today'}
+                data={homeData.totalPnl}
+                title="Total PnL"
+                description="Total"
+              />
+              <Tile
+                dashboard
+                data={homeData.unrealizedPnL}
+                title="Unrealized PnL"
+                description="Total"
+              />
+              <Tile
+                dashboard
+                data={homeData.realizedPnL}
+                title="Realized PnL"
+                description="Total"
               />
               <Tile
                 dashboard
@@ -352,23 +366,23 @@ const Dashboard = () => {
                 dashboard
                 data={homeData.tradingVolume}
                 title="Trading volume"
-                description="Today"
+                description="Total"
               />
               <Tile
                 dashboard
                 data={homeData.tradesExecuted}
                 title="Trades executed"
-                description="Today"
+                description="Total"
               />
               <Tile
                 dashboard
                 data={homeData.ordersPlaced}
                 title="Orders placed"
-                description="Today"
+                description="Total"
               />
             </Spotlight>
           ) : (
-            <div className="grid grid-cols-2 gap-6 lg:grid-cols-3 2xl:grid-cols-6">
+            <div className="grid grid-cols-2 gap-6 lg:grid-cols-4 2xl:grid-cols-8">
               <Tile
                 dashboard
                 data={homeData.strategiesRunning}
@@ -377,9 +391,21 @@ const Dashboard = () => {
               />
               <Tile
                 dashboard
-                data={homeData.pnl}
-                title="PnL"
-                description={'Today'}
+                data={homeData.totalPnl}
+                title="Total PnL"
+                description="Total"
+              />
+              <Tile
+                dashboard
+                data={homeData.unrealizedPnL}
+                title="Unrealized PnL"
+                description="Total"
+              />
+              <Tile
+                dashboard
+                data={homeData.realizedPnL}
+                title="Realized PnL"
+                description="Total"
               />
               <Tile
                 dashboard
@@ -391,19 +417,19 @@ const Dashboard = () => {
                 dashboard
                 data={homeData.tradingVolume}
                 title="Trading volume"
-                description="Today"
+                description="Total"
               />
               <Tile
                 dashboard
                 data={homeData.tradesExecuted}
                 title="Trades executed"
-                description="Today"
+                description="Total"
               />
               <Tile
                 dashboard
                 data={homeData.ordersPlaced}
                 title="Orders placed"
-                description="Today"
+                description="Total"
               />
             </div>
           )}

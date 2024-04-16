@@ -99,8 +99,8 @@ const Exchange = () => {
         content: (
           <div className="flex flex-col gap-2">
             <h2>
-              this contains relevant information about the exchange account you
-              connected,{' '}
+              this page contains relevant information about the exchange account
+              you connected,{' '}
               <span className="font-bold">
                 {' '}
                 like the status, some balances, and the exchange it’s connected

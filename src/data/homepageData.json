@@ -2,7 +2,10 @@
   "strategiesRunning": 5,
   "pnl": "645.76 $",
   "liveExchangeAccounts": 3,
-  "tradingVolume": "387659.36 $",
+  "totalPnl": "$15341",
+  "realizedPnL": "$11828",
+  "unrealizedPnL": "$3513",
+  "tradingVolume": "$387659.36",
   "tradesExecuted": 107795,
   "ordersPlaced": 980412,
   "activeStrategies": [
