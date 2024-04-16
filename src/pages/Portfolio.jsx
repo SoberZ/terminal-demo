@@ -275,8 +275,8 @@ const Portfolio = () => {
             </div>
             <form
               onSubmit={handleSubmit(submitHandler)}
-              className="flex flex-col gap-3 rounded-lg border bg-color-secondary p-2 dark:border-neutral-800 dark:bg-color-primary md:gap-2 md:p-5 lg:w-1/3">
-              <div className="flex justify-start gap-2 overflow-x-auto pr-2 pb-2 md:pb-0">
+              className="flex flex-col gap-2 rounded-lg border bg-color-secondary p-2 dark:border-neutral-800 dark:bg-color-primary md:p-5 lg:w-1/3">
+              <div className="flex justify-start gap-2 overflow-x-auto pr-2 pb-2 text-sm md:pb-0 md:text-base">
                 <button
                   type="button"
                   onClick={() => {
@@ -313,46 +313,47 @@ const Portfolio = () => {
               <ErrorBoundary FallbackComponent={Fallback}>
                 <Suspense fallback={<Loader />}>
                   <BalancePieChart
-                    className="p-0"
+                    className="p-1"
                     balances={pieChartData.data}
+                    portfolio
                     labels={pieChartData.labels}
                     styling={{
-                      height: width > 1024 ? '430px' : '420px',
+                      height: width > 1024 ? '430px' : '410px',
                       width: '100%',
                     }}
                   />
                 </Suspense>
               </ErrorBoundary>
 
-              <div className="flex gap-2 ">
+              <div className="flex flex-col gap-2 2xl:flex-row">
                 <div className="flex h-10 w-full rounded-lg border dark:border-neutral-700 dark:bg-color-secondary">
                   <TerminalButton
-                    text="Buy"
                     type="button"
                     onClick={() => {
                       resetField('amount')
                       setBuyActive(true)
                     }}
-                    className={`w-full items-baseline p-0 transition-colors ${
+                    className={`w-full items-baseline p-0 !text-sm transition-colors md:!text-base ${
                       buyActive
                         ? '!bg-green-500 dark:!bg-green-700'
                         : 'bg-color-secondary !text-color-secondary/50 hover:!text-color-secondary dark:border-neutral-700 dark:bg-color-secondary dark:hover:!text-white'
-                    } `}
-                  />
+                    } `}>
+                    Buy
+                  </TerminalButton>
 
                   <TerminalButton
-                    text="Sell"
                     type="button"
                     onClick={() => {
                       resetField('amount')
                       setBuyActive(false)
                     }}
-                    className={`w-full items-baseline p-0 transition-colors ${
+                    className={`w-full items-baseline p-0 !text-sm transition-colors md:!text-base ${
                       !buyActive
                         ? '!bg-red-500 dark:!bg-red-700'
                         : 'bg-color-secondary !text-color-secondary/50 hover:!text-color-secondary dark:border-neutral-700 dark:bg-color-secondary dark:hover:!text-white'
-                    } `}
-                  />
+                    } `}>
+                    Sell
+                  </TerminalButton>
                 </div>
                 <div className="flex w-full gap-2">
                   <Controller
@@ -403,6 +404,7 @@ const Portfolio = () => {
                   />
                 </div>
               </div>
+
               <div className="flex gap-2">
                 <Controller
                   name="price"
@@ -428,11 +430,10 @@ const Portfolio = () => {
                   rules={{
                     required: true,
                     max: maxBalance,
-                    min: 0.0000001,
                   }}
                   render={({ field }) => (
                     <span className="p-input-icon-right w-1/2 gap-2">
-                      <i className="pi ml-5 font-lato">
+                      <i className="pi ml-5 font-lato ">
                         {watchedSymbol && buyActive
                           ? watchedSymbol.split('/')[1]
                           : watchedSymbol.split('/')[0]}
@@ -461,7 +462,7 @@ const Portfolio = () => {
               </div>
 
               <div className="flex items-center justify-between gap-2">
-                <p>
+                <p className="text-xs md:text-base">
                   {(watchedAmount <= maxBalance &&
                     Math.round((watchedAmount / maxBalance) * 100)) ||
                     0}
@@ -587,9 +588,9 @@ const Portfolio = () => {
                     className="text-[0.7rem] md:text-[0.75rem]">
                     <Column
                       sortable
-                      field="order_id"
-                      header="Order ID"
-                      className="break-anywhere min-w-[5rem] md:min-w-[15rem] lg:min-w-[18rem]"
+                      field="market"
+                      header="Market"
+                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
                     />
                     <Column
                       sortable
@@ -604,12 +605,6 @@ const Portfolio = () => {
                       header="Type"
                       className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
                       // filter
-                    />
-                    <Column
-                      sortable
-                      field="market"
-                      header="Market"
-                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
                     />
                     <Column
                       sortable
@@ -693,9 +688,9 @@ const Portfolio = () => {
                     className="text-[0.7rem] md:text-[0.75rem]">
                     <Column
                       sortable
-                      field="order_id"
-                      header="Order ID"
-                      className="break-anywhere min-w-[5rem] md:min-w-[15rem] lg:min-w-[18rem]"
+                      field="market"
+                      header="Market"
+                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
                     />
                     <Column
                       sortable
@@ -711,12 +706,7 @@ const Portfolio = () => {
                       className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
                       // filter
                     />
-                    <Column
-                      sortable
-                      field="market"
-                      header="Market"
-                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-                    />
+
                     <Column
                       sortable
                       field="exchange_account_id"
@@ -766,9 +756,9 @@ const Portfolio = () => {
                     className="text-[0.7rem] md:text-[0.75rem]">
                     <Column
                       sortable
-                      field="order_id"
-                      header="Order ID"
-                      className="break-anywhere min-w-[5rem] md:min-w-[15rem] lg:min-w-[18rem]"
+                      field="market"
+                      header="Market"
+                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
                     />
                     <Column
                       sortable
@@ -784,12 +774,7 @@ const Portfolio = () => {
                       className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
                       // filter
                     />
-                    <Column
-                      sortable
-                      field="market"
-                      header="Market"
-                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-                    />
+
                     <Column
                       sortable
                       field="exchange_account_id"

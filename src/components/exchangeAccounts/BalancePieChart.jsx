@@ -27,7 +27,13 @@ const defaultDarkColors = [
   '#1b145a',
 ]
 
-const BalancePieChart = ({ balances, labels, styling, className }) => {
+const BalancePieChart = ({
+  balances,
+  labels,
+  styling,
+  className,
+  portfolio,
+}) => {
   const { width } = useWindowSize()
   const [darkModeState] = useDarkMode()
   const [darkMode, setDarkMode] = useState(darkModeState)
@@ -97,14 +103,14 @@ const BalancePieChart = ({ balances, labels, styling, className }) => {
       },
       // top: 'center',
       // right: 'center',
-      top: width < 1024 ? '10px' : 'center',
+      top: width < 1024 ? '2px' : 'center',
       right: width < 1024 ? 'center' : 'center',
     },
     series: [
       {
         name: 'Exchange Account balance',
         type: 'pie',
-        radius: ['40%', '70%'],
+        radius: ['40%', portfolio ? '60%' : '70%'],
         labelLine: {
           showAbove: true,
         },
