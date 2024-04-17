@@ -229,14 +229,14 @@ const PerformanceDashboard = () => {
                 metricsData={primaryChartData?.data}
                 metricsTime={primaryChartData?.date}
                 loading={loading}
-                className="col-span-1 hidden sm:col-span-3 sm:block"
+                className="col-span-1 hidden sm:col-span-3 sm:block xl:col-span-4"
               />
             </div>
           </Suspense>
         </ErrorBoundary>
         <ErrorBoundary FallbackComponent={Fallback}>
           <Suspense fallback={<Loader />}>
-            <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:gap-5 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-3 lg:gap-5 xl:grid-cols-4">
               {sortedData?.map((strategy, idx) => {
                 return (
                   <PerformanceMinionChart

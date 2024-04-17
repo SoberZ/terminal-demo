@@ -66,9 +66,12 @@ const PerformanceMinionChart = ({
       },
       title: {
         text: id,
+        offsetX: 20,
+        offsetY: 8,
+        margin: -10,
         style: {
           color: darkMode ? '#D4D4D4' : '#4432e2',
-          fontSize: '20px',
+          fontSize: width > 1024 ? '17px' : '18px',
           fontFamily: 'inherit',
         },
       },
@@ -114,9 +117,6 @@ const PerformanceMinionChart = ({
       grid: {
         borderColor: darkMode ? '#505050' : '#e0e6ed',
         strokeDashArray: 7,
-        padding: {
-          left: 20,
-        },
       },
 
       fill: {
@@ -144,7 +144,7 @@ const PerformanceMinionChart = ({
         <>
           {isForbidden ? null : (
             <div
-              className="absolute top-3 right-3 z-10"
+              className="absolute top-3 left-2 z-10"
               onClick={(e) => {
                 e.stopPropagation()
                 toggleFavoriteStrategy(id)
@@ -154,7 +154,7 @@ const PerformanceMinionChart = ({
                   <i
                     className="pi pi-star-fill color-gradient-to-r from-blue-900 to-blue-500 "
                     style={{
-                      fontSize: width < 1024 ? '1rem' : '1.4rem',
+                      fontSize: width < 1024 ? '1.2rem' : '1.4rem',
                       color: '#c6a907',
                     }}
                   />
@@ -162,7 +162,7 @@ const PerformanceMinionChart = ({
                   <i
                     className="pi pi-star "
                     style={{
-                      fontSize: width < 1024 ? '1rem' : '1.4rem',
+                      fontSize: width < 1024 ? '1.2rem' : '1.4rem',
                       color: '#c6a907',
                     }}
                   />
