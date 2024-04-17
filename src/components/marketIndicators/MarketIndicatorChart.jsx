@@ -73,6 +73,9 @@ const MarketIndicatorChart = ({
   const volatilityTimeframes =
     marketIndicators[id] === 'volatility' ? `&timeframe=${timeframe}` : ''
 
+  const liquidityLevels =
+    marketIndicators[id] === 'order-book-liquidity' ? `&levels=${levels}` : ''
+
   useEffect(() => {
     setLiveChartData([])
     if (websocket && websocket.readyState === WebSocket.OPEN) {
@@ -82,7 +85,7 @@ const MarketIndicatorChart = ({
     let origin = 'wss://api.autowhale.net'
 
     websocket = new WebSocket(
-      `${origin}/data/live-data/live-${marketIndicators[id]}?exchange=${exchange}&symbol=${market}${volatilityTimeframes}`
+      `${origin}/data/live-data/live-${marketIndicators[id]}?exchange=${exchange}&symbol=${market}${volatilityTimeframes}${liquidityLevels}`
     )
 
     websocket.onmessage = (data) => {
@@ -170,7 +173,6 @@ const MarketIndicatorChart = ({
 
   const sharedOptions = {
     chart: {
-      id: id,
       type: 'area',
       group:
         id === 'Buys and Sells'
