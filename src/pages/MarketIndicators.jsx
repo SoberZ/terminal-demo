@@ -177,7 +177,7 @@ const MarketIndicators = () => {
           <ErrorBoundary FallbackComponent={Fallback}>
             <Suspense fallback={<Loader />}>
               <MarketIndicatorChart
-                id="Trades' Liquidity"
+                id="Trades' Volume"
                 market={watchedMarket}
                 exchange={watchedExchange}
                 loading={loading}
@@ -185,6 +185,16 @@ const MarketIndicators = () => {
             </Suspense>
           </ErrorBoundary>
         </div>
+        <ErrorBoundary FallbackComponent={Fallback}>
+          <Suspense fallback={<Loader />}>
+            <MarketIndicatorChart
+              id="Order Book Liquidity"
+              market={watchedMarket}
+              exchange={watchedExchange}
+              loading={loading}
+            />
+          </Suspense>
+        </ErrorBoundary>
       </div>
       <div className="fixed bottom-5 right-9 z-20">
         <TerminalButton

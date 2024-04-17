@@ -51,23 +51,42 @@ const marketTimeframes = [
   { label: '1 month', value: '1M' },
 ]
 
-// const marketTimeframes = {
-//   '1s': '1s',
-//   '1m': '1m',
-//   '3m': '3m',
-//   '5m': '5m',
-//   '15m': '15m',
-//   '30m': '30m',
-//   '1h': '1h',
-//   '2h': '2h',
-//   '4h': '4h',
-//   '6h': '6h',
-//   '8h': '8h',
-//   '12h': '12h',
-//   '1d': '1d',
-//   '3d': '3d',
-//   '1w': '1w',
-//   '1M': '1M',
-// }
+const orderBookDepthLevels = [
+  { label: '5', value: 5 },
+  {
+    label: '10',
+    value: 10,
+  },
+  {
+    label: '25',
+    value: 25,
+  },
+  {
+    label: '50',
+    value: 50,
+  },
+  {
+    label: '100',
+    value: 100,
+  },
+  {
+    label: '200',
+    value: 200,
+  },
+  {
+    label: '500',
+    value: 500,
+  },
+  {
+    label: '1000',
+    value: 1000,
+  },
+]
 
-export { constants, exchangeParams, timeFrames, marketTimeframes }
+export {
+  constants,
+  exchangeParams,
+  timeFrames,
+  marketTimeframes,
+  orderBookDepthLevels,
+}
