@@ -360,7 +360,11 @@ export async function fetchRequiredParams(
   setStrategyInstances
 ) {
   setFetchedData(() => DefaultRequiredParams)
-  setStrategyInstances(() => StrategyInstances)
+  const alteredValues = StrategyInstances.map((i) => ({
+    value: i.value,
+    label: i.label.replace(/([A-Z])/g, ' $1').trim(i.strategy_type),
+  }))
+  setStrategyInstances(alteredValues)
 }
 
 //? the new function to create a strategy

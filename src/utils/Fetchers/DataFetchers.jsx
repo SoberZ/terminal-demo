@@ -45,7 +45,7 @@ export async function fetchActiveExchangeAccounts(
   exchange,
   setExchangeAccounts
 ) {
-  if (exchange == "kucoin") {
+  if (exchange == 'kucoin') {
     setExchangeAccounts(ExchangeAccounts)
   } else {
     toast.error('No Active Exchange Accounts found with this exchange')
@@ -58,5 +58,17 @@ export async function fetchActiveExchangeAccounts(
  * @param {*} setMarkets
  */
 export async function fetchMarkets(exchange, setMarkets) {
+  const cachedData = localStorage.getItem(`markets_${exchange}`)
+
+  if (cachedData) {
+    const { data } = JSON.parse(cachedData)
+
+    setMarkets(data)
+
+    return
+  }
+
+  localStorage.setItem(`markets_${exchange}`, JSON.stringify({ data: Markets }))
+
   setMarkets(Markets)
 }

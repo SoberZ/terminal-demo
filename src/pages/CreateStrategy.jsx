@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-hot-toast'
 import { Input, Select, Checkbox, TerminalButton } from '../components'
 import { Tooltip } from 'primereact/tooltip'
-import parse from 'html-react-parser'
+import { Slider } from 'primereact/slider'
+import { Controller } from 'react-hook-form'
 
 import { delay } from '../utils/misc'
 import { fetchRequiredParams } from '../utils/Fetchers/StrategyFetchers'
@@ -162,7 +163,7 @@ const CreateStrategy = () => {
       <Helmet>
         <title>Create Strategy</title>
       </Helmet>
-      <div className="space-y-5 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
+      <div className="min-h-[33rem] space-y-5 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
         <h1 className="inline-block  text-2xl font-semibold text-color-secondary dark:text-white">
           Create a new strategy
         </h1>
@@ -238,7 +239,7 @@ const CreateStrategy = () => {
                           }
                           return (
                             <div key={idx}>
-                              {type === 'decimal' && (
+                              {type === 'decimal' && !isPercentage && (
                                 <Input
                                   id={key}
                                   title={removeUnderscoresAndCapitalize(key)}
@@ -254,6 +255,49 @@ const CreateStrategy = () => {
                                       : null
                                   }
                                 />
+                              )}{' '}
+                              {isPercentage && (
+                                <>
+                                  <Controller
+                                    name={key}
+                                    control={control}
+                                    register={register}
+                                    rules={{ required: !optional }}
+                                    render={({ field, value }) => (
+                                      <div className="flex flex-col gap-2">
+                                        <Input
+                                          id={key}
+                                          title={removeUnderscoresAndCapitalize(
+                                            key
+                                          )}
+                                          placeholder={
+                                            placeholder ? placeholder : ''
+                                          }
+                                          value={field.value}
+                                          register={register}
+                                          min={min_value * 100}
+                                          max={max_value * 100}
+                                          inputDecimal
+                                          optional={optional}
+                                          tooltip={
+                                            isPercentage
+                                              ? '0 = 0%, 0.1 = 10%, -1 = 1 = -100%'
+                                              : null
+                                          }
+                                        />
+                                        <Slider
+                                          value={field.value}
+                                          min={min_value * 100}
+                                          max={max_value * 100}
+                                          step={0.1}
+                                          onChange={(e) => {
+                                            field.onChange(e.value)
+                                          }}
+                                        />
+                                      </div>
+                                    )}
+                                  />
+                                </>
                               )}{' '}
                               {type === 'integer' && (
                                 <Input

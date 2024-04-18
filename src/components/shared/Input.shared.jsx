@@ -13,6 +13,7 @@ const Input = ({
   optional,
   className,
   tooltip,
+  ...props
 }) => {
   // Determine regex for input type
   const pattern = () => {
@@ -42,6 +43,7 @@ const Input = ({
         required={!optional}
         min={min}
         max={max}
+        {...props}
         {...register(id, {
           required: !optional,
           pattern: {
@@ -51,8 +53,9 @@ const Input = ({
           valueAsNumber: inputNumber || inputDecimal,
         })}
       />
+
       <span className="inputTooltip pointer-events-none absolute left-2.5 top-0 -translate-y-1/2 bg-color-secondary p-0.5 text-xs transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs">
-        {title}
+        {title} {tooltip ? '%' : ''}
         {!optional ? <span className="text-red-600">*</span> : ''}
       </span>
     </label>
