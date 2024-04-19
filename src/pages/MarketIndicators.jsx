@@ -152,6 +152,16 @@ const MarketIndicators = () => {
           </h1>
         </div>
         <div className="flex flex-col gap-2 md:grid md:grid-cols-2 md:gap-5">
+          <ErrorBoundary FallbackComponent={Fallback}>
+            <Suspense fallback={<Loader />}>
+              <MarketIndicatorChart
+                id="Trades' Volume"
+                market={watchedMarket}
+                exchange={watchedExchange}
+                loading={loading}
+              />
+            </Suspense>
+          </ErrorBoundary>
           <div className="flex flex-col gap-2 md:gap-5">
             <ErrorBoundary FallbackComponent={Fallback}>
               <Suspense fallback={<Loader />}>
@@ -174,16 +184,6 @@ const MarketIndicators = () => {
               </Suspense>
             </ErrorBoundary>
           </div>
-          <ErrorBoundary FallbackComponent={Fallback}>
-            <Suspense fallback={<Loader />}>
-              <MarketIndicatorChart
-                id="Trades' Volume"
-                market={watchedMarket}
-                exchange={watchedExchange}
-                loading={loading}
-              />
-            </Suspense>
-          </ErrorBoundary>
         </div>
         <ErrorBoundary FallbackComponent={Fallback}>
           <Suspense fallback={<Loader />}>
