@@ -516,6 +516,17 @@ const Dashboard = () => {
         </div>
         */}
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+          <div className="rounded-lg bg-color-secondary text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 ">
+            <ErrorBoundary FallbackComponent={Fallback}>
+              <Suspense fallback={<Loader />}>
+                <TradingViewWidget
+                  activeExchange={'BINANCE'}
+                  activeSymbol={'BTCUSDT'}
+                  dashboard
+                />
+              </Suspense>
+            </ErrorBoundary>
+          </div>
           <div className="rounded-lg bg-color-secondary p-5 pb-48 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:pb-40 md:pb-32 lg:pb-24">
             <div className="h-96">
               <div className="flex flex-row items-center space-x-2">
@@ -537,19 +548,8 @@ const Dashboard = () => {
               />
             </div>
           </div>
-          <div className="rounded-lg bg-color-secondary text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 ">
-            <ErrorBoundary FallbackComponent={Fallback}>
-              <Suspense fallback={<Loader />}>
-                <TradingViewWidget
-                  activeExchange={'BINANCE'}
-                  activeSymbol={'BTCUSDT'}
-                  dashboard
-                />
-              </Suspense>
-            </ErrorBoundary>
-          </div>
         </div>
-        {/* <div className="grid grid-cols-2 gap-5">
+        {/* <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           <div className="rounded-lg bg-color-secondary p-5 pb-48 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:pb-40 md:pb-32 lg:pb-24">
             <div className="h-96">
               <div className="flex flex-row items-center space-x-2">

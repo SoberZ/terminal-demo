@@ -36,7 +36,7 @@ const HamburgerSidebar = ({ themeState, setter, getter }) => {
                       getter === route.path
                         ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                         : ''
-                    } rounded-3xl p-2.5 duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
+                    } rounded-3xl p-2.5 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
                     <route.component width="1.5rem" height="1.5rem" />
                     <span className="ml-3 flex-1">
                       {route.name}
