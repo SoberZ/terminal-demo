@@ -233,6 +233,8 @@ const Portfolio = () => {
     }
   }
 
+  const heightTV = width > 1024 ? 750 : 420
+
   return (
     <>
       <Joyride
@@ -275,7 +277,7 @@ const Portfolio = () => {
             </div>
             <form
               onSubmit={handleSubmit(submitHandler)}
-              className="flex flex-col gap-2 rounded-lg border bg-color-secondary p-2 dark:border-neutral-800 dark:bg-color-primary md:p-5 lg:w-1/3">
+              className="flex h-fit flex-col gap-2 rounded-lg border bg-color-secondary p-2 dark:border-neutral-800 dark:bg-color-primary md:p-5 lg:w-1/3">
               <div className="flex justify-start gap-2 overflow-x-auto pr-2 pb-2 text-sm md:pb-0 md:text-base">
                 <button
                   type="button"
@@ -318,7 +320,12 @@ const Portfolio = () => {
                     portfolio
                     labels={pieChartData.labels}
                     styling={{
-                      height: width > 1024 ? '430px' : '410px',
+                      height:
+                        width > 1024 && width < 1539
+                          ? '395px'
+                          : width > 1539
+                          ? '439px'
+                          : '',
                       width: '100%',
                     }}
                   />
