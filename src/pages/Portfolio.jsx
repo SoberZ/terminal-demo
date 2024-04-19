@@ -323,9 +323,9 @@ const Portfolio = () => {
                       height:
                         width > 1024 && width < 1539
                           ? '395px'
-                          : width > 1539
+                          : width >= 1539
                           ? '439px'
-                          : '',
+                          : '410px',
                       width: '100%',
                     }}
                   />
