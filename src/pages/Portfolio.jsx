@@ -33,7 +33,7 @@ import { fetchMarkets } from '../utils/Fetchers/DataFetchers'
 function HeaderTemplate({ badgeValue, title }) {
   return (
     <span className="flex items-baseline gap-1">
-      <span className={`${badgeValue > 0 ? '' : 'p-1'}`}>{title}</span>
+      <span className={`${badgeValue > 0 ? '' : 'p-1.5 md:p-1'}`}>{title}</span>
       {badgeValue > 0 ? (
         <Badge value={badgeValue} className="bg-autowhale-blue" />
       ) : null}
