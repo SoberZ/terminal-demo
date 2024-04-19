@@ -246,12 +246,12 @@ const Category = () => {
             this is a generic description, don't worry about it
           </p>
         </div>
-        <div className="flex justify-between">
-          <TerminalButton onClick={() => setVisible(true)}>
+        <div className="flex flex-wrap justify-between gap-4">
+          <TerminalButton className="h-11" onClick={() => setVisible(true)}>
             Edit Category
           </TerminalButton>
           <InputText
-            className="h-11 border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 md:w-1/3"
+            className="h-11 w-full border-[#757575] text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500 md:w-1/3"
             placeholder="Search for a Strategy"
             value={globalFilterValue}
             onChange={onGlobalFilterChange}
