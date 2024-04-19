@@ -312,7 +312,6 @@ const Category = () => {
               filters={filters}
               paginator
               breakpoint="0"
-              scrollable
               paginatorTemplate={
                 width < 768
                   ? 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink'
@@ -332,7 +331,7 @@ const Category = () => {
                 sortable
                 field="strategy_id"
                 header="Strategy"
-                className="break-anywhere min-w-[5rem] md:min-w-[15rem] lg:min-w-[18rem]"
+                className="break-anywhere min-w-[7rem] md:min-w-[15rem] lg:min-w-[18rem]"
               />
               <Column
                 sortable
