@@ -839,14 +839,18 @@ const Portfolio = () => {
 
                     <Column
                       className="max-w-[3.6rem]"
-                      body={(strategy) => {
+                      body={(row) => {
                         return (
-                          <i
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              //TODO: cancel the order here
-                            }}
-                            className="pi pi-trash text-[1.3rem] text-red-500 hover:text-red-700"></i>
+                          <>
+                            {row.order_status === 'open' && (
+                              <i
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  //TODO: cancel the order here
+                                }}
+                                className="pi pi-trash text-[1.3rem] text-red-500 hover:text-red-700"></i>
+                            )}
+                          </>
                         )
                       }}
                     />
@@ -1343,19 +1347,6 @@ const Portfolio = () => {
                       filterMatchModeOptions={equalsFilterOptions}
                       filterElement={orderStatusFilterTemplate}
                       className="max-w-[6rem] shadow-[-5px_0px_5px_#00000022] md:max-w-[7rem] md:shadow-none lg:max-w-[10rem]"
-                    />
-                    <Column
-                      className="max-w-[3.6rem]"
-                      body={(strategy) => {
-                        return (
-                          <i
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              //TODO: cancel the order here
-                            }}
-                            className="pi pi-trash text-[1.3rem] text-red-500 hover:text-red-700"></i>
-                        )
-                      }}
                     />
                   </DataTable>
                 </TabPanel>
