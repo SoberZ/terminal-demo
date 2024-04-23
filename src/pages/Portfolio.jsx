@@ -30,16 +30,24 @@ import FakePortfolioChartData from '../data/portfolio/piechartsPortfolio.json'
 import FakePortfolioChartsData from '../data/portfolio/individualPiechartsPortfolio.json'
 import { fetchMarkets } from '../utils/Fetchers/DataFetchers'
 
-function HeaderTemplate({ badgeValue, title }) {
-  return (
-    <span className="flex items-baseline gap-1">
-      <span className={`${badgeValue > 0 ? '' : 'p-1.5 md:p-1'}`}>{title}</span>
-      {badgeValue > 0 ? (
-        <Badge value={badgeValue} className="bg-autowhale-blue" />
-      ) : null}
-    </span>
-  )
-}
+import {
+  avgFillPriceBodyTemplate,
+  equalsFilterOptions,
+  numericFilterOptions,
+  orderSidesFilterTemplate,
+  orderStatusFilterTemplate,
+  orderTypesFilterTemplate,
+  stopLossBodyTemplate,
+  stringFilterOptions,
+  priceBodyTemplate,
+  quantityFilledBodyTemplate,
+  dateFilterOptions,
+  costBodyTemplate,
+  dateFilterTemplate,
+  rowsPerPageOptions,
+  HeaderTemplate,
+  getSeverity,
+} from './addons/PortfolioAddons'
 
 const Portfolio = () => {
   const { width } = useWindowSize()
@@ -72,7 +80,7 @@ const Portfolio = () => {
   const [activeExchangeAccount, setActiveExchangeAccount] = useState('')
   const [activeType, setActiveType] = useState('Limit')
   const [headerBadge, setHeaderBadge] = useState({
-    open: 4,
+    open: 3,
     closed: 0,
   })
 
@@ -81,21 +89,6 @@ const Portfolio = () => {
   const [buyActive, setBuyActive] = useState(true)
   const watchedSymbol = watch('symbol')
   const watchedAmount = watch('amount')
-
-  //? I'll only use the template if i need to access what's inside
-  const headerTemplates = ({ titleElement, onClick }) => {
-    return (
-      <>
-        <div
-          className="flex cursor-pointer items-center gap-2 p-3"
-          onClick={onClick}>
-          <span className="white-space-nowrap font-bold">
-            {titleElement.props.children}
-          </span>
-        </div>
-      </>
-    )
-  }
 
   const submitHandler = (submittedData) => {
     //? what if not all exchanges have the symbol ? does it partially create them ?
@@ -547,36 +540,141 @@ const Portfolio = () => {
                   <DataTable
                     value={[
                       {
-                        order_id: 'faae6901-d1ac-4f4f-8f88-cacd28429976',
-                        type: 'Limit',
-                        market: 'BTC/USDT',
+                        avg_fill_price: null,
+                        exchange: 'kucoin',
                         exchange_account_id: 'kucoin-account',
-                        amount: '56162',
-                        active_status: 'Open',
+                        execution_date: 'Fri, 15 Sep 2023 01:51:02 GMT',
+                        execution_delay: null,
+                        execution_time: 0.28513097763061523,
+                        fee_percent: 0.0001,
+                        is_demo_trade: false,
+                        is_retry: false,
+                        is_settled: true,
+                        last_traded_timestamp: null,
+                        market: 'BTC/USDT',
+                        obj_id: null,
+                        order_fee: 0,
+                        order_id: '65039c66eb794b0006299dce',
+                        order_side: 'buy',
+                        order_status: 'open',
+                        order_type: 'limit',
+                        price: 26526.6,
+                        quantity: 0.00005464,
+                        quantity_filled: 0,
+                        stop_loss_price_trigger: null,
+                        stop_loss_type: null,
+                        strategy_id: 'STRATEGY_NAME',
+                        trade_signal_id: null,
                       },
                       {
-                        order_id: '682ddb81-9a54-414e-90f1-1ac2bba7fcb6',
-                        type: 'Limit',
-                        market: 'BTC/USDT',
+                        avg_fill_price: 26526.5,
+                        exchange: 'kucoin',
                         exchange_account_id: 'kucoin-account',
-                        amount: '3541.3',
-                        active_status: 'Open',
+                        execution_date: 'Fri, 15 Sep 2023 01:50:52 GMT',
+                        execution_delay: null,
+                        execution_time: 0.27878594398498535,
+                        fee_percent: 0.0001,
+                        handledRollingMetrics: true,
+                        is_demo_trade: false,
+                        is_retry: false,
+                        is_settled: true,
+                        last_traded_timestamp: 'Fri, 15 Sep 2023 01:51:02 GMT',
+                        market: 'BTC/USDT',
+                        obj_id: null,
+                        order_fee: 0.001439062625,
+                        order_id: '65039c5b29b9ec0007d2f4d8',
+                        order_side: 'sell',
+                        order_status: 'closed',
+                        order_type: 'limit',
+                        price: 26526.5,
+                        quantity: 0.00005425,
+                        quantity_filled: 0.00005425,
+                        stop_loss_price_trigger: null,
+                        stop_loss_type: null,
+                        strategy_id: 'STRATEGY_NAME',
+                        trade_signal_id: null,
                       },
                       {
-                        order_id: '453560c9-61e3-4aed-a131-31208fda0f8a',
-                        type: 'Limit',
-                        market: 'BTC/USDT',
+                        avg_fill_price: null,
+                        exchange: 'kucoin',
                         exchange_account_id: 'kucoin-account',
-                        amount: '8796',
-                        active_status: 'Open',
+                        execution_date: 'Fri, 15 Sep 2023 01:50:52 GMT',
+                        execution_delay: null,
+                        execution_time: 0.270158052444458,
+                        fee_percent: 0.0002,
+                        is_demo_trade: false,
+                        is_retry: false,
+                        is_settled: true,
+                        last_traded_timestamp: null,
+                        market: 'BTC/USDT',
+                        obj_id: null,
+                        order_fee: 0,
+                        order_id: '65039c5beb794b0006299499',
+                        order_side: 'buy',
+                        order_status: 'open',
+                        order_type: 'limit',
+                        price: 26526.5,
+                        quantity: 0.00005425,
+                        quantity_filled: 0,
+                        stop_loss_price_trigger: null,
+                        stop_loss_type: null,
+                        strategy_id: 'STRATEGY_NAME',
+                        trade_signal_id: null,
                       },
                       {
-                        order_id: '853958c4-85ff-40c7-8a1a-a63ffe3db511',
-                        type: 'Limit',
-                        market: 'BTC/USDT',
+                        avg_fill_price: null,
+                        exchange: 'kucoin',
                         exchange_account_id: 'kucoin-account',
-                        amount: '61379',
-                        active_status: 'Open',
+                        execution_date: 'Fri, 15 Sep 2023 01:50:43 GMT',
+                        execution_delay: null,
+                        execution_time: 0.3389930725097656,
+                        fee_percent: 0.0002,
+                        is_demo_trade: false,
+                        is_retry: false,
+                        is_settled: true,
+                        last_traded_timestamp: null,
+                        market: 'BTC/USDT',
+                        obj_id: null,
+                        order_fee: 0,
+                        order_id: '65039c535f06e40007f1a6a5',
+                        order_side: 'buy',
+                        order_status: 'open',
+                        order_type: 'limit',
+                        price: 26526.1,
+                        quantity: 0.00005475,
+                        quantity_filled: 0,
+                        stop_loss_price_trigger: null,
+                        stop_loss_type: null,
+                        strategy_id: 'STRATEGY_NAME',
+                        trade_signal_id: null,
+                      },
+                      {
+                        avg_fill_price: 26526.1,
+                        exchange: 'kucoin',
+                        exchange_account_id: 'kucoin-account',
+                        execution_date: 'Fri, 15 Sep 2023 01:50:43 GMT',
+                        execution_delay: null,
+                        execution_time: 0.3448302745819092,
+                        fee_percent: 0.0001,
+                        handledRollingMetrics: true,
+                        is_demo_trade: false,
+                        is_retry: false,
+                        is_settled: true,
+                        last_traded_timestamp: 'Fri, 15 Sep 2023 01:50:52 GMT',
+                        market: 'BTC/USDT',
+                        obj_id: null,
+                        order_fee: 0.001452303975,
+                        order_id: '65039c53eab587000764806c',
+                        order_side: 'sell',
+                        order_status: 'closed',
+                        order_type: 'limit',
+                        price: 26526.1,
+                        quantity: 0.00005475,
+                        quantity_filled: 0.00005475,
+                        stop_loss_price_trigger: null,
+                        stop_loss_type: null,
+                        strategy_id: 'STRATEGY_NAME',
+                        trade_signal_id: null,
                       },
                     ]}
                     // filters={filters}
@@ -594,24 +692,12 @@ const Portfolio = () => {
                     // totalRecords={strategies?.length}
                     className="text-[0.7rem] md:text-[0.75rem]">
                     <Column
-                      sortable
-                      field="market"
-                      header="Market"
-                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-                    />
-                    <Column
-                      sortable
-                      field="amount"
-                      header="Amount"
-                      body={(order) => <p>{numberFormatting(order.amount)}</p>}
-                      style={{ minWidth: '7rem' }}
-                    />
-                    <Column
-                      sortable
-                      field="type"
-                      header="Type"
-                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-                      // filter
+                      header="#"
+                      body={(data, options) => options.rowIndex + 1}
+                      frozen
+                      className={`max-w-[3rem] ${
+                        width < 768 && 'max-w-[2rem] break-all'
+                      }`}
                     />
                     <Column
                       sortable
@@ -619,20 +705,150 @@ const Portfolio = () => {
                       header="Exchange account"
                       className="min-w-[8rem] md:min-w-[10rem] lg:min-w-[14rem]"
                     />
-
+                    <Column
+                      field="execution_date"
+                      header="Execution Date"
+                      // filter
+                      style={{ padding: '0.9em' }}
+                      // onFilter={handleFilter}
+                      dataType="date"
+                      filterElement={dateFilterTemplate}
+                      showFilterOperator={false}
+                      filterMatchModeOptions={dateFilterOptions}
+                    />
                     <Column
                       sortable
-                      field="active_status"
-                      header="Status"
-                      body={(order) => (
+                      field="market"
+                      header="Market"
+                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                    />
+                    <Column
+                      field="order_side"
+                      header="Order Side"
+                      filter
+                      style={{ padding: '0.9em' }}
+                      body={(account) => (
                         <Tag
-                          value={order.active_status}
+                          value={account.order_side}
                           style={{
-                            backgroundColor: '#22C55E',
+                            backgroundColor: getSeverity(account.order_side),
                           }}
                           className="text-md"
                         />
                       )}
+                      dataType="text"
+                      showFilterOperator={false}
+                      filterMatchModeOptions={equalsFilterOptions}
+                      filterElement={orderSidesFilterTemplate}
+                      className="max-w-[7rem]"
+                    />
+                    <Column
+                      field="order_type"
+                      header="Order Type"
+                      filter
+                      style={{ padding: '0.9em' }}
+                      dataType="text"
+                      showFilterOperator={false}
+                      filterMatchModeOptions={equalsFilterOptions}
+                      filterElement={orderTypesFilterTemplate}
+                      className="max-w-[7rem]"
+                    />
+                    <Column
+                      field="cost"
+                      header="Cost"
+                      style={{ padding: '0.9em' }}
+                      dataType="text"
+                      showFilterOperator={false}
+                      body={costBodyTemplate}
+                    />
+
+                    <Column
+                      field="avg_fill_price"
+                      header="Avg fill price"
+                      filter
+                      style={{ padding: '0.9em' }}
+                      dataType="text"
+                      showFilterOperator={false}
+                      filterMatchModeOptions={numericFilterOptions}
+                      body={avgFillPriceBodyTemplate}
+                    />
+                    <Column
+                      field="stop_loss_price_trigger"
+                      header="Stop Loss"
+                      filter
+                      style={{ padding: '0.9em' }}
+                      dataType="numeric"
+                      showFilterOperator={false}
+                      filterMatchModeOptions={numericFilterOptions}
+                      body={stopLossBodyTemplate}
+                    />
+                    <Column
+                      field="price"
+                      header="Price"
+                      style={{ padding: '0.9em' }}
+                      filterField="price"
+                      dataType="numeric"
+                      filter
+                      showFilterOperator={false}
+                      filterMatchModeOptions={numericFilterOptions}
+                      body={priceBodyTemplate}
+                    />
+                    <Column
+                      field="quantity"
+                      header="Quantity"
+                      style={{ padding: '0.9em' }}
+                      filterField="quantity"
+                      dataType="numeric"
+                      filter
+                      showFilterOperator={false}
+                      filterMatchModeOptions={numericFilterOptions}
+                    />
+                    <Column
+                      field="quantity_filled"
+                      header="Quantity Filled"
+                      filter
+                      style={{ padding: '0.9em' }}
+                      filterField="quantity_filled"
+                      dataType="numeric"
+                      showFilterOperator={false}
+                      filterMatchModeOptions={numericFilterOptions}
+                      body={quantityFilledBodyTemplate}
+                    />
+                    <Column
+                      field="order_status"
+                      header="Order Status"
+                      filter
+                      frozen
+                      alignFrozen="right"
+                      dataType="text"
+                      style={{ padding: '0.9em' }}
+                      body={(order) => (
+                        <Tag
+                          value={order.order_status}
+                          style={{
+                            backgroundColor: getSeverity(order.order_status),
+                          }}
+                          className="text-md"
+                        />
+                      )}
+                      showFilterOperator={false}
+                      filterMatchModeOptions={equalsFilterOptions}
+                      filterElement={orderStatusFilterTemplate}
+                      className="max-w-[6rem] shadow-[-5px_0px_5px_#00000022] md:max-w-[7rem] md:shadow-none lg:max-w-[10rem]"
+                    />
+
+                    <Column
+                      className="max-w-[3.6rem]"
+                      body={(strategy) => {
+                        return (
+                          <i
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              //TODO: cancel the order here
+                            }}
+                            className="pi pi-trash text-[1.3rem] text-red-500 hover:text-red-700"></i>
+                        )
+                      }}
                     />
                   </DataTable>
                 </TabPanel>
@@ -647,36 +863,85 @@ const Portfolio = () => {
                   <DataTable
                     value={[
                       {
-                        order_id: 'faae6901-d1ac-4f4f-8f88-cacd28429976',
-                        type: 'Limit',
-                        market: 'BTC/USDT',
+                        avg_fill_price: null,
+                        exchange: 'kucoin',
                         exchange_account_id: 'kucoin-account',
-                        amount: '56162',
-                        active_status: 'Open',
+                        execution_date: 'Fri, 15 Sep 2023 01:51:02 GMT',
+                        execution_delay: null,
+                        execution_time: 0.28513097763061523,
+                        fee_percent: 0.0001,
+                        is_demo_trade: false,
+                        is_retry: false,
+                        is_settled: true,
+                        last_traded_timestamp: null,
+                        market: 'BTC/USDT',
+                        obj_id: null,
+                        order_fee: 0,
+                        order_id: '65039c66eb794b0006299dce',
+                        order_side: 'buy',
+                        order_status: 'open',
+                        order_type: 'limit',
+                        price: 26526.6,
+                        quantity: 0.00005464,
+                        quantity_filled: 0,
+                        stop_loss_price_trigger: null,
+                        stop_loss_type: null,
+                        strategy_id: 'STRATEGY_NAME',
+                        trade_signal_id: null,
                       },
                       {
-                        order_id: '682ddb81-9a54-414e-90f1-1ac2bba7fcb6',
-                        type: 'Limit',
-                        market: 'BTC/USDT',
+                        avg_fill_price: null,
+                        exchange: 'kucoin',
                         exchange_account_id: 'kucoin-account',
-                        amount: '3541.3',
-                        active_status: 'Open',
+                        execution_date: 'Fri, 15 Sep 2023 01:50:52 GMT',
+                        execution_delay: null,
+                        execution_time: 0.270158052444458,
+                        fee_percent: 0.0002,
+                        is_demo_trade: false,
+                        is_retry: false,
+                        is_settled: true,
+                        last_traded_timestamp: null,
+                        market: 'BTC/USDT',
+                        obj_id: null,
+                        order_fee: 0,
+                        order_id: '65039c5beb794b0006299499',
+                        order_side: 'buy',
+                        order_status: 'open',
+                        order_type: 'limit',
+                        price: 26526.5,
+                        quantity: 0.00005425,
+                        quantity_filled: 0,
+                        stop_loss_price_trigger: null,
+                        stop_loss_type: null,
+                        strategy_id: 'STRATEGY_NAME',
+                        trade_signal_id: null,
                       },
                       {
-                        order_id: '453560c9-61e3-4aed-a131-31208fda0f8a',
-                        type: 'Limit',
-                        market: 'BTC/USDT',
+                        avg_fill_price: null,
+                        exchange: 'kucoin',
                         exchange_account_id: 'kucoin-account',
-                        amount: '8796',
-                        active_status: 'Open',
-                      },
-                      {
-                        order_id: '853958c4-85ff-40c7-8a1a-a63ffe3db511',
-                        type: 'Limit',
+                        execution_date: 'Fri, 15 Sep 2023 01:50:43 GMT',
+                        execution_delay: null,
+                        execution_time: 0.3389930725097656,
+                        fee_percent: 0.0002,
+                        is_demo_trade: false,
+                        is_retry: false,
+                        is_settled: true,
+                        last_traded_timestamp: null,
                         market: 'BTC/USDT',
-                        exchange_account_id: 'kucoin-account',
-                        amount: '61379',
-                        active_status: 'Open',
+                        obj_id: null,
+                        order_fee: 0,
+                        order_id: '65039c535f06e40007f1a6a5',
+                        order_side: 'buy',
+                        order_status: 'open',
+                        order_type: 'limit',
+                        price: 26526.1,
+                        quantity: 0.00005475,
+                        quantity_filled: 0,
+                        stop_loss_price_trigger: null,
+                        stop_loss_type: null,
+                        strategy_id: 'STRATEGY_NAME',
+                        trade_signal_id: null,
                       },
                     ]}
                     // filters={filters}
@@ -694,46 +959,162 @@ const Portfolio = () => {
                     // totalRecords={strategies?.length}
                     className="text-[0.7rem] md:text-[0.75rem]">
                     <Column
-                      sortable
-                      field="market"
-                      header="Market"
-                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                      header="#"
+                      body={(data, options) => options.rowIndex + 1}
+                      frozen
+                      className={`max-w-[3rem] ${
+                        width < 768 && 'max-w-[2rem] break-all'
+                      }`}
                     />
-                    <Column
-                      sortable
-                      field="amount"
-                      header="Amount"
-                      body={(order) => <p>{numberFormatting(order.amount)}</p>}
-                      style={{ minWidth: '7rem' }}
-                    />
-                    <Column
-                      sortable
-                      field="type"
-                      header="Type"
-                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-                      // filter
-                    />
-
                     <Column
                       sortable
                       field="exchange_account_id"
                       header="Exchange account"
                       className="min-w-[8rem] md:min-w-[10rem] lg:min-w-[14rem]"
                     />
-
+                    <Column
+                      field="execution_date"
+                      header="Execution Date"
+                      // filter
+                      style={{ padding: '0.9em' }}
+                      // onFilter={handleFilter}
+                      dataType="date"
+                      filterElement={dateFilterTemplate}
+                      showFilterOperator={false}
+                      filterMatchModeOptions={dateFilterOptions}
+                    />
                     <Column
                       sortable
-                      field="active_status"
-                      header="Status"
-                      body={(order) => (
+                      field="market"
+                      header="Market"
+                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                    />
+                    <Column
+                      field="order_side"
+                      header="Order Side"
+                      filter
+                      style={{ padding: '0.9em' }}
+                      body={(account) => (
                         <Tag
-                          value={order.active_status}
+                          value={account.order_side}
                           style={{
-                            backgroundColor: '#22C55E',
+                            backgroundColor: getSeverity(account.order_side),
                           }}
                           className="text-md"
                         />
                       )}
+                      dataType="text"
+                      showFilterOperator={false}
+                      filterMatchModeOptions={equalsFilterOptions}
+                      filterElement={orderSidesFilterTemplate}
+                      className="max-w-[7rem]"
+                    />
+                    <Column
+                      field="order_type"
+                      header="Order Type"
+                      filter
+                      style={{ padding: '0.9em' }}
+                      dataType="text"
+                      showFilterOperator={false}
+                      filterMatchModeOptions={equalsFilterOptions}
+                      filterElement={orderTypesFilterTemplate}
+                      className="max-w-[7rem]"
+                    />
+                    <Column
+                      field="cost"
+                      header="Cost"
+                      style={{ padding: '0.9em' }}
+                      dataType="text"
+                      showFilterOperator={false}
+                      body={costBodyTemplate}
+                    />
+
+                    <Column
+                      field="avg_fill_price"
+                      header="Avg fill price"
+                      filter
+                      style={{ padding: '0.9em' }}
+                      dataType="text"
+                      showFilterOperator={false}
+                      filterMatchModeOptions={numericFilterOptions}
+                      body={avgFillPriceBodyTemplate}
+                    />
+                    <Column
+                      field="stop_loss_price_trigger"
+                      header="Stop Loss"
+                      filter
+                      style={{ padding: '0.9em' }}
+                      dataType="numeric"
+                      showFilterOperator={false}
+                      filterMatchModeOptions={numericFilterOptions}
+                      body={stopLossBodyTemplate}
+                    />
+                    <Column
+                      field="price"
+                      header="Price"
+                      style={{ padding: '0.9em' }}
+                      filterField="price"
+                      dataType="numeric"
+                      filter
+                      showFilterOperator={false}
+                      filterMatchModeOptions={numericFilterOptions}
+                      body={priceBodyTemplate}
+                    />
+                    <Column
+                      field="quantity"
+                      header="Quantity"
+                      style={{ padding: '0.9em' }}
+                      filterField="quantity"
+                      dataType="numeric"
+                      filter
+                      showFilterOperator={false}
+                      filterMatchModeOptions={numericFilterOptions}
+                    />
+                    <Column
+                      field="quantity_filled"
+                      header="Quantity Filled"
+                      filter
+                      style={{ padding: '0.9em' }}
+                      filterField="quantity_filled"
+                      dataType="numeric"
+                      showFilterOperator={false}
+                      filterMatchModeOptions={numericFilterOptions}
+                      body={quantityFilledBodyTemplate}
+                    />
+                    <Column
+                      field="order_status"
+                      header="Order Status"
+                      filter
+                      frozen
+                      alignFrozen="right"
+                      dataType="text"
+                      style={{ padding: '0.9em' }}
+                      body={(order) => (
+                        <Tag
+                          value={order.order_status}
+                          style={{
+                            backgroundColor: getSeverity(order.order_status),
+                          }}
+                          className="text-md"
+                        />
+                      )}
+                      showFilterOperator={false}
+                      filterMatchModeOptions={equalsFilterOptions}
+                      filterElement={orderStatusFilterTemplate}
+                      className="max-w-[6rem] shadow-[-5px_0px_5px_#00000022] md:max-w-[7rem] md:shadow-none lg:max-w-[10rem]"
+                    />
+                    <Column
+                      className="max-w-[3.6rem]"
+                      body={(strategy) => {
+                        return (
+                          <i
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              //TODO: cancel the order here
+                            }}
+                            className="pi pi-trash text-[1.3rem] text-red-500 hover:text-red-700"></i>
+                        )
+                      }}
                     />
                   </DataTable>
                 </TabPanel>
@@ -746,7 +1127,64 @@ const Portfolio = () => {
                   }
                   className="text-xs md:text-base">
                   <DataTable
-                    value={[]}
+                    value={[
+                      {
+                        avg_fill_price: 26526.5,
+                        exchange: 'kucoin',
+                        exchange_account_id: 'kucoin-account',
+                        execution_date: 'Fri, 15 Sep 2023 01:50:52 GMT',
+                        execution_delay: null,
+                        execution_time: 0.27878594398498535,
+                        fee_percent: 0.0001,
+                        handledRollingMetrics: true,
+                        is_demo_trade: false,
+                        is_retry: false,
+                        is_settled: true,
+                        last_traded_timestamp: 'Fri, 15 Sep 2023 01:51:02 GMT',
+                        market: 'BTC/USDT',
+                        obj_id: null,
+                        order_fee: 0.001439062625,
+                        order_id: '65039c5b29b9ec0007d2f4d8',
+                        order_side: 'sell',
+                        order_status: 'closed',
+                        order_type: 'limit',
+                        price: 26526.5,
+                        quantity: 0.00005425,
+                        quantity_filled: 0.00005425,
+                        stop_loss_price_trigger: null,
+                        stop_loss_type: null,
+                        strategy_id: 'STRATEGY_NAME',
+                        trade_signal_id: null,
+                      },
+                      {
+                        avg_fill_price: 26526.1,
+                        exchange: 'kucoin',
+                        exchange_account_id: 'kucoin-account',
+                        execution_date: 'Fri, 15 Sep 2023 01:50:43 GMT',
+                        execution_delay: null,
+                        execution_time: 0.3448302745819092,
+                        fee_percent: 0.0001,
+                        handledRollingMetrics: true,
+                        is_demo_trade: false,
+                        is_retry: false,
+                        is_settled: true,
+                        last_traded_timestamp: 'Fri, 15 Sep 2023 01:50:52 GMT',
+                        market: 'BTC/USDT',
+                        obj_id: null,
+                        order_fee: 0.001452303975,
+                        order_id: '65039c53eab587000764806c',
+                        order_side: 'sell',
+                        order_status: 'closed',
+                        order_type: 'limit',
+                        price: 26526.1,
+                        quantity: 0.00005475,
+                        quantity_filled: 0.00005475,
+                        stop_loss_price_trigger: null,
+                        stop_loss_type: null,
+                        strategy_id: 'STRATEGY_NAME',
+                        trade_signal_id: null,
+                      },
+                    ]}
                     // filters={filters}
                     paginator
                     breakpoint="0"
@@ -762,46 +1200,162 @@ const Portfolio = () => {
                     // totalRecords={strategies?.length}
                     className="text-[0.7rem] md:text-[0.75rem]">
                     <Column
-                      sortable
-                      field="market"
-                      header="Market"
-                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                      header="#"
+                      body={(data, options) => options.rowIndex + 1}
+                      frozen
+                      className={`max-w-[3rem] ${
+                        width < 768 && 'max-w-[2rem] break-all'
+                      }`}
                     />
-                    <Column
-                      sortable
-                      field="amount"
-                      header="Amount"
-                      body={(order) => <p>{numberFormatting(order.amount)}</p>}
-                      style={{ minWidth: '7rem' }}
-                    />
-                    <Column
-                      sortable
-                      field="type"
-                      header="Type"
-                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
-                      // filter
-                    />
-
                     <Column
                       sortable
                       field="exchange_account_id"
                       header="Exchange account"
                       className="min-w-[8rem] md:min-w-[10rem] lg:min-w-[14rem]"
                     />
-
+                    <Column
+                      field="execution_date"
+                      header="Execution Date"
+                      // filter
+                      style={{ padding: '0.9em' }}
+                      // onFilter={handleFilter}
+                      dataType="date"
+                      filterElement={dateFilterTemplate}
+                      showFilterOperator={false}
+                      filterMatchModeOptions={dateFilterOptions}
+                    />
                     <Column
                       sortable
-                      field="active_status"
-                      header="Status"
-                      body={(order) => (
+                      field="market"
+                      header="Market"
+                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                    />
+                    <Column
+                      field="order_side"
+                      header="Order Side"
+                      filter
+                      style={{ padding: '0.9em' }}
+                      body={(account) => (
                         <Tag
-                          value={order.active_status}
+                          value={account.order_side}
                           style={{
-                            backgroundColor: '#22C55E',
+                            backgroundColor: getSeverity(account.order_side),
                           }}
                           className="text-md"
                         />
                       )}
+                      dataType="text"
+                      showFilterOperator={false}
+                      filterMatchModeOptions={equalsFilterOptions}
+                      filterElement={orderSidesFilterTemplate}
+                      className="max-w-[7rem]"
+                    />
+                    <Column
+                      field="order_type"
+                      header="Order Type"
+                      filter
+                      style={{ padding: '0.9em' }}
+                      dataType="text"
+                      showFilterOperator={false}
+                      filterMatchModeOptions={equalsFilterOptions}
+                      filterElement={orderTypesFilterTemplate}
+                      className="max-w-[7rem]"
+                    />
+                    <Column
+                      field="cost"
+                      header="Cost"
+                      style={{ padding: '0.9em' }}
+                      dataType="text"
+                      showFilterOperator={false}
+                      body={costBodyTemplate}
+                    />
+
+                    <Column
+                      field="avg_fill_price"
+                      header="Avg fill price"
+                      filter
+                      style={{ padding: '0.9em' }}
+                      dataType="text"
+                      showFilterOperator={false}
+                      filterMatchModeOptions={numericFilterOptions}
+                      body={avgFillPriceBodyTemplate}
+                    />
+                    <Column
+                      field="stop_loss_price_trigger"
+                      header="Stop Loss"
+                      filter
+                      style={{ padding: '0.9em' }}
+                      dataType="numeric"
+                      showFilterOperator={false}
+                      filterMatchModeOptions={numericFilterOptions}
+                      body={stopLossBodyTemplate}
+                    />
+                    <Column
+                      field="price"
+                      header="Price"
+                      style={{ padding: '0.9em' }}
+                      filterField="price"
+                      dataType="numeric"
+                      filter
+                      showFilterOperator={false}
+                      filterMatchModeOptions={numericFilterOptions}
+                      body={priceBodyTemplate}
+                    />
+                    <Column
+                      field="quantity"
+                      header="Quantity"
+                      style={{ padding: '0.9em' }}
+                      filterField="quantity"
+                      dataType="numeric"
+                      filter
+                      showFilterOperator={false}
+                      filterMatchModeOptions={numericFilterOptions}
+                    />
+                    <Column
+                      field="quantity_filled"
+                      header="Quantity Filled"
+                      filter
+                      style={{ padding: '0.9em' }}
+                      filterField="quantity_filled"
+                      dataType="numeric"
+                      showFilterOperator={false}
+                      filterMatchModeOptions={numericFilterOptions}
+                      body={quantityFilledBodyTemplate}
+                    />
+                    <Column
+                      field="order_status"
+                      header="Order Status"
+                      filter
+                      frozen
+                      alignFrozen="right"
+                      dataType="text"
+                      style={{ padding: '0.9em' }}
+                      body={(order) => (
+                        <Tag
+                          value={order.order_status}
+                          style={{
+                            backgroundColor: getSeverity(order.order_status),
+                          }}
+                          className="text-md"
+                        />
+                      )}
+                      showFilterOperator={false}
+                      filterMatchModeOptions={equalsFilterOptions}
+                      filterElement={orderStatusFilterTemplate}
+                      className="max-w-[6rem] shadow-[-5px_0px_5px_#00000022] md:max-w-[7rem] md:shadow-none lg:max-w-[10rem]"
+                    />
+                    <Column
+                      className="max-w-[3.6rem]"
+                      body={(strategy) => {
+                        return (
+                          <i
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              //TODO: cancel the order here
+                            }}
+                            className="pi pi-trash text-[1.3rem] text-red-500 hover:text-red-700"></i>
+                        )
+                      }}
                     />
                   </DataTable>
                 </TabPanel>
