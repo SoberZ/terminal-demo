@@ -521,7 +521,7 @@ const Portfolio = () => {
                   }`}
                   type="submit"
                   className={`w-full transition-all ${
-                    isValid
+                    isValid && watchedAmount > 0
                       ? buyActive
                         ? '!bg-green-500 hover:!bg-green-600 dark:!bg-green-700 dark:hover:!bg-green-700/80'
                         : '!bg-red-500 hover:!bg-red-600 dark:!bg-red-700 dark:hover:!bg-red-700/80'
