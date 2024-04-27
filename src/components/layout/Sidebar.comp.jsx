@@ -17,13 +17,14 @@ const Sidebar = ({ themeState, getter, setter }) => {
         <div className="flex-1 text-base font-medium">
           <ul className="space-y-3 fill-color-secondary pt-2 pb-4 text-color-secondary">
             {routes.map((route, index) => {
+              const matchPattern = new RegExp(`^${route.path}(/|$)`)
               return (
                 <Link
                   key={index + 1}
                   to={route.path}
                   onClick={handleClick(route.path)}
                   className={`flex flex-wrap items-center justify-center ${
-                    getter === route.path
+                    matchPattern.test(getter)
                       ? 'bg-color-secondary fill-autowhale-blue font-normal text-autowhale-blue shadow-soft-xl dark:fill-white dark:text-white'
                       : ''
                   } rounded-3xl p-3 transition duration-300 hover:cursor-pointer hover:bg-color-secondary hover:fill-autowhale-blue hover:text-autowhale-blue hover:shadow-soft-xl `}>
