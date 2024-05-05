@@ -88,11 +88,11 @@ export const routes = [
     name: 'Performance Metrics Dashboard',
     component: DataAnalysis,
   },
-  {
-    path: '/market-indicators',
-    name: 'Market Indicators',
-    component: LiveDataIcon,
-  },
+  // {
+  //   path: '/market-indicators',
+  //   name: 'Market Indicators',
+  //   component: LiveDataIcon,
+  // },
   {
     path: '/portfolio',
     name: 'Portfolio',
