@@ -409,7 +409,7 @@ const Strategies = () => {
       <Helmet>
         <title>Strategies</title>
       </Helmet>
-      <div className="flex flex-col space-y-10 overflow-y-hidden">
+      <div className="mx-auto flex max-w-[2200px] flex-col space-y-10 overflow-y-hidden">
         <div
           id="step-0"
           className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">

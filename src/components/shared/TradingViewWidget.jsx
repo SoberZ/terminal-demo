@@ -31,7 +31,7 @@ function TradingViewWidget({ activeSymbol, activeExchange, dashboard }) {
     '/',
     ''
   )}`
-  const heightTV = dashboard ? 502 : width > 1024 ? 750 : 420
+  const heightTV = dashboard ? 502 : width > 1024 ? 800 : 420
   return (
     <TDwidget
       symbol={constructedSymbol}

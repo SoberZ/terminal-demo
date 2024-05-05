@@ -163,7 +163,7 @@ const CreateStrategy = () => {
       <Helmet>
         <title>Create Strategy</title>
       </Helmet>
-      <div className="min-h-[33rem] space-y-5 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
+      <div className="mx-auto min-h-[33rem] max-w-[2200px] space-y-5 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
         <h1 className="inline-block  text-2xl font-semibold text-color-secondary dark:text-white">
           Create a new strategy
         </h1>

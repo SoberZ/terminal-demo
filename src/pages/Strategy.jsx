@@ -478,7 +478,7 @@ const Strategy = () => {
       <Helmet>
         <title>{strategyId}</title>
       </Helmet>
-      <div className="space-y-4 rounded-lg bg-color-secondary py-3.5 px-2 text-sm text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800 md:p-10">
+      <div className="mx-auto max-w-[2200px] space-y-4 rounded-lg bg-color-secondary py-3.5 px-2 text-sm text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800 md:p-10">
         <div className="flex flex-col items-center space-y-2 md:flex md:flex-row md:items-center md:justify-between md:space-y-0">
           <div className="flex flex-wrap justify-center gap-2 md:justify-start">
             <div

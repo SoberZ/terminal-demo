@@ -237,7 +237,7 @@ const CreateExchangeAccount = () => {
       <Helmet>
         <title>Create Exchange Account</title>
       </Helmet>
-      <div className="space-y-5 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
+      <div className="mx-auto max-w-[2200px] space-y-5 rounded-lg bg-color-secondary p-10 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
         <h1 className="inline-block bg-clip-text text-2xl font-semibold text-color-secondary  dark:text-white">
           Create an exchange account
         </h1>

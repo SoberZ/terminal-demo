@@ -328,7 +328,7 @@ const Dashboard = () => {
       <Helmet>
         <title>Main Dashboard</title>
       </Helmet>
-      <div className="flex flex-col space-y-6">
+      <div className="mx-auto flex max-w-[2200px] flex-col space-y-6">
         <div id={`step-2`} className="flex flex-col space-y-10">
           {width > 768 ? (
             <Spotlight className="group grid grid-cols-2 gap-6 lg:grid-cols-4 2xl:grid-cols-8">

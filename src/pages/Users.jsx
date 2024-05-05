@@ -119,7 +119,7 @@ export const Users = () => {
       <Helmet>
         <title>Users</title>
       </Helmet>
-      <div className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
+      <div className="mx-auto max-w-[2200px] space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
         <div className="w-full space-y-5 text-sm">
           <p className="text-sm font-light">
             As an admin you have access to this page. Edit, view and assign

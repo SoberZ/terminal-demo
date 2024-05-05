@@ -59,7 +59,7 @@ const Categories = () => {
   return (
     <>
       <ConfirmDialog />
-      <div className="flex gap-5">
+      <div className="flex gap-5 ">
         <TerminalButton>
           <Link to="/users/create-category">Create a Category</Link>
         </TerminalButton>

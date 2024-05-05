@@ -265,7 +265,7 @@ const Cachers = () => {
       <Helmet>
         <title>Cachers</title>
       </Helmet>
-      <div className="space-y-10">
+      <div className="mx-auto max-w-[2200px] space-y-10">
         <div className="w-full space-y-5 rounded-lg bg-color-secondary p-5 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
           <p className="text-sm font-light">
             Find an overview over all cachers in the system here. it gives a

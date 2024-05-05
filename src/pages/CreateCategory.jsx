@@ -269,7 +269,7 @@ const CreateCategory = () => {
       <Helmet>
         <title>Create Category</title>
       </Helmet>
-      <div className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
+      <div className="mx-auto max-w-[2200px] space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
         <p className="text-sm font-light">Create a category here</p>
         <div className="flex gap-5">
           <TerminalButton

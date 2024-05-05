@@ -237,7 +237,7 @@ const Category = () => {
         <title>{categoryId}</title>
       </Helmet>
       <ConfirmDialog />
-      <div className="flex flex-col space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
+      <div className="mx-auto flex max-w-[2200px] flex-col space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
         <div className="flex flex-col gap-2">
           <h1 className="text-primary break-anywhere text-2xl font-semibold dark:text-white md:inline md:text-left">
             {categoryId}

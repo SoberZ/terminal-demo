@@ -204,7 +204,7 @@ const Exchanges = () => {
       <Helmet>
         <title>Exchanges</title>
       </Helmet>
-      <div className="space-y-10">
+      <div className="mx-auto max-w-[2200px] space-y-10">
         <div className="space-y-5 rounded-lg bg-color-secondary p-5 text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800">
           <p className="text-sm font-light ">
             Find on overview of all exchange accounts in the system. By clicking

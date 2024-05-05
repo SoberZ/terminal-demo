@@ -171,7 +171,7 @@ const Exchange = () => {
       <Helmet>
         <title>{exchangeId}</title>
       </Helmet>
-      <div className="space-y-4 rounded-lg bg-color-secondary p-3.5 text-sm text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800 md:p-10">
+      <div className="mx-auto max-w-[2200px] space-y-4 rounded-lg bg-color-secondary p-3.5 text-sm text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800 md:p-10">
         {accountData && (
           <div className="flex flex-col  text-sm">
             <div className="flex w-full flex-col items-center justify-center gap-3 md:flex-row md:justify-between">

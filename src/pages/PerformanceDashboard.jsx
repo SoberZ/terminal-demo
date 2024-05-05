@@ -190,7 +190,7 @@ const PerformanceDashboard = () => {
       <Helmet>
         <title>Performance Dashboard</title>
       </Helmet>
-      <div className="space-y-4 rounded-lg bg-color-secondary p-3.5 text-sm text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800 md:p-10">
+      <div className="mx-auto max-w-[2200px] space-y-4 rounded-lg bg-color-secondary p-3.5 text-sm text-color-secondary shadow-soft-lg dark:border dark:border-neutral-800 md:p-10">
         <div className="flex items-center gap-5 ">
           <h2 className="text-2xl font-bold">Performance Metrics Dashboard</h2>
           <button className="mx-1" onClick={handleRefresh}>

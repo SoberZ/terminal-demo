@@ -226,7 +226,7 @@ const User = () => {
         <title>{userId}</title>
       </Helmet>
       <ConfirmDialog />
-      <div className="space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
+      <div className="mx-auto max-w-[2200px] space-y-5 rounded-lg bg-color-secondary p-3.5 pb-5 text-color-secondary shadow-soft-xl dark:border dark:border-neutral-800 sm:p-5">
         <div className="flex flex-col items-center space-y-2 md:flex md:flex-row md:items-center md:justify-between md:space-y-0">
           <h1 className="text-3xl font-semibold text-autowhale-blue dark:text-color-secondary">
             {userId}

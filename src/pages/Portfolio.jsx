@@ -28,6 +28,7 @@ import ExchangesJson from '../data/exchanges.json'
 import FakePieChartData from '../data/exchangePiechart.json'
 import FakePortfolioChartData from '../data/portfolio/piechartsPortfolio.json'
 import FakePortfolioChartsData from '../data/portfolio/individualPiechartsPortfolio.json'
+import FakeFreeBalanceData from '../data/portfolio/freeBalance.json'
 import { fetchMarkets } from '../utils/Fetchers/DataFetchers'
 
 import {
@@ -57,18 +58,14 @@ const Portfolio = () => {
     watch,
     resetField,
     trigger,
+    setValue,
     formState: { isValid, isDirty },
   } = useForm({
     defaultValues: {
-      //? fetch accessible exchange accounts
       exchange_account_id: '',
-      //? fetch accessible symbols there ?
       symbol: 'BTC/USDT',
-      side: '',
-      //? limit or something else
       type: 'Limit',
       amount: '',
-      //? don't know if it should be written by the user or something else
       price: '',
       stop_loss_price: '',
       take_profit_price: '',
@@ -87,6 +84,9 @@ const Portfolio = () => {
   const [pieChartData, setPieChartData] = useState({})
   const [markets, setMarkets] = useState([])
   const [buyActive, setBuyActive] = useState(true)
+  // const [freeBalance, setFreeBalance] = useState()
+
+  const watchedPrice = watch('price')
   const watchedSymbol = watch('symbol')
   const watchedAmount = watch('amount')
 
@@ -114,8 +114,15 @@ const Portfolio = () => {
   }
 
   useEffect(() => {
+    setValue('price', '62450')
     setAccessibleExchangeAccounts(ExchangesJson)
   }, [])
+
+  //? this can never return more than one exchange
+  const selectedExchange = accessibleExchangeAccounts.filter(
+    (exchange) =>
+      exchange.exchange_account_id === activeExchangeAccount && exchange
+  )[0]?.exchange
 
   useEffect(() => {
     async function fetchAndCombineBalances() {
@@ -152,19 +159,13 @@ const Portfolio = () => {
     .filter((exchange) => exchange.status === 'running')
     .map((exchange) => exchange.exchange_account_id)
 
-  //? this can never return more than one exchange
-  const selectedExchange = accessibleExchangeAccounts.filter(
-    (exchange) =>
-      exchange.exchange_account_id === activeExchangeAccount && exchange
-  )[0]?.exchange
-
   useEffect(() => {
     if (selectedExchange !== undefined) {
       fetchMarkets(selectedExchange, setMarkets)
     }
   }, [selectedExchange])
 
-  const maxBalance = FakePortfolioChartsData.filter(
+  const freeBalance = FakeFreeBalanceData.filter(
     (data) => data.exchange_account_id === activeExchangeAccount
   ).map((filteredData) => {
     const tradeSymbol = buyActive
@@ -226,8 +227,6 @@ const Portfolio = () => {
     }
   }
 
-  const heightTV = width > 1024 ? 750 : 420
-
   return (
     <>
       <Joyride
@@ -255,7 +254,7 @@ const Portfolio = () => {
         }}
         // styles={{ overlay: { height: '100%' } }}
       />
-      <div className="space-y-10">
+      <div className="mx-auto max-w-[2200px] space-y-10">
         <Helmet>
           <title>Portfolio</title>
         </Helmet>
@@ -276,6 +275,7 @@ const Portfolio = () => {
                   type="button"
                   onClick={() => {
                     setActiveExchangeAccount('all')
+                    resetField('amount')
                   }}
                   className={`${
                     activeExchangeAccount === 'all'
@@ -293,6 +293,7 @@ const Portfolio = () => {
                         ? setActiveExchangeAccount('all')
                         : (() => {
                             trigger('price')
+                            resetField('amount')
                             setActiveExchangeAccount(exchange)
                           })()
                     }}
@@ -429,42 +430,80 @@ const Portfolio = () => {
                   control={control}
                   rules={{
                     required: true,
-                    max: maxBalance,
+                    max: freeBalance,
                   }}
                   render={({ field }) => (
                     <span className="p-input-icon-right w-1/2 gap-2">
                       <i className="pi ml-5 font-lato ">
-                        {watchedSymbol && buyActive
-                          ? watchedSymbol.split('/')[1]
-                          : watchedSymbol.split('/')[0]}
+                        {watchedSymbol.split('/')[0]}
                       </i>
                       <InputText
                         keyfilter="pnum"
-                        max={maxBalance || 0}
+                        max={freeBalance || 0}
                         min={0}
                         className="h-10 w-full text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:!border-neutral-700 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500"
                         placeholder="Amount"
-                        // placeholder={`Amount ${
-                        //   watchedSymbol && `(${watchedSymbol.split('/')[1]})`
-                        // }`}
+                        value={
+                          buyActive
+                            ? Number(
+                                parseFloat(field.value / watchedPrice)?.toFixed(
+                                  8
+                                )
+                              ) || ''
+                            : Number(parseFloat(field.value)?.toFixed(8)) || ''
+                        }
                         onChange={(e) => {
-                          const value = Math.min(
-                            maxBalance,
-                            Math.max(0, parseFloat(e.target.value) || 0)
-                          )
-                          field.onChange(value)
+                          const derivedValue = buyActive
+                            ? parseFloat(e.target.value) * watchedPrice
+                            : parseFloat(e.target.value)
+
+                          field.onChange(derivedValue || 0)
                         }}
-                        {...field}
                       />
                     </span>
                   )}
                 />
               </div>
+              <Controller
+                name="amount"
+                control={control}
+                rules={{
+                  required: true,
+                  max: freeBalance,
+                }}
+                render={({ field }) => (
+                  <span className="p-input-icon-right hidden gap-2 lg:block">
+                    <i className="pi ml-5 font-lato">
+                      {watchedSymbol.split('/')[1]}
+                    </i>
+                    <InputText
+                      keyfilter="pnum"
+                      max={freeBalance || 0}
+                      min={0}
+                      className="h-10 w-full text-black focus-within:border-blue-600 focus-within:!ring-2 focus-within:ring-blue-300 dark:!border-neutral-700 dark:bg-color-secondary dark:text-white dark:focus-within:!border-blue-900 dark:focus-within:!ring-blue-500"
+                      placeholder="Total"
+                      value={
+                        buyActive
+                          ? Number(parseFloat(field.value)?.toFixed(8)) || ''
+                          : Number(
+                              parseFloat(watchedPrice * field.value)?.toFixed(8)
+                            ) || ''
+                      }
+                      onChange={(e) => {
+                        const derivedValue = buyActive
+                          ? parseFloat(e.target.value)
+                          : parseFloat(e.target.value) / watchedPrice
 
+                        field.onChange(derivedValue || 0)
+                      }}
+                    />
+                  </span>
+                )}
+              />
               <div className="flex items-center justify-between gap-2">
                 <p className="text-xs md:text-base">
-                  {(watchedAmount <= maxBalance &&
-                    Math.round((watchedAmount / maxBalance) * 100)) ||
+                  {(watchedAmount <= freeBalance &&
+                    Math.round((watchedAmount / freeBalance) * 100)) ||
                     0}
                   %
                 </p>
@@ -473,6 +512,7 @@ const Portfolio = () => {
                   control={control}
                   rules={{
                     required: true,
+                    min: 0,
                   }}
                   render={({ field }) => (
                     <Slider
@@ -481,8 +521,9 @@ const Portfolio = () => {
                         field.onChange(e.value)
                       }}
                       className="w-[90%]"
-                      max={(watchedAmount <= maxBalance && maxBalance) || 0}
-                      // step={maxBalance * 0.25 || maxBalance * 0.01}
+                      max={(watchedAmount <= freeBalance && freeBalance) || 0}
+                      // TODO: figure out a way to have the step and the input working simultaneously
+                      step={freeBalance * 0.01}
                     />
                   )}
                 />
