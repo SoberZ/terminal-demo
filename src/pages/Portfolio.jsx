@@ -762,6 +762,20 @@ const Portfolio = () => {
                       field="market"
                       header="Market"
                       className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                      body={(order) => (
+                        <div className="flex items-center">
+                          <img
+                            src={`/crypto-icons-webp/${
+                              order.market.split('/')[0]
+                            }.webp`}
+                            className="h-6 w-6"
+                            alt=""
+                          />
+                          <p className="text-[0.7rem] md:text-sm">
+                            {order.market}
+                          </p>
+                        </div>
+                      )}
                     />
                     <Column
                       field="order_side"
@@ -1033,6 +1047,20 @@ const Portfolio = () => {
                       field="market"
                       header="Market"
                       className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                      body={(order) => (
+                        <div className="flex items-center">
+                          <img
+                            src={`/crypto-icons-webp/${
+                              order.market.split('/')[0]
+                            }.webp`}
+                            className="h-6 w-6"
+                            alt=""
+                          />
+                          <p className="text-[0.7rem] md:text-sm">
+                            {order.market}
+                          </p>
+                        </div>
+                      )}
                     />
                     <Column
                       field="order_side"
@@ -1274,6 +1302,20 @@ const Portfolio = () => {
                       field="market"
                       header="Market"
                       className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                      body={(order) => (
+                        <div className="flex items-center">
+                          <img
+                            src={`/crypto-icons-webp/${
+                              order.market.split('/')[0]
+                            }.webp`}
+                            className="h-6 w-6"
+                            alt=""
+                          />
+                          <p className="text-[0.7rem] md:text-sm">
+                            {order.market}
+                          </p>
+                        </div>
+                      )}
                     />
                     <Column
                       field="order_side"

@@ -147,7 +147,12 @@ const MarketIndicators = () => {
               </Suspense>
             </ErrorBoundary>
           </div>
-          <h1 className="pt-1 text-center text-xl font-bold capitalize text-autowhale-blue dark:text-white md:col-span-2 md:pt-0 md:text-3xl lg:text-right">
+          <h1 className="flex items-center justify-center pt-1 text-center text-xl font-bold capitalize text-autowhale-blue dark:text-white md:col-span-2 md:justify-end md:pt-0 md:text-3xl lg:text-right">
+            <img
+              src={`/crypto-icons-webp/${currentMarket.split('/')[0]}.webp`}
+              className="h-10 w-10"
+              alt=""
+            />
             {`${currentMarket} - ${currentExchange}`}
           </h1>
         </div>

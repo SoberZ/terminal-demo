@@ -529,8 +529,15 @@ const Strategy = () => {
               </Link>
             </div>
           </div>
-          <h1 className="pt-1 text-xl text-autowhale-blue dark:text-white md:pt-0 md:text-3xl">
-            {`${strategyData?.market} - ${strategyData?.exchange}`}
+          <h1 className="flex items-center pt-1 text-xl text-autowhale-blue dark:text-white md:pt-0 md:text-3xl">
+            <img
+              src={`/crypto-icons-webp/${
+                strategyData?.market.split('/')[0] || 'generic'
+              }.webp`}
+              className="h-10 w-10"
+              alt=""
+            />
+            {` ${strategyData?.market} - ${strategyData?.exchange}`}
           </h1>
         </div>
         <ErrorBoundary FallbackComponent={Fallback}>
