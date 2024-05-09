@@ -440,6 +440,18 @@ const AllOrdersComponent = ({ records }) => {
           showFilterOperator={false}
           filterMatchModeOptions={stringFilterOptions}
           className="max-w-[7rem]"
+          body={(strategy) => (
+            <div className="flex items-center">
+              <img
+                src={`/crypto-icons-webp/${
+                  strategy.market.split('/')[0] || 'generic'
+                }.webp`}
+                className="h-5 w-5"
+                alt=""
+              />
+              <p className="text-[0.7rem] md:text-sm">{strategy.market}</p>
+            </div>
+          )}
         />
         <Column
           field="order_side"

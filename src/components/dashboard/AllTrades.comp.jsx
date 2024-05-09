@@ -340,7 +340,7 @@ const AllTradesComponent = ({ records }) => {
   }
 
   return (
-    <div className="!text-xs !md:text-base">
+    <div className="!md:text-base !text-xs">
       <DataTable
         value={tradesData}
         totalRecords={totalRecords}
@@ -382,7 +382,7 @@ const AllTradesComponent = ({ records }) => {
           filterMatchModeOptions={stringFilterOptions}
           frozen
           className={` ${
-            width < 768 && 'max-w-[7rem] md:max-w-[10rem] break-all'
+            width < 768 && 'max-w-[7rem] break-all md:max-w-[10rem]'
           } shadow-[5px_0px_5px_#00000022] xl:shadow-none `}
         />
         <Column
@@ -423,6 +423,18 @@ const AllTradesComponent = ({ records }) => {
           showFilterOperator={false}
           filterMatchModeOptions={stringFilterOptions}
           className="max-w-[7rem]"
+          body={(strategy) => (
+            <div className="flex items-center">
+              <img
+                src={`/crypto-icons-webp/${
+                  strategy.market.split('/')[0] || 'generic'
+                }.webp`}
+                className="h-5 w-5"
+                alt=""
+              />
+              <p className="text-[0.7rem] md:text-sm">{strategy.market}</p>
+            </div>
+          )}
         />
         <Column
           field="order_side"

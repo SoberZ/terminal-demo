@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet'
 import { ErrorBoundary } from 'react-error-boundary'
 
 // Import FakeData
-import Data from '../data/homepageData'
+import Data from '../data/homepageData.json'
 
 import {
   Tile,
@@ -626,6 +626,20 @@ const Dashboard = () => {
                       field="market"
                       header="Market"
                       className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                      body={(strategy) => (
+                        <div className="flex items-center">
+                          <img
+                            src={`/crypto-icons-webp/${
+                              strategy.market.split('/')[0] || 'generic'
+                            }.webp`}
+                            className="h-6 w-6"
+                            alt=""
+                          />
+                          <p className="text-[0.7rem] md:text-sm">
+                            {strategy.market}
+                          </p>
+                        </div>
+                      )}
                     />
                     <Column
                       sortable
@@ -677,6 +691,20 @@ const Dashboard = () => {
                   field="market"
                   header="Market"
                   className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                  body={(strategy) => (
+                    <div className="flex items-center">
+                      <img
+                        src={`/crypto-icons-webp/${
+                          strategy.market.split('/')[0] || 'generic'
+                        }.webp`}
+                        className="h-6 w-6"
+                        alt=""
+                      />
+                      <p className="text-[0.7rem] md:text-sm">
+                        {strategy.market}
+                      </p>
+                    </div>
+                  )}
                 />
                 <Column
                   sortable
