@@ -439,7 +439,7 @@ const AllOrdersComponent = ({ records }) => {
           style={{ padding: '0.9em' }}
           showFilterOperator={false}
           filterMatchModeOptions={stringFilterOptions}
-          className="max-w-[7rem]"
+          className="min-w-[5rem] md:min-w-[7rem]"
           body={(strategy) => (
             <div className="flex items-center">
               <img
