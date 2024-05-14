@@ -45,6 +45,45 @@ const TranslateWrapper = ({ children, reverse }) => {
   )
 }
 
+const cryptocurrencies = {
+  bitcoin: {
+    symbol: 'BTC',
+  },
+  ethereum: {
+    symbol: 'ETH',
+  },
+  binancecoin: {
+    symbol: 'BNB',
+  },
+  solana: {
+    symbol: 'SOL',
+  },
+  ripple: {
+    symbol: 'XRP',
+  },
+  cardano: {
+    symbol: 'ADA',
+  },
+  polkadot: {
+    symbol: 'DOT',
+  },
+  litecoin: {
+    symbol: 'LTC',
+  },
+  'bitcoin-cash': {
+    symbol: 'BCH',
+  },
+  'avalanche-2': {
+    symbol: 'AVAX',
+  },
+  chainlink: {
+    symbol: 'LINK',
+  },
+  'the-open-network': {
+    symbol: 'ICP',
+  },
+}
+
 const Dashboard = () => {
   const navigate = useNavigate()
   const [darkMode] = useDarkMode()
@@ -289,9 +328,24 @@ const Dashboard = () => {
   const TokensList = () => (
     <>
       {Object.entries(cryptoData).map(([key, value]) => (
-        <h1 key={key} className="flex items-center gap-1">
-          <span className={`whitespace-nowrap font-bold`}>
-            {caseToTitleCase(key)}:
+        <h1
+          key={key}
+          className={`flex ${
+            cryptocurrencies[key]?.symbol === 'BTC'
+              ? 'w-52'
+              : cryptocurrencies[key]?.symbol === 'ETH'
+              ? 'w-48'
+              : 'w-44'
+          }  items-center justify-start gap-1 px-1`}>
+          <img
+            src={`/crypto-icons-webp/${
+              cryptocurrencies[key]?.symbol || 'generic'
+            }.webp`}
+            className="h-6 w-6"
+            alt=""
+          />
+          <span className="whitespace-nowrap font-bold ">
+            {`${cryptocurrencies[key]?.symbol}/USDT`}:
           </span>
           <span className={`font-light ${value.color}`}>
             ${numberFormatting(value.usd)}
