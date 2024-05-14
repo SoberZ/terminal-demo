@@ -12,23 +12,23 @@
     {
       "active_status": "active",
       "exchange": "binance",
-      "market": "BTC/USDT",
+      "market": "ETH/USDT",
       "exchange_account_id": "binance_account",
-      "strategy_id": "DEMO_BTC_STRATEGY",
+      "strategy_id": "DEMO_ETH_STRATEGY",
       "type": "Demo MM Strategy"
     },
     {
       "active_status": "active",
       "exchange_account_id": "kucoin-account",
-      "strategy_id": "KUCOIN_BTC_AVELLANEDA_STRATEGY",
+      "strategy_id": "KUCOIN_KCS_AVELLANEDA_STRATEGY",
       "exchange": "kucoin",
-      "market": "BTC/USDT",
+      "market": "KCS/USDT",
       "type": "Avellaneda Strategy"
     },
     {
       "active_status": "active",
       "exchange": "binance",
-      "market": "BTC/USDT",
+      "market": "BNB/BUSD",
       "exchange_account_id": "binance_account",
       "strategy_id": "DEMO_DEPTH_STRATEGY",
       "type": "Demo MM Strategy"
@@ -36,17 +36,17 @@
     {
       "active_status": "active",
       "exchange_account_id": "kucoin-account",
-      "strategy_id": "KUCOIN_BTC_GENERIC_STRATEGY",
+      "strategy_id": "KUCOIN_SOL_GENERIC_STRATEGY",
       "exchange": "kucoin",
-      "market": "BTC/USDT",
+      "market": "SOL/USDT",
       "type": "Avellaneda Strategy"
     },
     {
       "active_status": "active",
       "exchange_account_id": "gateio-account",
-      "strategy_id": "GATE_BTC_AVELLANEDA_STRATEGY",
+      "strategy_id": "GATE_HNT_AVELLANEDA_STRATEGY",
       "exchange": "gateio",
-      "market": "BTC/USDT",
+      "market": "HNT/USDT",
       "type": "Avellaneda Strategy"
     }
   ],

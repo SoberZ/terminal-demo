@@ -11,7 +11,7 @@
     "exchange_account_id": "GATE_TEST",
     "ip_addr": "localhost:8050",
     "port": "8050",
-    "status": "auth_failed"
+    "status": "running"
   },
   {
     "exchange": "kucoin",

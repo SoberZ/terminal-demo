@@ -402,6 +402,19 @@ const AllTradesComponent = ({ records }) => {
           filter
           showFilterOperator={false}
           filterMatchModeOptions={stringFilterOptions}
+          className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+          body={(strategy) => (
+            <div className="flex items-center gap-1">
+              <img
+                src={`/crypto-exchanges-webp/${
+                  strategy.exchange || 'generic'
+                }.webp`}
+                className="h-6 w-6"
+                alt=""
+              />
+              <p className="text-[0.7rem] md:text-base">{strategy.exchange}</p>
+            </div>
+          )}
         />
         <Column
           field="execution_date"
@@ -424,7 +437,7 @@ const AllTradesComponent = ({ records }) => {
           filterMatchModeOptions={stringFilterOptions}
           className="min-w-[5rem] md:min-w-[7rem]"
           body={(strategy) => (
-            <div className="flex items-center">
+            <div className="flex items-center gap-1">
               <img
                 src={`/crypto-icons-webp/${
                   strategy.market.split('/')[0] || 'generic'
@@ -432,7 +445,7 @@ const AllTradesComponent = ({ records }) => {
                 className="h-5 w-5"
                 alt=""
               />
-              <p className="text-[0.7rem] md:text-sm">{strategy.market}</p>
+              <p className="text-[0.7rem] md:text-base">{strategy.market}</p>
             </div>
           )}
         />

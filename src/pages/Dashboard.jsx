@@ -342,7 +342,7 @@ const Dashboard = () => {
               cryptocurrencies[key]?.symbol || 'generic'
             }.webp`}
             className="h-6 w-6"
-            alt=""
+            alt="crypto-icon"
           />
           <span className="whitespace-nowrap font-bold ">
             {`${cryptocurrencies[key]?.symbol}/USDT`}:
@@ -674,7 +674,21 @@ const Dashboard = () => {
                     <Column
                       field="exchange"
                       header="Exchange"
-                      className="min-w-[8rem] md:min-w-[10rem] lg:min-w-[14rem]"
+                      className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                      body={(strategy) => (
+                        <div className="flex items-center gap-1">
+                          <img
+                            src={`/crypto-exchanges-webp/${
+                              strategy.exchange || 'generic'
+                            }.webp`}
+                            className="h-6 w-6"
+                            alt=""
+                          />
+                          <p className="text-[0.7rem] md:text-base">
+                            {strategy.exchange}
+                          </p>
+                        </div>
+                      )}
                     />
                     <Column
                       field="market"
@@ -739,7 +753,21 @@ const Dashboard = () => {
                 <Column
                   field="exchange"
                   header="Exchange"
-                  className="min-w-[8rem] md:min-w-[10rem] lg:min-w-[14rem]"
+                  className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                  body={(strategy) => (
+                    <div className="flex items-center gap-1">
+                      <img
+                        src={`/crypto-exchanges-webp/${
+                          strategy.exchange || 'generic'
+                        }.webp`}
+                        className="h-6 w-6"
+                        alt=""
+                      />
+                      <p className="text-[0.7rem] md:text-sm">
+                        {strategy.exchange}
+                      </p>
+                    </div>
+                  )}
                 />
                 <Column
                   field="market"

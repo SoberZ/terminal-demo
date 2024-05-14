@@ -159,6 +159,10 @@ const Portfolio = () => {
     .filter((exchange) => exchange.status === 'running')
     .map((exchange) => exchange.exchange_account_id)
 
+  const activeExchanges = accessibleExchangeAccounts
+    .filter((exchange) => exchange.status === 'running')
+    .map((exchange) => exchange.exchange)
+
   useEffect(() => {
     if (selectedExchange !== undefined) {
       fetchMarkets(selectedExchange, setMarkets)
@@ -284,7 +288,7 @@ const Portfolio = () => {
                   } w-fit whitespace-nowrap rounded border p-2 py-1 text-color-secondary transition-colors `}>
                   All
                 </button>
-                {accessibleExchangeNames?.map((exchange) => (
+                {accessibleExchangeNames?.map((exchange, idx) => (
                   <button
                     key={exchange}
                     type="button"
@@ -301,7 +305,14 @@ const Portfolio = () => {
                       activeExchangeAccount === exchange
                         ? 'border-autowhale-blue bg-autowhale-blue text-white dark:text-color-secondary'
                         : 'bg-color-secondary dark:border-neutral-700 dark:bg-color-primary hover:dark:border-autowhale-blue'
-                    } break-anywhere w-fit whitespace-nowrap rounded border px-2 py-1 text-color-secondary transition-colors `}>
+                    } break-anywhere flex min-w-fit items-center whitespace-nowrap rounded border px-2 py-1 text-color-secondary transition-colors`}>
+                    <img
+                      src={`/crypto-exchanges-webp/${
+                        activeExchanges[idx] || 'generic'
+                      }.webp`}
+                      className="h-5 w-5"
+                      alt="crypto exchange icon"
+                    />
                     {exchange}
                   </button>
                 ))}

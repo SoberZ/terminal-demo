@@ -262,6 +262,21 @@ const Exchanges = () => {
               style={{ fontSize: '0.9rem' }}
               field="exchange"
               header="Exchange"
+              className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+              body={(account) => (
+                <div className="flex items-center gap-1">
+                  <img
+                    src={`/crypto-exchanges-webp/${
+                      account.exchange || 'generic'
+                    }.webp`}
+                    className="h-6 w-6"
+                    alt=""
+                  />
+                  <p className="text-[0.7rem] md:text-base">
+                    {account.exchange}
+                  </p>
+                </div>
+              )}
             />
             <Column
               sortable

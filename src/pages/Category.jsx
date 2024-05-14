@@ -344,6 +344,27 @@ const Category = () => {
                 filterElement={strategyTypesFilterTemplate}
               />
               <Column
+                field="exchange"
+                header="Exchange"
+                style={{ padding: '0.9em' }}
+                dataType="text"
+                className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+                body={(strategy) => (
+                  <div className="flex items-center gap-1">
+                    <img
+                      src={`/crypto-exchanges-webp/${
+                        strategy.exchange || 'generic'
+                      }.webp`}
+                      className="h-6 w-6"
+                      alt=""
+                    />
+                    <p className="text-[0.7rem] md:text-sm">
+                      {strategy.exchange}
+                    </p>
+                  </div>
+                )}
+              />
+              <Column
                 sortable
                 field="market"
                 header="Market"

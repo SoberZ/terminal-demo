@@ -28,7 +28,7 @@
     --border-color: #292929;
     --highlight-color-hover: #deebff;
     --sb-track-color: #ffffff;
-    --sb-thumb-color: #4432e2;
+    --sb-thumb-color: #4133da;
   }
   // it's not regestreing the colorscheme
   :root[data-theme='dark'] {
@@ -55,8 +55,8 @@ body {
 }
 
 :root {
-  --autowhale-blue: #4432e2;
-  --highlight-text-color: #4432e2 !important;
+  --autowhale-blue: #4133da;
+  --highlight-text-color: #4133da !important;
   --primary-color: var(--autowhale-blue) !important;
   --sb-size: 7px;
 
@@ -121,7 +121,7 @@ tr:hover {
 }
 
 .p-sortable-column:focus {
-  box-shadow: 0 0 0 0.2rem #4432e2d8 !important;
+  box-shadow: 0 0 0 0.2rem #4133dad8 !important;
   border: 0;
 }
 
@@ -135,7 +135,7 @@ tr:hover {
 }
 
 .p-checkbox-box.p-focus {
-  box-shadow: 0 0 0 0.1rem #4432e2d8 !important;
+  box-shadow: 0 0 0 0.1rem #4133dad8 !important;
   border-color: var(--autowhale-blue) !important;
 }
 
@@ -146,18 +146,18 @@ tr:hover {
 .p-button:enabled:hover {
   background: var(--autowhale-blue);
   border: 1px solid var(--autowhale-blue);
-  box-shadow: 0 0 0 0.1rem #4432e2d8 !important;
+  box-shadow: 0 0 0 0.1rem #4133dad8 !important;
 }
 
 @layer components {
   .text-primary {
-    color: #4432e2;
+    color: #4133da;
   }
   .btn-primary {
-    background-color: #4432e2;
+    background-color: #4133da;
   }
   .btn-primary-dark {
-    background-color: #4432e2;
+    background-color: #4133da;
   }
 }
 
@@ -492,19 +492,19 @@ tr:hover {
 }
 
 .p-slider .p-slider-range {
-  background: #4432e2 !important;
+  background: #4133da !important;
 }
 
 .p-slider:not(.p-disabled) .p-slider-handle:hover {
-  background: #4432e2 !important;
-  border-color: #4432e2 !important;
+  background: #4133da !important;
+  border-color: #4133da !important;
 }
 .p-slider:not(.p-disabled) .p-slider-handle:hover {
-  background: #4432e2 !important;
-  border-color: #4432e2 !important;
+  background: #4133da !important;
+  border-color: #4133da !important;
 }
 .p-slider .p-slider-handle {
-  border: 2px solid #4432e2 !important;
+  border: 2px solid #4133da !important;
 }
 .p-slider .p-slider-handle.p-slider-handle-active {
   z-index: 0 !important;

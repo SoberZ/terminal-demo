@@ -175,22 +175,31 @@ const Exchange = () => {
         {accountData && (
           <div className="flex flex-col  text-sm">
             <div className="flex w-full flex-col items-center justify-center gap-3 md:flex-row md:justify-between">
-              <div className="flex flex-wrap justify-center gap-2 md:justify-start">
+              <div className="flex flex-wrap items-center justify-center gap-2 md:justify-start">
                 <h1 className="text-primary break-anywhere text-2xl font-semibold dark:text-white md:inline md:text-left">
                   {exchangeId}
                 </h1>
-                <div className="flex flex-wrap gap-2">
-                  <Tag
-                    value={accountData.status}
-                    style={{
-                      backgroundColor: getSeverity(accountData.status),
-                    }}
-                    className="text-sm md:text-lg"
+                <div className="flex items-center gap-1.5">
+                  <img
+                    src={`/crypto-exchanges-webp/${
+                      accountData.exchange || 'generic'
+                    }.webp`}
+                    className="h-10 w-10"
+                    alt="crypto exchange icon"
                   />
-                  <Tag
-                    value={accountData.exchange}
-                    className="text-sm md:text-lg"
-                  />
+                  <div className="flex flex-wrap gap-2">
+                    <Tag
+                      value={accountData.status}
+                      style={{
+                        backgroundColor: getSeverity(accountData.status),
+                      }}
+                      className="text-sm md:text-lg"
+                    />
+                    <Tag
+                      value={accountData.exchange}
+                      className="text-sm md:text-lg"
+                    />
+                  </div>
                 </div>
               </div>
               <div className="flex flex-wrap justify-center gap-2">
