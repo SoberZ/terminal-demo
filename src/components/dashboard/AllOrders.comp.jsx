@@ -419,7 +419,7 @@ const AllOrdersComponent = ({ records }) => {
           filter
           showFilterOperator={false}
           filterMatchModeOptions={stringFilterOptions}
-          className="min-w-[5rem] md:min-w-[7rem] lg:min-w-[10rem]"
+          className={`max-w-[7rem] ${width < 768 && 'max-w-[5rem]'}`}
           body={(strategy) => (
             <div className="flex items-center gap-1">
               <img

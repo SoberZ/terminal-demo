@@ -10,6 +10,7 @@ import { Dialog } from 'primereact/dialog'
 import { MultiSelect } from 'primereact/multiselect'
 
 import { Helmet } from 'react-helmet'
+import { useNavigate } from 'react-router-dom'
 
 import UserData from '../data/users/userData.json'
 import RolesData from '../data/users/rolesData.json'
@@ -50,6 +51,7 @@ const AssignRoles = ({ roles, control }) => {
 }
 
 const User = () => {
+  const navigate = useNavigate()
   const { userId } = useParams()
   const [roles, setRoles] = useState({})
   const [user, setUser] = useState({
@@ -437,7 +439,14 @@ const User = () => {
                   }}
                   className="flex flex-col gap-3 rounded-md border p-5 shadow-soft-lg transition-colors hover:cursor-pointer hover:border-autowhale-blue/40 dark:border-neutral-700 hover:dark:border-neutral-300">
                   <div className="flex items-center justify-between">
-                    <span className="text-xl font-bold">
+                    <span className="flex items-center gap-1 text-xl font-bold">
+                      <img
+                        src={`/crypto-exchanges-webp/${
+                          exchangeAccount.exchange || 'generic'
+                        }.webp`}
+                        className="h-10 w-10"
+                        alt="crypto exchange icon"
+                      />
                       {exchangeAccount.exchange_account_id}
                     </span>
                     <span
