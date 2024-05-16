@@ -398,7 +398,7 @@ const Strategies = () => {
         styles={{
           options: {
             zIndex: 1000,
-            primaryColor: '#4432e2',
+            primaryColor: '#4133da',
             arrowColor: '#fff',
             backgroundColor: '#fff',
             textColor: '#171717',

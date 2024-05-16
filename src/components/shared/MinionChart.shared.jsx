@@ -55,16 +55,16 @@ const MinionChart = ({
       },
       stroke: {
         curve: 'smooth',
-        colors: ['#4432e2'],
+        colors: ['#4133da'],
         opacity: 1,
       },
       fill: {
         type: 'solid',
-        colors: ['#4432e2'],
+        colors: ['#4133da'],
         opacity: 0.3,
       },
       markers: {
-        colors: ['#4432e2'],
+        colors: ['#4133da'],
       },
     },
   })
@@ -126,12 +126,12 @@ const MinionChart = ({
           theme: darkMode ? 'dark' : 'light',
         },
         fill: {
-          colors: ['#4432e2'],
+          colors: ['#4133da'],
         },
         title: {
           ...prevData.options.title,
           style: {
-            color: darkMode ? '#D4D4D4' : '#4432e2',
+            color: darkMode ? '#D4D4D4' : '#4133da',
             fontSize: '17px',
             fontFamily: 'inherit',
           },

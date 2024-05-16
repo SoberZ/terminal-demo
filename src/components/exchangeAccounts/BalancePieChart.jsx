@@ -4,27 +4,27 @@ import { useDarkMode, useWindowSize } from '../../hooks'
 import { useEffect, useState } from 'react'
 
 const defaultColors = [
-  '#4432e2',
-  '#5747e5',
-  '#695be8',
-  '#7c70eb',
-  '#8f84ee',
-  '#a299f1',
-  '#b4adf3',
-  '#c7c2f6',
-  '#dad6f9',
+  '#4133da',
+  '#5447de',
+  '#675ce1',
+  '#7a70e5',
+  '#8d85e9',
+  '#a099ed',
+  '#b3adf0',
+  '#c6c2f4',
+  '#d9d6f8',
 ]
 const defaultDarkColors = [
-  '#7c70eb',
-  '#695be8',
-  '#5747e5',
-  '#4432e2',
-  '#3d2dcb',
-  '#3628b5',
-  '#30239e',
-  '#291e88',
-  '#221971',
-  '#1b145a',
+  '#7a70e5',
+  '#675ce1',
+  '#5447de',
+  '#4133da',
+  '#3b2ec4',
+  '#3429ae',
+  '#2e2499',
+  '#271f83',
+  '#211a6d',
+  '#1a1457',
 ]
 
 const BalancePieChart = ({

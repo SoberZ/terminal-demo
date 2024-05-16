@@ -65,12 +65,12 @@ const PerformancePrimaryChart = ({
       title: {
         text: id,
         style: {
-          color: darkMode ? '#D4D4D4' : '#4432e2',
+          color: darkMode ? '#D4D4D4' : '#4133da',
           fontSize: '20px',
           fontFamily: 'inherit',
         },
       },
-      colors: ['#4432e2'],
+      colors: ['#4133da'],
       dataLabels: {
         enabled: false,
       },
@@ -160,7 +160,7 @@ const PerformancePrimaryChart = ({
         selection: {
           enabled: true,
           fill: {
-            color: darkMode ? '#fff' : '#4432e2',
+            color: darkMode ? '#fff' : '#4133da',
             opacity: 0.1,
           },
         },
@@ -177,7 +177,7 @@ const PerformancePrimaryChart = ({
       fill: {
         type: 'solid',
         opacity: 1,
-        colors: ['#4432e2'],
+        colors: ['#4133da'],
       },
       stroke: {
         show: false,

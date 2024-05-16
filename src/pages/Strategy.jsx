@@ -467,7 +467,7 @@ const Strategy = () => {
         styles={{
           options: {
             zIndex: 1000,
-            primaryColor: '#4432e2',
+            primaryColor: '#4133da',
             arrowColor: '#fff',
             backgroundColor: '#fff',
             textColor: '#171717',
@@ -573,7 +573,7 @@ const Strategy = () => {
               onClick={() => setLast24MetricsActive(false)}
               className={`items-center rounded-l-md px-4 py-2 transition-colors ease-in ${
                 !last24MetricsActive
-                  ? 'rounded-md bg-[#4432e2] text-white hover:bg-[#162963] dark:bg-color-tertiary dark:text-neutral-800 dark:hover:bg-[#787878]'
+                  ? 'rounded-md bg-[#4133da] text-white hover:bg-[#162963] dark:bg-color-tertiary dark:text-neutral-800 dark:hover:bg-[#787878]'
                   : ''
               } `}>
               <span>Total performance</span>
@@ -582,7 +582,7 @@ const Strategy = () => {
               onClick={() => setLast24MetricsActive(true)}
               className={`items-center rounded-r-md px-4 py-2 transition-colors ease-in ${
                 last24MetricsActive
-                  ? 'rounded-md bg-[#4432e2] text-white hover:bg-[#162963] dark:bg-color-tertiary dark:text-neutral-800 dark:hover:bg-[#787878]'
+                  ? 'rounded-md bg-[#4133da] text-white hover:bg-[#162963] dark:bg-color-tertiary dark:text-neutral-800 dark:hover:bg-[#787878]'
                   : ''
               } `}>
               <span>Last 24h performance</span>
@@ -937,7 +937,7 @@ const Strategy = () => {
                 onClick={() => setTotalChartMetricsActive(true)}
                 className={`items-center rounded-l-md px-4 py-2 transition-colors ease-in ${
                   totalChartMetricsActive
-                    ? 'rounded-md bg-[#4432e2] text-white hover:bg-[#162963] dark:bg-color-tertiary dark:text-neutral-800 dark:hover:bg-[#787878]'
+                    ? 'rounded-md bg-[#4133da] text-white hover:bg-[#162963] dark:bg-color-tertiary dark:text-neutral-800 dark:hover:bg-[#787878]'
                     : ''
                 } `}>
                 <span>Total performance</span>
@@ -946,7 +946,7 @@ const Strategy = () => {
                 onClick={() => setTotalChartMetricsActive(false)}
                 className={`items-center rounded-r-md px-4 py-2 transition-colors ease-in ${
                   !totalChartMetricsActive
-                    ? 'rounded-md bg-[#4432e2] text-white hover:bg-[#162963] dark:bg-color-tertiary dark:text-neutral-800 dark:hover:bg-[#787878]'
+                    ? 'rounded-md bg-[#4133da] text-white hover:bg-[#162963] dark:bg-color-tertiary dark:text-neutral-800 dark:hover:bg-[#787878]'
                     : ''
                 } `}>
                 <span>Grouped performance</span>

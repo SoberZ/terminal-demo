@@ -6,9 +6,9 @@ export const LiveDashboardChart = (props) => {
     data = [],
     colors: {
       backgroundColor = 'transparent',
-      lineColor = '#4432e2',
+      lineColor = '#4133da',
       textColor = 'white',
-      areaTopColor = '#4432e2',
+      areaTopColor = '#4133da',
       areaBottomColor = 'rgba(41, 98, 255, 0.28)',
     } = {},
   } = props

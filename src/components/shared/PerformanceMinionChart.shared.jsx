@@ -70,12 +70,12 @@ const PerformanceMinionChart = ({
         offsetY: 8,
         margin: -10,
         style: {
-          color: darkMode ? '#D4D4D4' : '#4432e2',
+          color: darkMode ? '#D4D4D4' : '#4133da',
           fontSize: width > 1024 ? '17px' : '18px',
           fontFamily: 'inherit',
         },
       },
-      colors: ['#4432e2'],
+      colors: ['#4133da'],
       dataLabels: {
         enabled: false,
       },
