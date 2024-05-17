@@ -43,7 +43,7 @@ import MetricData from '../data/strategyData/metrics.json'
 import StrategyData from '../data/strategyData/strategy.json'
 import GroupedChart from '../data/strategyData/groupedCharts.json'
 import StrategiesData from '../data/strategies/strategiesData.json'
-import { getBase, getQuote } from '../utils/misc'
+import { cryptoExchangeIcons, getBase, getQuote } from '../utils/misc'
 
 import Joyride, { STATUS } from 'react-joyride'
 import { Helmet } from 'react-helmet'
@@ -540,7 +540,9 @@ const Strategy = () => {
             {` ${strategyData?.market} -`}
             <img
               src={`/crypto-exchanges-webp/${
-                strategyData?.exchange || 'generic'
+                cryptoExchangeIcons[strategyData?.exchange]
+                  ? strategyData?.exchange
+                  : 'generic'
               }.webp`}
               className="h-10 w-10"
               alt="crypto exchange icon"

@@ -14,6 +14,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import Joyride, { STATUS } from 'react-joyride'
 import { BiInfoCircle } from 'react-icons/bi'
 import { Helmet } from 'react-helmet'
+import { cryptoExchangeIcons } from '../utils/misc'
 
 const MarketIndicators = () => {
   const { watch, control } = useForm()
@@ -153,7 +154,17 @@ const MarketIndicators = () => {
               className="h-10 w-10"
               alt=""
             />
-            {`${currentMarket} - ${currentExchange}`}
+            {` ${currentMarket} -`}
+            <img
+              src={`/crypto-exchanges-webp/${
+                cryptoExchangeIcons[currentExchange]
+                  ? currentExchange.toLowerCase()
+                  : 'generic'
+              }.webp`}
+              className="h-10 w-10"
+              alt="crypto exchange icon"
+            />
+            {` ${currentExchange}`}
           </h1>
         </div>
         <div className="flex flex-col gap-2 md:grid md:grid-cols-2 md:gap-5">

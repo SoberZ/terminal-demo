@@ -129,3 +129,21 @@ export function caseToTitleCase(inputStr) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
 }
+
+export const cryptoExchangeIcons = {
+  binance: 'binance',
+  bitfinex: 'bitfinex',
+  bitget: 'bitget',
+  bitmart: 'bitmart',
+  bitstamp: 'bitstamp',
+  bybit: 'bybit',
+  coinbase: 'coinbase',
+  coinex: 'coinex',
+  cryptocom: 'cryptocom',
+  gateio: 'gateio',
+  gemini: 'gemini',
+  huobi: 'huobi',
+  kraken: 'kraken',
+  kucoin: 'kucoin',
+  okex: 'okex',
+}
