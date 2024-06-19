@@ -291,17 +291,9 @@ const Exchange = () => {
         </div>
         <DataTable
           value={result}
-          paginator
           breakpoint="0"
           scrollable
-          paginatorTemplate={
-            width < 768
-              ? 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink'
-              : 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown'
-          }
           sortOrder={1}
-          rows={20}
-          rowsPerPageOptions={[20, 30, 40, 50]}
           className="text-[0.7rem] md:text-base">
           <Column
             sortable
