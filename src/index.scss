@@ -549,3 +549,11 @@ tr:hover {
 .p-input-icon-right > .p-inputtext {
   padding-right: 3.4rem !important;
 }
+
+.p-calendar {
+  & .p-inputtext {
+    background-color: rgb(var(--bg-color-secondary)) !important;
+    color: rgb(var(--text-color-secondary)) !important;
+    @apply rounded-[6px] border-[#ced4da] dark:border-neutral-700;
+  }
+}

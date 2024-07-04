@@ -8,6 +8,7 @@ import LiveDataIcon from './LiveDataIcon'
 import UsersIcon from './UsersIcon'
 import DataAnalysis from './DataAnalysis'
 import PortfolioIcon from './PortfolioIcon'
+import TradingExecutionIcon from './TradingExecutionIcon'
 
 export {
   HomeIcon,
@@ -20,4 +21,5 @@ export {
   DataAnalysis,
   LiveDataIcon,
   PortfolioIcon,
+  TradingExecutionIcon,
 }

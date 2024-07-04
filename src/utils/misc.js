@@ -6,6 +6,7 @@ import {
   KeyIcon,
   StatsIcon,
   PortfolioIcon,
+  TradingExecutionIcon,
 } from '../assets/icons'
 
 export const delay = (ms) => new Promise((res) => setTimeout(res, ms))
@@ -94,6 +95,11 @@ export const routes = [
   //   component: LiveDataIcon,
   // },
   {
+    path: '/trading-execution',
+    name: 'Trading Execution',
+    component: TradingExecutionIcon,
+  },
+  {
     path: '/portfolio',
     name: 'Portfolio',
     component: PortfolioIcon,
@@ -146,4 +152,10 @@ export const cryptoExchangeIcons = {
   kraken: 'kraken',
   kucoin: 'kucoin',
   okex: 'okex',
+}
+
+export const delayInUNIX = {
+  d: 24 * 60 * 60 * 1000,
+  h: 60 * 60 * 1000,
+  m: 60 * 1000,
 }

@@ -36,6 +36,7 @@ import Loader from './shared/Loader.shared'
 import TradingViewWidget from './shared/TradingViewWidget'
 import TimeDisplay from './shared/TimeDisplay'
 import { LiveDashboardChart } from './shared/LiveDashboardChart'
+import PreviewChart from './tradingExecution/PreviewChart'
 
 export {
   ClientProvider,
@@ -71,4 +72,5 @@ export {
   TradingViewWidget,
   TimeDisplay,
   LiveDashboardChart,
+  PreviewChart,
 }
